@@ -92,7 +92,7 @@ extern "C" L2_EXPORT BOOL WINAPI ExtensionL2Attach(HMODULE core) {
         }
     }
     if (!profile) return fail(ERROR_BAD_EXE_FORMAT, "ExtensionL2: unsupported Core.dll ABI\n");
-    if (std::memcmp(reinterpret_cast<const void*>(evaluate), l2client::StepPrefix,
+    if (std::memcmp(reinterpret_cast<const void*>(evaluate), profile->stepCode,
                     sizeof(l2client::StepPrefix)) != 0)
         return fail(ERROR_BAD_EXE_FORMAT, "ExtensionL2: FFrame::Step code mismatch\n");
     std::size_t count = 0;

@@ -17,7 +17,7 @@ def main():
     manifest = json.loads((out / 'BUILDINFO.json').read_text())
     assert hashlib.sha256((out / 'app/_interface_core.pyd').read_bytes()).hexdigest() == manifest['core_sha256']
     files = [Path('app') / p.name for p in (ROOT / 'app').glob('*.py')]
-    files.append(Path('schemas/schemas.json'))
+    files.extend(Path('schemas') / p.name for p in sorted((ROOT / 'schemas').glob('*.json')))
     hashes = {}
     for relative in files:
         original = (ROOT / relative).read_bytes()

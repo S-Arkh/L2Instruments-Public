@@ -1,0 +1,5 @@
+{
+  "SortProbe": {
+    "contains": ["Numbers.Sort(CompareInts);", "Names.Sort(CompareNames);", "LocalNumbers.Sort(CompareInts);", "LocalGroup.Items.Sort(CompareItems);", "Groups[NextIndex()].Items.Sort(CompareItems);"]
+  }
+}

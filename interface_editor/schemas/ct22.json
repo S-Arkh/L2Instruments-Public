@@ -1,0 +1,5837 @@
+{
+  "format": 1,
+  "records": {
+    "ct22.BarCtrl": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "foreTexture",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "foreLeftTexture",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "foreRightTexture",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "backTexture",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "backLeftTexture",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "backRightTexture",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "uSize",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "vSize",
+          "kind": "int",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.Button": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "normalTex",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "pushedTex",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "highlightTex",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "dropTex",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "buttonName",
+          "kind": "int",
+          "default": -9999
+        },
+        {
+          "op": "field",
+          "name": "buttonNameText",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "noHighlight",
+          "kind": "int",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "defaultSoundOn",
+          "kind": "int",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "disableTime",
+          "kind": "int",
+          "default": -9999
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.ChatWindow": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "lineGap",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "nextLineOffsetX",
+          "kind": "int",
+          "default": -9999
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.CheckBox": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "titleIndex",
+          "kind": "int",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "titleText",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "checked",
+          "kind": "bool",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "leftAligned",
+          "kind": "bool",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "maxWidth",
+          "kind": "int",
+          "default": -9999
+        },
+        {
+          "op": "field",
+          "name": "checkTexture",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "unCheckTexture",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "disableTexture",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "disableCheckTexture",
+          "kind": "string",
+          "default": "undefined"
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.ComboBox": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "values",
+          "kind": "list",
+          "type": "ct22.ComboBox.ComboBoxElement",
+          "poly": false,
+          "count": "int",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.ComboBox.ComboBoxElement": {
+      "base": null,
+      "ops": [
+        {
+          "op": "field",
+          "name": "sysString",
+          "kind": "int",
+          "default": -9999
+        },
+        {
+          "op": "field",
+          "name": "systemMsg",
+          "kind": "int",
+          "default": -9999
+        },
+        {
+          "op": "field",
+          "name": "text",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "reserved",
+          "kind": "int",
+          "default": -9999
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.DefaultProperty": {
+      "base": null,
+      "ops": [
+        {
+          "op": "field",
+          "name": "name",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "superName",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "unk2",
+          "kind": "int",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "unk3",
+          "kind": "int",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "unk4",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk5",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "unk6",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "unk7",
+          "kind": "int",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "size",
+          "kind": "bool",
+          "default": 0
+        },
+        {
+          "op": "if",
+          "condition": "size",
+          "yes": [
+            {
+              "op": "field",
+              "name": "size_absolute_values",
+              "kind": "bool",
+              "default": 1
+            },
+            {
+              "op": "if",
+              "condition": "!size_absolute_values",
+              "yes": [
+                {
+                  "op": "field",
+                  "name": "_reserved_0",
+                  "kind": "compact",
+                  "default": 0
+                },
+                {
+                  "op": "field",
+                  "name": "size_percent_width",
+                  "kind": "float",
+                  "default": 0
+                },
+                {
+                  "op": "field",
+                  "name": "size_percent_height",
+                  "kind": "float",
+                  "default": 0
+                }
+              ],
+              "no": []
+            },
+            {
+              "op": "field",
+              "name": "size_absolute_width",
+              "kind": "int",
+              "default": 0
+            },
+            {
+              "op": "field",
+              "name": "size_absolute_height",
+              "kind": "int",
+              "default": 0
+            }
+          ],
+          "no": []
+        },
+        {
+          "op": "field",
+          "name": "anchor",
+          "kind": "bool",
+          "default": 0
+        },
+        {
+          "op": "if",
+          "condition": "anchor",
+          "yes": [
+            {
+              "op": "field",
+              "name": "anchor_parent",
+              "kind": "int",
+              "type": "ct22.Alignment",
+              "enum": [
+                {
+                  "label": "NONE",
+                  "value": 0
+                },
+                {
+                  "label": "TOP_LEFT",
+                  "value": 1
+                },
+                {
+                  "label": "TOP_CENTER",
+                  "value": 2
+                },
+                {
+                  "label": "TOP_RIGHT",
+                  "value": 3
+                },
+                {
+                  "label": "CENTER_LEFT",
+                  "value": 4
+                },
+                {
+                  "label": "CENTER",
+                  "value": 5
+                },
+                {
+                  "label": "CENTER_RIGHT",
+                  "value": 6
+                },
+                {
+                  "label": "BOTTOM_LEFT",
+                  "value": 7
+                },
+                {
+                  "label": "BOTTOM_CENTER",
+                  "value": 8
+                },
+                {
+                  "label": "BOTTOM_RIGHT",
+                  "value": 9
+                }
+              ],
+              "default": 0
+            },
+            {
+              "op": "field",
+              "name": "anchor_this",
+              "kind": "int",
+              "type": "ct22.Alignment",
+              "enum": [
+                {
+                  "label": "NONE",
+                  "value": 0
+                },
+                {
+                  "label": "TOP_LEFT",
+                  "value": 1
+                },
+                {
+                  "label": "TOP_CENTER",
+                  "value": 2
+                },
+                {
+                  "label": "TOP_RIGHT",
+                  "value": 3
+                },
+                {
+                  "label": "CENTER_LEFT",
+                  "value": 4
+                },
+                {
+                  "label": "CENTER",
+                  "value": 5
+                },
+                {
+                  "label": "CENTER_RIGHT",
+                  "value": 6
+                },
+                {
+                  "label": "BOTTOM_LEFT",
+                  "value": 7
+                },
+                {
+                  "label": "BOTTOM_CENTER",
+                  "value": 8
+                },
+                {
+                  "label": "BOTTOM_RIGHT",
+                  "value": 9
+                }
+              ],
+              "default": 0
+            },
+            {
+              "op": "field",
+              "name": "anchor_ctrl",
+              "kind": "string",
+              "default": ""
+            },
+            {
+              "op": "field",
+              "name": "anchor_x",
+              "kind": "float",
+              "default": 0
+            },
+            {
+              "op": "field",
+              "name": "anchor_y",
+              "kind": "float",
+              "default": 0
+            }
+          ],
+          "no": []
+        },
+        {
+          "op": "field",
+          "name": "useFont",
+          "kind": "bool",
+          "default": 0
+        },
+        {
+          "op": "if",
+          "condition": "useFont",
+          "yes": [
+            {
+              "op": "field",
+              "name": "text_font_1",
+              "kind": "string",
+              "default": "undefined"
+            },
+            {
+              "op": "field",
+              "name": "text_font_2",
+              "kind": "string",
+              "default": "undefined"
+            },
+            {
+              "op": "field",
+              "name": "text_color",
+              "kind": "color",
+              "default": 0
+            },
+            {
+              "op": "field",
+              "name": "text_unk_const_zero",
+              "kind": "int",
+              "default": 0
+            }
+          ],
+          "no": []
+        },
+        {
+          "op": "field",
+          "name": "unk23",
+          "kind": "int",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "unk24",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "popupType",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "popupValue",
+          "kind": "int",
+          "default": -9999
+        },
+        {
+          "op": "field",
+          "name": "unk27",
+          "kind": "int",
+          "default": -9999
+        },
+        {
+          "op": "field",
+          "name": "unk28",
+          "kind": "int",
+          "default": -9999
+        },
+        {
+          "op": "field",
+          "name": "unk29",
+          "kind": "int",
+          "default": -9999
+        }
+      ],
+      "abstract": true
+    },
+    "ct22.EditBox": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "type",
+          "kind": "int",
+          "type": "ct22.EditBox.Type",
+          "enum": [
+            {
+              "label": "NORMAL",
+              "value": 0
+            },
+            {
+              "label": "CHAT",
+              "value": 1
+            },
+            {
+              "label": "PASSWORD",
+              "value": 2
+            },
+            {
+              "label": "COUNT",
+              "value": 3
+            },
+            {
+              "label": "NUMBER",
+              "value": 4
+            },
+            {
+              "label": "UNK5",
+              "value": 5
+            },
+            {
+              "label": "TYPE6",
+              "value": 6
+            }
+          ],
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "maxLength",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "showCursor",
+          "kind": "int",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "chatMarkOn",
+          "kind": "bool",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "offsetX",
+          "kind": "int",
+          "default": -9999
+        },
+        {
+          "op": "field",
+          "name": "candidateBoxShowUpPos",
+          "kind": "bool",
+          "default": 1
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.EffectButton": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "type",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "normalTex",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "pushedTex",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "highlightTex",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "effectTex1",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "effectTex2",
+          "kind": "string",
+          "default": "undefined"
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.FishViewportWindow": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "texBack",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "texClock",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "texFishHPBar",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "texFishHPBarBack",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "texFishFakeHPBarWarning",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "texFishingEffect",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "texIconPumping",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "texIconReeling",
+          "kind": "string",
+          "default": ""
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.Font": {
+      "base": null,
+      "ops": [
+        {
+          "op": "field",
+          "name": "defaultFontName",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "defaultColor",
+          "kind": "color",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "fonts",
+          "kind": "list",
+          "type": "ct22.Font.FontData",
+          "poly": false,
+          "count": "int",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.Font.FontData": {
+      "base": null,
+      "ops": [
+        {
+          "op": "field",
+          "name": "name",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "file",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "location",
+          "kind": "string",
+          "default": "windows"
+        },
+        {
+          "op": "field",
+          "name": "size",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "index",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "indexOn",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "shadow",
+          "kind": "bool",
+          "default": 0
+        },
+        {
+          "op": "if",
+          "condition": "shadow",
+          "yes": [
+            {
+              "op": "field",
+              "name": "shadow_x",
+              "kind": "int",
+              "default": 0
+            },
+            {
+              "op": "field",
+              "name": "shadow_y",
+              "kind": "int",
+              "default": 0
+            }
+          ],
+          "no": [
+            {
+              "op": "field",
+              "name": "unused01",
+              "kind": "int",
+              "default": 0
+            },
+            {
+              "op": "field",
+              "name": "unused02",
+              "kind": "int",
+              "default": 0
+            }
+          ]
+        },
+        {
+          "op": "field",
+          "name": "stroke",
+          "kind": "bool",
+          "default": 0
+        },
+        {
+          "op": "if",
+          "condition": "stroke",
+          "yes": [
+            {
+              "op": "field",
+              "name": "stroke_large",
+              "kind": "bool",
+              "default": 0
+            }
+          ],
+          "no": [
+            {
+              "op": "field",
+              "name": "unused11",
+              "kind": "int",
+              "default": 0
+            }
+          ]
+        },
+        {
+          "op": "field",
+          "name": "lineGap",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "underlineOffset",
+          "kind": "int",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.HtmlCtrl": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "viewType",
+          "kind": "string",
+          "default": ""
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.InvenWeight": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "target",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "textureWidth",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "textureHeight",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "textureStepLeft",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "textureStepMid",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "textureStepRight",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "textureWarnLeft",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "textureWarnMid",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "textureWarnRight",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "textureAddedLeft",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "textureAddedMid",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "textureAddedRight",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "textureBackLeft",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "textureBackMid",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "textureBackRight",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "gaugeText",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "fontWidth",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "fontHeight",
+          "kind": "int",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.ItemWindow": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "col",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "row",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "maxItemNum",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "iconWidth",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "iconHeight",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "gapX",
+          "kind": "int",
+          "default": -9999
+        },
+        {
+          "op": "field",
+          "name": "gapY",
+          "kind": "int",
+          "default": -9999
+        },
+        {
+          "op": "field",
+          "name": "offsetX",
+          "kind": "int",
+          "default": -9999
+        },
+        {
+          "op": "field",
+          "name": "offsetY",
+          "kind": "int",
+          "default": -9999
+        },
+        {
+          "op": "field",
+          "name": "backgroundItemWidth",
+          "kind": "int",
+          "default": -9999
+        },
+        {
+          "op": "field",
+          "name": "backgroundItemHeight",
+          "kind": "int",
+          "default": -9999
+        },
+        {
+          "op": "field",
+          "name": "backgroundItemTex",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "selectedItemWidth",
+          "kind": "int",
+          "default": -9999
+        },
+        {
+          "op": "field",
+          "name": "selectedItemHeight",
+          "kind": "int",
+          "default": -9999
+        },
+        {
+          "op": "field",
+          "name": "selectedItemTex",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "unselectedItemWidth",
+          "kind": "int",
+          "default": -9999
+        },
+        {
+          "op": "field",
+          "name": "unselectedItemHeight",
+          "kind": "int",
+          "default": -9999
+        },
+        {
+          "op": "field",
+          "name": "unselectedItemTex",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "blankItemWidth",
+          "kind": "int",
+          "default": -9999
+        },
+        {
+          "op": "field",
+          "name": "blankItemHeight",
+          "kind": "int",
+          "default": -9999
+        },
+        {
+          "op": "field",
+          "name": "blankItemTex",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "noSelectItem",
+          "kind": "int",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "noItemDrag",
+          "kind": "int",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "buttonClick",
+          "kind": "int",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "useCoolTime",
+          "kind": "int",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "noScroll",
+          "kind": "int",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "showIconFrame",
+          "kind": "int",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "outLineUp",
+          "kind": "string",
+          "default": "l2ui_ch3.InventoryWnd.inventory_outline"
+        },
+        {
+          "op": "field",
+          "name": "outLineDown",
+          "kind": "string",
+          "default": "l2ui_ch3.InventoryWnd.inventory_outline_down"
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.ListBox": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "maxRow",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "showRow",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "showLastLine",
+          "kind": "int",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.ListCtrl": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "unk100",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk101",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk102",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk103",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk104",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "values",
+          "kind": "list",
+          "type": "ct22.ListCtrl.ListElement",
+          "poly": false,
+          "count": "int",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.ListCtrl.ListElement": {
+      "base": null,
+      "ops": [
+        {
+          "op": "field",
+          "name": "textStringId",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "width",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk108",
+          "kind": "bool",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "unk109",
+          "kind": "bool",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "unk110",
+          "kind": "bool",
+          "default": -1
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.MinimapCtrl": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "showTime",
+          "kind": "bool",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "showTown",
+          "kind": "bool",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "showGrid",
+          "kind": "bool",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "showMyLocMark",
+          "kind": "bool",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "showMyLocText",
+          "kind": "bool",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "showSSQText",
+          "kind": "bool",
+          "default": -1
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.MoviePlayerCtrl": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "unk100",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk101",
+          "kind": "int",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.MultiEdit": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "unk100",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk101",
+          "kind": "int",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.MultiSellItemInfo": {
+      "base": "ct22.DefaultProperty",
+      "ops": [],
+      "abstract": false
+    },
+    "ct22.MultiSellNeededItem": {
+      "base": "ct22.DefaultProperty",
+      "ops": [],
+      "abstract": false
+    },
+    "ct22.NameCtrl": {
+      "base": "ct22.DefaultProperty",
+      "ops": [],
+      "abstract": false
+    },
+    "ct22.Progress": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "unk100",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "backLeftTexture",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "backTexture",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "backRightTexture",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "barLeftTexture",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "barTexture",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "barRightTexture",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "gap",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "textureSize",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "type",
+          "kind": "int",
+          "type": "ct22.Progress.ProgressBarType",
+          "enum": [
+            {
+              "label": "None",
+              "value": 0
+            },
+            {
+              "label": "RightLeft",
+              "value": 1
+            },
+            {
+              "label": "LeftRight",
+              "value": 2
+            },
+            {
+              "label": "TopBottom",
+              "value": 3
+            },
+            {
+              "label": "BottomTop",
+              "value": 4
+            }
+          ],
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.PropertyController": {
+      "base": "ct22.DefaultProperty",
+      "ops": [],
+      "abstract": false
+    },
+    "ct22.RadarMapCtrl": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "unk100",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk101",
+          "kind": "float",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk102",
+          "kind": "list",
+          "type": "ct22.RadarMapCtrl.RadarMapElement",
+          "poly": false,
+          "count": "int",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.RadarMapCtrl.RadarMapElement": {
+      "base": null,
+      "ops": [
+        {
+          "op": "field",
+          "name": "unk103",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk104",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk105",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk106",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk107",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk108",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk109",
+          "kind": "int",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.RadioButton": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "sysstring",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "radioGroupID",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "isChecked",
+          "kind": "int",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.ScrollArea": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "areaHeight",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "children",
+          "kind": "list",
+          "type": "ct22.DefaultProperty",
+          "poly": true,
+          "count": "int",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.Shortcut": {
+      "base": null,
+      "ops": [
+        {
+          "op": "field",
+          "name": "unk0",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk1",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk2",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "actions",
+          "kind": "list",
+          "type": "ct22.Shortcut.Action",
+          "poly": false,
+          "count": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk9",
+          "kind": "int",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.Shortcut.Action": {
+      "base": null,
+      "ops": [
+        {
+          "op": "field",
+          "name": "key_1",
+          "kind": "int",
+          "type": "ct22.Shortcut.Action.InputKey",
+          "enum": [
+            {
+              "label": "IK_None",
+              "value": 0
+            },
+            {
+              "label": "IK_LeftMouse",
+              "value": 1
+            },
+            {
+              "label": "IK_RightMouse",
+              "value": 2
+            },
+            {
+              "label": "IK_Cancel",
+              "value": 3
+            },
+            {
+              "label": "IK_MiddleMouse",
+              "value": 4
+            },
+            {
+              "label": "IK_Unknown05",
+              "value": 5
+            },
+            {
+              "label": "IK_Unknown06",
+              "value": 6
+            },
+            {
+              "label": "IK_Unknown07",
+              "value": 7
+            },
+            {
+              "label": "IK_Backspace",
+              "value": 8
+            },
+            {
+              "label": "IK_Tab",
+              "value": 9
+            },
+            {
+              "label": "IK_Unknown0A",
+              "value": 10
+            },
+            {
+              "label": "IK_Unknown0B",
+              "value": 11
+            },
+            {
+              "label": "IK_Unknown0C",
+              "value": 12
+            },
+            {
+              "label": "IK_Enter",
+              "value": 13
+            },
+            {
+              "label": "IK_Unknown0E",
+              "value": 14
+            },
+            {
+              "label": "IK_Unknown0F",
+              "value": 15
+            },
+            {
+              "label": "IK_Shift",
+              "value": 16
+            },
+            {
+              "label": "IK_Ctrl",
+              "value": 17
+            },
+            {
+              "label": "IK_Alt",
+              "value": 18
+            },
+            {
+              "label": "IK_Pause",
+              "value": 19
+            },
+            {
+              "label": "IK_CapsLock",
+              "value": 20
+            },
+            {
+              "label": "IK_Unknown15",
+              "value": 21
+            },
+            {
+              "label": "IK_Unknown16",
+              "value": 22
+            },
+            {
+              "label": "IK_Unknown17",
+              "value": 23
+            },
+            {
+              "label": "IK_Unknown18",
+              "value": 24
+            },
+            {
+              "label": "IK_Unknown19",
+              "value": 25
+            },
+            {
+              "label": "IK_Unknown1A",
+              "value": 26
+            },
+            {
+              "label": "IK_Escape",
+              "value": 27
+            },
+            {
+              "label": "IK_Unknown1C",
+              "value": 28
+            },
+            {
+              "label": "IK_Unknown1D",
+              "value": 29
+            },
+            {
+              "label": "IK_Unknown1E",
+              "value": 30
+            },
+            {
+              "label": "IK_Unknown1F",
+              "value": 31
+            },
+            {
+              "label": "IK_Space",
+              "value": 32
+            },
+            {
+              "label": "IK_PageUp",
+              "value": 33
+            },
+            {
+              "label": "IK_PageDown",
+              "value": 34
+            },
+            {
+              "label": "IK_End",
+              "value": 35
+            },
+            {
+              "label": "IK_Home",
+              "value": 36
+            },
+            {
+              "label": "IK_Left",
+              "value": 37
+            },
+            {
+              "label": "IK_Up",
+              "value": 38
+            },
+            {
+              "label": "IK_Right",
+              "value": 39
+            },
+            {
+              "label": "IK_Down",
+              "value": 40
+            },
+            {
+              "label": "IK_Select",
+              "value": 41
+            },
+            {
+              "label": "IK_Print",
+              "value": 42
+            },
+            {
+              "label": "IK_Execute",
+              "value": 43
+            },
+            {
+              "label": "IK_PrintScrn",
+              "value": 44
+            },
+            {
+              "label": "IK_Insert",
+              "value": 45
+            },
+            {
+              "label": "IK_Delete",
+              "value": 46
+            },
+            {
+              "label": "IK_Help",
+              "value": 47
+            },
+            {
+              "label": "IK_0",
+              "value": 48
+            },
+            {
+              "label": "IK_1",
+              "value": 49
+            },
+            {
+              "label": "IK_2",
+              "value": 50
+            },
+            {
+              "label": "IK_3",
+              "value": 51
+            },
+            {
+              "label": "IK_4",
+              "value": 52
+            },
+            {
+              "label": "IK_5",
+              "value": 53
+            },
+            {
+              "label": "IK_6",
+              "value": 54
+            },
+            {
+              "label": "IK_7",
+              "value": 55
+            },
+            {
+              "label": "IK_8",
+              "value": 56
+            },
+            {
+              "label": "IK_9",
+              "value": 57
+            },
+            {
+              "label": "IK_Unknown3A",
+              "value": 58
+            },
+            {
+              "label": "IK_Unknown3B",
+              "value": 59
+            },
+            {
+              "label": "IK_Unknown3C",
+              "value": 60
+            },
+            {
+              "label": "IK_Unknown3D",
+              "value": 61
+            },
+            {
+              "label": "IK_Unknown3E",
+              "value": 62
+            },
+            {
+              "label": "IK_Unknown3F",
+              "value": 63
+            },
+            {
+              "label": "IK_Unknown40",
+              "value": 64
+            },
+            {
+              "label": "IK_A",
+              "value": 65
+            },
+            {
+              "label": "IK_B",
+              "value": 66
+            },
+            {
+              "label": "IK_C",
+              "value": 67
+            },
+            {
+              "label": "IK_D",
+              "value": 68
+            },
+            {
+              "label": "IK_E",
+              "value": 69
+            },
+            {
+              "label": "IK_F",
+              "value": 70
+            },
+            {
+              "label": "IK_G",
+              "value": 71
+            },
+            {
+              "label": "IK_H",
+              "value": 72
+            },
+            {
+              "label": "IK_I",
+              "value": 73
+            },
+            {
+              "label": "IK_J",
+              "value": 74
+            },
+            {
+              "label": "IK_K",
+              "value": 75
+            },
+            {
+              "label": "IK_L",
+              "value": 76
+            },
+            {
+              "label": "IK_M",
+              "value": 77
+            },
+            {
+              "label": "IK_N",
+              "value": 78
+            },
+            {
+              "label": "IK_O",
+              "value": 79
+            },
+            {
+              "label": "IK_P",
+              "value": 80
+            },
+            {
+              "label": "IK_Q",
+              "value": 81
+            },
+            {
+              "label": "IK_R",
+              "value": 82
+            },
+            {
+              "label": "IK_S",
+              "value": 83
+            },
+            {
+              "label": "IK_T",
+              "value": 84
+            },
+            {
+              "label": "IK_U",
+              "value": 85
+            },
+            {
+              "label": "IK_V",
+              "value": 86
+            },
+            {
+              "label": "IK_W",
+              "value": 87
+            },
+            {
+              "label": "IK_X",
+              "value": 88
+            },
+            {
+              "label": "IK_Y",
+              "value": 89
+            },
+            {
+              "label": "IK_Z",
+              "value": 90
+            },
+            {
+              "label": "IK_Unknown5B",
+              "value": 91
+            },
+            {
+              "label": "IK_Unknown5C",
+              "value": 92
+            },
+            {
+              "label": "IK_Unknown5D",
+              "value": 93
+            },
+            {
+              "label": "IK_Unknown5E",
+              "value": 94
+            },
+            {
+              "label": "IK_Unknown5F",
+              "value": 95
+            },
+            {
+              "label": "IK_NumPad0",
+              "value": 96
+            },
+            {
+              "label": "IK_NumPad1",
+              "value": 97
+            },
+            {
+              "label": "IK_NumPad2",
+              "value": 98
+            },
+            {
+              "label": "IK_NumPad3",
+              "value": 99
+            },
+            {
+              "label": "IK_NumPad4",
+              "value": 100
+            },
+            {
+              "label": "IK_NumPad5",
+              "value": 101
+            },
+            {
+              "label": "IK_NumPad6",
+              "value": 102
+            },
+            {
+              "label": "IK_NumPad7",
+              "value": 103
+            },
+            {
+              "label": "IK_NumPad8",
+              "value": 104
+            },
+            {
+              "label": "IK_NumPad9",
+              "value": 105
+            },
+            {
+              "label": "IK_GreyStar",
+              "value": 106
+            },
+            {
+              "label": "IK_GreyPlus",
+              "value": 107
+            },
+            {
+              "label": "IK_Separator",
+              "value": 108
+            },
+            {
+              "label": "IK_GreyMinus",
+              "value": 109
+            },
+            {
+              "label": "IK_NumPadPeriod",
+              "value": 110
+            },
+            {
+              "label": "IK_GreySlash",
+              "value": 111
+            },
+            {
+              "label": "IK_F1",
+              "value": 112
+            },
+            {
+              "label": "IK_F2",
+              "value": 113
+            },
+            {
+              "label": "IK_F3",
+              "value": 114
+            },
+            {
+              "label": "IK_F4",
+              "value": 115
+            },
+            {
+              "label": "IK_F5",
+              "value": 116
+            },
+            {
+              "label": "IK_F6",
+              "value": 117
+            },
+            {
+              "label": "IK_F7",
+              "value": 118
+            },
+            {
+              "label": "IK_F8",
+              "value": 119
+            },
+            {
+              "label": "IK_F9",
+              "value": 120
+            },
+            {
+              "label": "IK_F10",
+              "value": 121
+            },
+            {
+              "label": "IK_F11",
+              "value": 122
+            },
+            {
+              "label": "IK_F12",
+              "value": 123
+            },
+            {
+              "label": "IK_F13",
+              "value": 124
+            },
+            {
+              "label": "IK_F14",
+              "value": 125
+            },
+            {
+              "label": "IK_F15",
+              "value": 126
+            },
+            {
+              "label": "IK_F16",
+              "value": 127
+            },
+            {
+              "label": "IK_F17",
+              "value": 128
+            },
+            {
+              "label": "IK_F18",
+              "value": 129
+            },
+            {
+              "label": "IK_F19",
+              "value": 130
+            },
+            {
+              "label": "IK_F20",
+              "value": 131
+            },
+            {
+              "label": "IK_F21",
+              "value": 132
+            },
+            {
+              "label": "IK_F22",
+              "value": 133
+            },
+            {
+              "label": "IK_F23",
+              "value": 134
+            },
+            {
+              "label": "IK_F24",
+              "value": 135
+            },
+            {
+              "label": "IK_Unknown88",
+              "value": 136
+            },
+            {
+              "label": "IK_Unknown89",
+              "value": 137
+            },
+            {
+              "label": "IK_Unknown8A",
+              "value": 138
+            },
+            {
+              "label": "IK_Unknown8B",
+              "value": 139
+            },
+            {
+              "label": "IK_Unknown8C",
+              "value": 140
+            },
+            {
+              "label": "IK_Unknown8D",
+              "value": 141
+            },
+            {
+              "label": "IK_Unknown8E",
+              "value": 142
+            },
+            {
+              "label": "IK_Unknown8F",
+              "value": 143
+            },
+            {
+              "label": "IK_NumLock",
+              "value": 144
+            },
+            {
+              "label": "IK_ScrollLock",
+              "value": 145
+            },
+            {
+              "label": "IK_Unknown92",
+              "value": 146
+            },
+            {
+              "label": "IK_Unknown93",
+              "value": 147
+            },
+            {
+              "label": "IK_Unknown94",
+              "value": 148
+            },
+            {
+              "label": "IK_Unknown95",
+              "value": 149
+            },
+            {
+              "label": "IK_Unknown96",
+              "value": 150
+            },
+            {
+              "label": "IK_Unknown97",
+              "value": 151
+            },
+            {
+              "label": "IK_Unknown98",
+              "value": 152
+            },
+            {
+              "label": "IK_Unknown99",
+              "value": 153
+            },
+            {
+              "label": "IK_Unknown9A",
+              "value": 154
+            },
+            {
+              "label": "IK_Unknown9B",
+              "value": 155
+            },
+            {
+              "label": "IK_Unknown9C",
+              "value": 156
+            },
+            {
+              "label": "IK_Unknown9D",
+              "value": 157
+            },
+            {
+              "label": "IK_Unknown9E",
+              "value": 158
+            },
+            {
+              "label": "IK_Unknown9F",
+              "value": 159
+            },
+            {
+              "label": "IK_LShift",
+              "value": 160
+            },
+            {
+              "label": "IK_RShift",
+              "value": 161
+            },
+            {
+              "label": "IK_LControl",
+              "value": 162
+            },
+            {
+              "label": "IK_RControl",
+              "value": 163
+            },
+            {
+              "label": "IK_UnknownA4",
+              "value": 164
+            },
+            {
+              "label": "IK_UnknownA5",
+              "value": 165
+            },
+            {
+              "label": "IK_UnknownA6",
+              "value": 166
+            },
+            {
+              "label": "IK_UnknownA7",
+              "value": 167
+            },
+            {
+              "label": "IK_UnknownA8",
+              "value": 168
+            },
+            {
+              "label": "IK_UnknownA9",
+              "value": 169
+            },
+            {
+              "label": "IK_UnknownAA",
+              "value": 170
+            },
+            {
+              "label": "IK_UnknownAB",
+              "value": 171
+            },
+            {
+              "label": "IK_UnknownAC",
+              "value": 172
+            },
+            {
+              "label": "IK_UnknownAD",
+              "value": 173
+            },
+            {
+              "label": "IK_UnknownAE",
+              "value": 174
+            },
+            {
+              "label": "IK_UnknownAF",
+              "value": 175
+            },
+            {
+              "label": "IK_UnknownB0",
+              "value": 176
+            },
+            {
+              "label": "IK_UnknownB1",
+              "value": 177
+            },
+            {
+              "label": "IK_UnknownB2",
+              "value": 178
+            },
+            {
+              "label": "IK_UnknownB3",
+              "value": 179
+            },
+            {
+              "label": "IK_UnknownB4",
+              "value": 180
+            },
+            {
+              "label": "IK_UnknownB5",
+              "value": 181
+            },
+            {
+              "label": "IK_UnknownB6",
+              "value": 182
+            },
+            {
+              "label": "IK_UnknownB7",
+              "value": 183
+            },
+            {
+              "label": "IK_UnknownB8",
+              "value": 184
+            },
+            {
+              "label": "IK_Unicode",
+              "value": 185
+            },
+            {
+              "label": "IK_Semicolon",
+              "value": 186
+            },
+            {
+              "label": "IK_Equals",
+              "value": 187
+            },
+            {
+              "label": "IK_Comma",
+              "value": 188
+            },
+            {
+              "label": "IK_Minus",
+              "value": 189
+            },
+            {
+              "label": "IK_Period",
+              "value": 190
+            },
+            {
+              "label": "IK_Slash",
+              "value": 191
+            },
+            {
+              "label": "IK_Tilde",
+              "value": 192
+            },
+            {
+              "label": "IK_UnknownC1",
+              "value": 193
+            },
+            {
+              "label": "IK_UnknownC2",
+              "value": 194
+            },
+            {
+              "label": "IK_UnknownC3",
+              "value": 195
+            },
+            {
+              "label": "IK_UnknownC4",
+              "value": 196
+            },
+            {
+              "label": "IK_UnknownC5",
+              "value": 197
+            },
+            {
+              "label": "IK_UnknownC6",
+              "value": 198
+            },
+            {
+              "label": "IK_UnknownC7",
+              "value": 199
+            },
+            {
+              "label": "IK_Joy1",
+              "value": 200
+            },
+            {
+              "label": "IK_Joy2",
+              "value": 201
+            },
+            {
+              "label": "IK_Joy3",
+              "value": 202
+            },
+            {
+              "label": "IK_Joy4",
+              "value": 203
+            },
+            {
+              "label": "IK_Joy5",
+              "value": 204
+            },
+            {
+              "label": "IK_Joy6",
+              "value": 205
+            },
+            {
+              "label": "IK_Joy7",
+              "value": 206
+            },
+            {
+              "label": "IK_Joy8",
+              "value": 207
+            },
+            {
+              "label": "IK_Joy9",
+              "value": 208
+            },
+            {
+              "label": "IK_Joy10",
+              "value": 209
+            },
+            {
+              "label": "IK_Joy11",
+              "value": 210
+            },
+            {
+              "label": "IK_Joy12",
+              "value": 211
+            },
+            {
+              "label": "IK_Joy13",
+              "value": 212
+            },
+            {
+              "label": "IK_Joy14",
+              "value": 213
+            },
+            {
+              "label": "IK_Joy15",
+              "value": 214
+            },
+            {
+              "label": "IK_Joy16",
+              "value": 215
+            },
+            {
+              "label": "IK_UnknownD8",
+              "value": 216
+            },
+            {
+              "label": "IK_UnknownD9",
+              "value": 217
+            },
+            {
+              "label": "IK_UnknownDA",
+              "value": 218
+            },
+            {
+              "label": "IK_LeftBracket",
+              "value": 219
+            },
+            {
+              "label": "IK_Backslash",
+              "value": 220
+            },
+            {
+              "label": "IK_RightBracket",
+              "value": 221
+            },
+            {
+              "label": "IK_SingleQuote",
+              "value": 222
+            },
+            {
+              "label": "IK_UnknownDF",
+              "value": 223
+            },
+            {
+              "label": "IK_UnknownE0",
+              "value": 224
+            },
+            {
+              "label": "IK_UnknownE1",
+              "value": 225
+            },
+            {
+              "label": "IK_UnknownE2",
+              "value": 226
+            },
+            {
+              "label": "IK_UnknownE3",
+              "value": 227
+            },
+            {
+              "label": "IK_MouseX",
+              "value": 228
+            },
+            {
+              "label": "IK_MouseY",
+              "value": 229
+            },
+            {
+              "label": "IK_MouseZ",
+              "value": 230
+            },
+            {
+              "label": "IK_MouseW",
+              "value": 231
+            },
+            {
+              "label": "IK_JoyU",
+              "value": 232
+            },
+            {
+              "label": "IK_JoyV",
+              "value": 233
+            },
+            {
+              "label": "IK_JoySlider1",
+              "value": 234
+            },
+            {
+              "label": "IK_JoySlider2",
+              "value": 235
+            },
+            {
+              "label": "IK_MouseWheelUp",
+              "value": 236
+            },
+            {
+              "label": "IK_MouseWheelDown",
+              "value": 237
+            },
+            {
+              "label": "IK_Unknown10E",
+              "value": 238
+            },
+            {
+              "label": "UK_Unknown10F",
+              "value": 239
+            },
+            {
+              "label": "IK_JoyX",
+              "value": 240
+            },
+            {
+              "label": "IK_JoyY",
+              "value": 241
+            },
+            {
+              "label": "IK_JoyZ",
+              "value": 242
+            },
+            {
+              "label": "IK_JoyR",
+              "value": 243
+            },
+            {
+              "label": "IK_UnknownF4",
+              "value": 244
+            },
+            {
+              "label": "IK_UnknownF5",
+              "value": 245
+            },
+            {
+              "label": "IK_Attn",
+              "value": 246
+            },
+            {
+              "label": "IK_CrSel",
+              "value": 247
+            },
+            {
+              "label": "IK_ExSel",
+              "value": 248
+            },
+            {
+              "label": "IK_ErEof",
+              "value": 249
+            },
+            {
+              "label": "IK_Play",
+              "value": 250
+            },
+            {
+              "label": "IK_Zoom",
+              "value": 251
+            },
+            {
+              "label": "IK_NoName",
+              "value": 252
+            },
+            {
+              "label": "IK_PA1",
+              "value": 253
+            },
+            {
+              "label": "IK_OEMClear",
+              "value": 254
+            }
+          ],
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "key_2",
+          "kind": "int",
+          "type": "ct22.Shortcut.Action.InputKey",
+          "enum": [
+            {
+              "label": "IK_None",
+              "value": 0
+            },
+            {
+              "label": "IK_LeftMouse",
+              "value": 1
+            },
+            {
+              "label": "IK_RightMouse",
+              "value": 2
+            },
+            {
+              "label": "IK_Cancel",
+              "value": 3
+            },
+            {
+              "label": "IK_MiddleMouse",
+              "value": 4
+            },
+            {
+              "label": "IK_Unknown05",
+              "value": 5
+            },
+            {
+              "label": "IK_Unknown06",
+              "value": 6
+            },
+            {
+              "label": "IK_Unknown07",
+              "value": 7
+            },
+            {
+              "label": "IK_Backspace",
+              "value": 8
+            },
+            {
+              "label": "IK_Tab",
+              "value": 9
+            },
+            {
+              "label": "IK_Unknown0A",
+              "value": 10
+            },
+            {
+              "label": "IK_Unknown0B",
+              "value": 11
+            },
+            {
+              "label": "IK_Unknown0C",
+              "value": 12
+            },
+            {
+              "label": "IK_Enter",
+              "value": 13
+            },
+            {
+              "label": "IK_Unknown0E",
+              "value": 14
+            },
+            {
+              "label": "IK_Unknown0F",
+              "value": 15
+            },
+            {
+              "label": "IK_Shift",
+              "value": 16
+            },
+            {
+              "label": "IK_Ctrl",
+              "value": 17
+            },
+            {
+              "label": "IK_Alt",
+              "value": 18
+            },
+            {
+              "label": "IK_Pause",
+              "value": 19
+            },
+            {
+              "label": "IK_CapsLock",
+              "value": 20
+            },
+            {
+              "label": "IK_Unknown15",
+              "value": 21
+            },
+            {
+              "label": "IK_Unknown16",
+              "value": 22
+            },
+            {
+              "label": "IK_Unknown17",
+              "value": 23
+            },
+            {
+              "label": "IK_Unknown18",
+              "value": 24
+            },
+            {
+              "label": "IK_Unknown19",
+              "value": 25
+            },
+            {
+              "label": "IK_Unknown1A",
+              "value": 26
+            },
+            {
+              "label": "IK_Escape",
+              "value": 27
+            },
+            {
+              "label": "IK_Unknown1C",
+              "value": 28
+            },
+            {
+              "label": "IK_Unknown1D",
+              "value": 29
+            },
+            {
+              "label": "IK_Unknown1E",
+              "value": 30
+            },
+            {
+              "label": "IK_Unknown1F",
+              "value": 31
+            },
+            {
+              "label": "IK_Space",
+              "value": 32
+            },
+            {
+              "label": "IK_PageUp",
+              "value": 33
+            },
+            {
+              "label": "IK_PageDown",
+              "value": 34
+            },
+            {
+              "label": "IK_End",
+              "value": 35
+            },
+            {
+              "label": "IK_Home",
+              "value": 36
+            },
+            {
+              "label": "IK_Left",
+              "value": 37
+            },
+            {
+              "label": "IK_Up",
+              "value": 38
+            },
+            {
+              "label": "IK_Right",
+              "value": 39
+            },
+            {
+              "label": "IK_Down",
+              "value": 40
+            },
+            {
+              "label": "IK_Select",
+              "value": 41
+            },
+            {
+              "label": "IK_Print",
+              "value": 42
+            },
+            {
+              "label": "IK_Execute",
+              "value": 43
+            },
+            {
+              "label": "IK_PrintScrn",
+              "value": 44
+            },
+            {
+              "label": "IK_Insert",
+              "value": 45
+            },
+            {
+              "label": "IK_Delete",
+              "value": 46
+            },
+            {
+              "label": "IK_Help",
+              "value": 47
+            },
+            {
+              "label": "IK_0",
+              "value": 48
+            },
+            {
+              "label": "IK_1",
+              "value": 49
+            },
+            {
+              "label": "IK_2",
+              "value": 50
+            },
+            {
+              "label": "IK_3",
+              "value": 51
+            },
+            {
+              "label": "IK_4",
+              "value": 52
+            },
+            {
+              "label": "IK_5",
+              "value": 53
+            },
+            {
+              "label": "IK_6",
+              "value": 54
+            },
+            {
+              "label": "IK_7",
+              "value": 55
+            },
+            {
+              "label": "IK_8",
+              "value": 56
+            },
+            {
+              "label": "IK_9",
+              "value": 57
+            },
+            {
+              "label": "IK_Unknown3A",
+              "value": 58
+            },
+            {
+              "label": "IK_Unknown3B",
+              "value": 59
+            },
+            {
+              "label": "IK_Unknown3C",
+              "value": 60
+            },
+            {
+              "label": "IK_Unknown3D",
+              "value": 61
+            },
+            {
+              "label": "IK_Unknown3E",
+              "value": 62
+            },
+            {
+              "label": "IK_Unknown3F",
+              "value": 63
+            },
+            {
+              "label": "IK_Unknown40",
+              "value": 64
+            },
+            {
+              "label": "IK_A",
+              "value": 65
+            },
+            {
+              "label": "IK_B",
+              "value": 66
+            },
+            {
+              "label": "IK_C",
+              "value": 67
+            },
+            {
+              "label": "IK_D",
+              "value": 68
+            },
+            {
+              "label": "IK_E",
+              "value": 69
+            },
+            {
+              "label": "IK_F",
+              "value": 70
+            },
+            {
+              "label": "IK_G",
+              "value": 71
+            },
+            {
+              "label": "IK_H",
+              "value": 72
+            },
+            {
+              "label": "IK_I",
+              "value": 73
+            },
+            {
+              "label": "IK_J",
+              "value": 74
+            },
+            {
+              "label": "IK_K",
+              "value": 75
+            },
+            {
+              "label": "IK_L",
+              "value": 76
+            },
+            {
+              "label": "IK_M",
+              "value": 77
+            },
+            {
+              "label": "IK_N",
+              "value": 78
+            },
+            {
+              "label": "IK_O",
+              "value": 79
+            },
+            {
+              "label": "IK_P",
+              "value": 80
+            },
+            {
+              "label": "IK_Q",
+              "value": 81
+            },
+            {
+              "label": "IK_R",
+              "value": 82
+            },
+            {
+              "label": "IK_S",
+              "value": 83
+            },
+            {
+              "label": "IK_T",
+              "value": 84
+            },
+            {
+              "label": "IK_U",
+              "value": 85
+            },
+            {
+              "label": "IK_V",
+              "value": 86
+            },
+            {
+              "label": "IK_W",
+              "value": 87
+            },
+            {
+              "label": "IK_X",
+              "value": 88
+            },
+            {
+              "label": "IK_Y",
+              "value": 89
+            },
+            {
+              "label": "IK_Z",
+              "value": 90
+            },
+            {
+              "label": "IK_Unknown5B",
+              "value": 91
+            },
+            {
+              "label": "IK_Unknown5C",
+              "value": 92
+            },
+            {
+              "label": "IK_Unknown5D",
+              "value": 93
+            },
+            {
+              "label": "IK_Unknown5E",
+              "value": 94
+            },
+            {
+              "label": "IK_Unknown5F",
+              "value": 95
+            },
+            {
+              "label": "IK_NumPad0",
+              "value": 96
+            },
+            {
+              "label": "IK_NumPad1",
+              "value": 97
+            },
+            {
+              "label": "IK_NumPad2",
+              "value": 98
+            },
+            {
+              "label": "IK_NumPad3",
+              "value": 99
+            },
+            {
+              "label": "IK_NumPad4",
+              "value": 100
+            },
+            {
+              "label": "IK_NumPad5",
+              "value": 101
+            },
+            {
+              "label": "IK_NumPad6",
+              "value": 102
+            },
+            {
+              "label": "IK_NumPad7",
+              "value": 103
+            },
+            {
+              "label": "IK_NumPad8",
+              "value": 104
+            },
+            {
+              "label": "IK_NumPad9",
+              "value": 105
+            },
+            {
+              "label": "IK_GreyStar",
+              "value": 106
+            },
+            {
+              "label": "IK_GreyPlus",
+              "value": 107
+            },
+            {
+              "label": "IK_Separator",
+              "value": 108
+            },
+            {
+              "label": "IK_GreyMinus",
+              "value": 109
+            },
+            {
+              "label": "IK_NumPadPeriod",
+              "value": 110
+            },
+            {
+              "label": "IK_GreySlash",
+              "value": 111
+            },
+            {
+              "label": "IK_F1",
+              "value": 112
+            },
+            {
+              "label": "IK_F2",
+              "value": 113
+            },
+            {
+              "label": "IK_F3",
+              "value": 114
+            },
+            {
+              "label": "IK_F4",
+              "value": 115
+            },
+            {
+              "label": "IK_F5",
+              "value": 116
+            },
+            {
+              "label": "IK_F6",
+              "value": 117
+            },
+            {
+              "label": "IK_F7",
+              "value": 118
+            },
+            {
+              "label": "IK_F8",
+              "value": 119
+            },
+            {
+              "label": "IK_F9",
+              "value": 120
+            },
+            {
+              "label": "IK_F10",
+              "value": 121
+            },
+            {
+              "label": "IK_F11",
+              "value": 122
+            },
+            {
+              "label": "IK_F12",
+              "value": 123
+            },
+            {
+              "label": "IK_F13",
+              "value": 124
+            },
+            {
+              "label": "IK_F14",
+              "value": 125
+            },
+            {
+              "label": "IK_F15",
+              "value": 126
+            },
+            {
+              "label": "IK_F16",
+              "value": 127
+            },
+            {
+              "label": "IK_F17",
+              "value": 128
+            },
+            {
+              "label": "IK_F18",
+              "value": 129
+            },
+            {
+              "label": "IK_F19",
+              "value": 130
+            },
+            {
+              "label": "IK_F20",
+              "value": 131
+            },
+            {
+              "label": "IK_F21",
+              "value": 132
+            },
+            {
+              "label": "IK_F22",
+              "value": 133
+            },
+            {
+              "label": "IK_F23",
+              "value": 134
+            },
+            {
+              "label": "IK_F24",
+              "value": 135
+            },
+            {
+              "label": "IK_Unknown88",
+              "value": 136
+            },
+            {
+              "label": "IK_Unknown89",
+              "value": 137
+            },
+            {
+              "label": "IK_Unknown8A",
+              "value": 138
+            },
+            {
+              "label": "IK_Unknown8B",
+              "value": 139
+            },
+            {
+              "label": "IK_Unknown8C",
+              "value": 140
+            },
+            {
+              "label": "IK_Unknown8D",
+              "value": 141
+            },
+            {
+              "label": "IK_Unknown8E",
+              "value": 142
+            },
+            {
+              "label": "IK_Unknown8F",
+              "value": 143
+            },
+            {
+              "label": "IK_NumLock",
+              "value": 144
+            },
+            {
+              "label": "IK_ScrollLock",
+              "value": 145
+            },
+            {
+              "label": "IK_Unknown92",
+              "value": 146
+            },
+            {
+              "label": "IK_Unknown93",
+              "value": 147
+            },
+            {
+              "label": "IK_Unknown94",
+              "value": 148
+            },
+            {
+              "label": "IK_Unknown95",
+              "value": 149
+            },
+            {
+              "label": "IK_Unknown96",
+              "value": 150
+            },
+            {
+              "label": "IK_Unknown97",
+              "value": 151
+            },
+            {
+              "label": "IK_Unknown98",
+              "value": 152
+            },
+            {
+              "label": "IK_Unknown99",
+              "value": 153
+            },
+            {
+              "label": "IK_Unknown9A",
+              "value": 154
+            },
+            {
+              "label": "IK_Unknown9B",
+              "value": 155
+            },
+            {
+              "label": "IK_Unknown9C",
+              "value": 156
+            },
+            {
+              "label": "IK_Unknown9D",
+              "value": 157
+            },
+            {
+              "label": "IK_Unknown9E",
+              "value": 158
+            },
+            {
+              "label": "IK_Unknown9F",
+              "value": 159
+            },
+            {
+              "label": "IK_LShift",
+              "value": 160
+            },
+            {
+              "label": "IK_RShift",
+              "value": 161
+            },
+            {
+              "label": "IK_LControl",
+              "value": 162
+            },
+            {
+              "label": "IK_RControl",
+              "value": 163
+            },
+            {
+              "label": "IK_UnknownA4",
+              "value": 164
+            },
+            {
+              "label": "IK_UnknownA5",
+              "value": 165
+            },
+            {
+              "label": "IK_UnknownA6",
+              "value": 166
+            },
+            {
+              "label": "IK_UnknownA7",
+              "value": 167
+            },
+            {
+              "label": "IK_UnknownA8",
+              "value": 168
+            },
+            {
+              "label": "IK_UnknownA9",
+              "value": 169
+            },
+            {
+              "label": "IK_UnknownAA",
+              "value": 170
+            },
+            {
+              "label": "IK_UnknownAB",
+              "value": 171
+            },
+            {
+              "label": "IK_UnknownAC",
+              "value": 172
+            },
+            {
+              "label": "IK_UnknownAD",
+              "value": 173
+            },
+            {
+              "label": "IK_UnknownAE",
+              "value": 174
+            },
+            {
+              "label": "IK_UnknownAF",
+              "value": 175
+            },
+            {
+              "label": "IK_UnknownB0",
+              "value": 176
+            },
+            {
+              "label": "IK_UnknownB1",
+              "value": 177
+            },
+            {
+              "label": "IK_UnknownB2",
+              "value": 178
+            },
+            {
+              "label": "IK_UnknownB3",
+              "value": 179
+            },
+            {
+              "label": "IK_UnknownB4",
+              "value": 180
+            },
+            {
+              "label": "IK_UnknownB5",
+              "value": 181
+            },
+            {
+              "label": "IK_UnknownB6",
+              "value": 182
+            },
+            {
+              "label": "IK_UnknownB7",
+              "value": 183
+            },
+            {
+              "label": "IK_UnknownB8",
+              "value": 184
+            },
+            {
+              "label": "IK_Unicode",
+              "value": 185
+            },
+            {
+              "label": "IK_Semicolon",
+              "value": 186
+            },
+            {
+              "label": "IK_Equals",
+              "value": 187
+            },
+            {
+              "label": "IK_Comma",
+              "value": 188
+            },
+            {
+              "label": "IK_Minus",
+              "value": 189
+            },
+            {
+              "label": "IK_Period",
+              "value": 190
+            },
+            {
+              "label": "IK_Slash",
+              "value": 191
+            },
+            {
+              "label": "IK_Tilde",
+              "value": 192
+            },
+            {
+              "label": "IK_UnknownC1",
+              "value": 193
+            },
+            {
+              "label": "IK_UnknownC2",
+              "value": 194
+            },
+            {
+              "label": "IK_UnknownC3",
+              "value": 195
+            },
+            {
+              "label": "IK_UnknownC4",
+              "value": 196
+            },
+            {
+              "label": "IK_UnknownC5",
+              "value": 197
+            },
+            {
+              "label": "IK_UnknownC6",
+              "value": 198
+            },
+            {
+              "label": "IK_UnknownC7",
+              "value": 199
+            },
+            {
+              "label": "IK_Joy1",
+              "value": 200
+            },
+            {
+              "label": "IK_Joy2",
+              "value": 201
+            },
+            {
+              "label": "IK_Joy3",
+              "value": 202
+            },
+            {
+              "label": "IK_Joy4",
+              "value": 203
+            },
+            {
+              "label": "IK_Joy5",
+              "value": 204
+            },
+            {
+              "label": "IK_Joy6",
+              "value": 205
+            },
+            {
+              "label": "IK_Joy7",
+              "value": 206
+            },
+            {
+              "label": "IK_Joy8",
+              "value": 207
+            },
+            {
+              "label": "IK_Joy9",
+              "value": 208
+            },
+            {
+              "label": "IK_Joy10",
+              "value": 209
+            },
+            {
+              "label": "IK_Joy11",
+              "value": 210
+            },
+            {
+              "label": "IK_Joy12",
+              "value": 211
+            },
+            {
+              "label": "IK_Joy13",
+              "value": 212
+            },
+            {
+              "label": "IK_Joy14",
+              "value": 213
+            },
+            {
+              "label": "IK_Joy15",
+              "value": 214
+            },
+            {
+              "label": "IK_Joy16",
+              "value": 215
+            },
+            {
+              "label": "IK_UnknownD8",
+              "value": 216
+            },
+            {
+              "label": "IK_UnknownD9",
+              "value": 217
+            },
+            {
+              "label": "IK_UnknownDA",
+              "value": 218
+            },
+            {
+              "label": "IK_LeftBracket",
+              "value": 219
+            },
+            {
+              "label": "IK_Backslash",
+              "value": 220
+            },
+            {
+              "label": "IK_RightBracket",
+              "value": 221
+            },
+            {
+              "label": "IK_SingleQuote",
+              "value": 222
+            },
+            {
+              "label": "IK_UnknownDF",
+              "value": 223
+            },
+            {
+              "label": "IK_UnknownE0",
+              "value": 224
+            },
+            {
+              "label": "IK_UnknownE1",
+              "value": 225
+            },
+            {
+              "label": "IK_UnknownE2",
+              "value": 226
+            },
+            {
+              "label": "IK_UnknownE3",
+              "value": 227
+            },
+            {
+              "label": "IK_MouseX",
+              "value": 228
+            },
+            {
+              "label": "IK_MouseY",
+              "value": 229
+            },
+            {
+              "label": "IK_MouseZ",
+              "value": 230
+            },
+            {
+              "label": "IK_MouseW",
+              "value": 231
+            },
+            {
+              "label": "IK_JoyU",
+              "value": 232
+            },
+            {
+              "label": "IK_JoyV",
+              "value": 233
+            },
+            {
+              "label": "IK_JoySlider1",
+              "value": 234
+            },
+            {
+              "label": "IK_JoySlider2",
+              "value": 235
+            },
+            {
+              "label": "IK_MouseWheelUp",
+              "value": 236
+            },
+            {
+              "label": "IK_MouseWheelDown",
+              "value": 237
+            },
+            {
+              "label": "IK_Unknown10E",
+              "value": 238
+            },
+            {
+              "label": "UK_Unknown10F",
+              "value": 239
+            },
+            {
+              "label": "IK_JoyX",
+              "value": 240
+            },
+            {
+              "label": "IK_JoyY",
+              "value": 241
+            },
+            {
+              "label": "IK_JoyZ",
+              "value": 242
+            },
+            {
+              "label": "IK_JoyR",
+              "value": 243
+            },
+            {
+              "label": "IK_UnknownF4",
+              "value": 244
+            },
+            {
+              "label": "IK_UnknownF5",
+              "value": 245
+            },
+            {
+              "label": "IK_Attn",
+              "value": 246
+            },
+            {
+              "label": "IK_CrSel",
+              "value": 247
+            },
+            {
+              "label": "IK_ExSel",
+              "value": 248
+            },
+            {
+              "label": "IK_ErEof",
+              "value": 249
+            },
+            {
+              "label": "IK_Play",
+              "value": 250
+            },
+            {
+              "label": "IK_Zoom",
+              "value": 251
+            },
+            {
+              "label": "IK_NoName",
+              "value": 252
+            },
+            {
+              "label": "IK_PA1",
+              "value": 253
+            },
+            {
+              "label": "IK_OEMClear",
+              "value": 254
+            }
+          ],
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "key_3",
+          "kind": "int",
+          "type": "ct22.Shortcut.Action.InputKey",
+          "enum": [
+            {
+              "label": "IK_None",
+              "value": 0
+            },
+            {
+              "label": "IK_LeftMouse",
+              "value": 1
+            },
+            {
+              "label": "IK_RightMouse",
+              "value": 2
+            },
+            {
+              "label": "IK_Cancel",
+              "value": 3
+            },
+            {
+              "label": "IK_MiddleMouse",
+              "value": 4
+            },
+            {
+              "label": "IK_Unknown05",
+              "value": 5
+            },
+            {
+              "label": "IK_Unknown06",
+              "value": 6
+            },
+            {
+              "label": "IK_Unknown07",
+              "value": 7
+            },
+            {
+              "label": "IK_Backspace",
+              "value": 8
+            },
+            {
+              "label": "IK_Tab",
+              "value": 9
+            },
+            {
+              "label": "IK_Unknown0A",
+              "value": 10
+            },
+            {
+              "label": "IK_Unknown0B",
+              "value": 11
+            },
+            {
+              "label": "IK_Unknown0C",
+              "value": 12
+            },
+            {
+              "label": "IK_Enter",
+              "value": 13
+            },
+            {
+              "label": "IK_Unknown0E",
+              "value": 14
+            },
+            {
+              "label": "IK_Unknown0F",
+              "value": 15
+            },
+            {
+              "label": "IK_Shift",
+              "value": 16
+            },
+            {
+              "label": "IK_Ctrl",
+              "value": 17
+            },
+            {
+              "label": "IK_Alt",
+              "value": 18
+            },
+            {
+              "label": "IK_Pause",
+              "value": 19
+            },
+            {
+              "label": "IK_CapsLock",
+              "value": 20
+            },
+            {
+              "label": "IK_Unknown15",
+              "value": 21
+            },
+            {
+              "label": "IK_Unknown16",
+              "value": 22
+            },
+            {
+              "label": "IK_Unknown17",
+              "value": 23
+            },
+            {
+              "label": "IK_Unknown18",
+              "value": 24
+            },
+            {
+              "label": "IK_Unknown19",
+              "value": 25
+            },
+            {
+              "label": "IK_Unknown1A",
+              "value": 26
+            },
+            {
+              "label": "IK_Escape",
+              "value": 27
+            },
+            {
+              "label": "IK_Unknown1C",
+              "value": 28
+            },
+            {
+              "label": "IK_Unknown1D",
+              "value": 29
+            },
+            {
+              "label": "IK_Unknown1E",
+              "value": 30
+            },
+            {
+              "label": "IK_Unknown1F",
+              "value": 31
+            },
+            {
+              "label": "IK_Space",
+              "value": 32
+            },
+            {
+              "label": "IK_PageUp",
+              "value": 33
+            },
+            {
+              "label": "IK_PageDown",
+              "value": 34
+            },
+            {
+              "label": "IK_End",
+              "value": 35
+            },
+            {
+              "label": "IK_Home",
+              "value": 36
+            },
+            {
+              "label": "IK_Left",
+              "value": 37
+            },
+            {
+              "label": "IK_Up",
+              "value": 38
+            },
+            {
+              "label": "IK_Right",
+              "value": 39
+            },
+            {
+              "label": "IK_Down",
+              "value": 40
+            },
+            {
+              "label": "IK_Select",
+              "value": 41
+            },
+            {
+              "label": "IK_Print",
+              "value": 42
+            },
+            {
+              "label": "IK_Execute",
+              "value": 43
+            },
+            {
+              "label": "IK_PrintScrn",
+              "value": 44
+            },
+            {
+              "label": "IK_Insert",
+              "value": 45
+            },
+            {
+              "label": "IK_Delete",
+              "value": 46
+            },
+            {
+              "label": "IK_Help",
+              "value": 47
+            },
+            {
+              "label": "IK_0",
+              "value": 48
+            },
+            {
+              "label": "IK_1",
+              "value": 49
+            },
+            {
+              "label": "IK_2",
+              "value": 50
+            },
+            {
+              "label": "IK_3",
+              "value": 51
+            },
+            {
+              "label": "IK_4",
+              "value": 52
+            },
+            {
+              "label": "IK_5",
+              "value": 53
+            },
+            {
+              "label": "IK_6",
+              "value": 54
+            },
+            {
+              "label": "IK_7",
+              "value": 55
+            },
+            {
+              "label": "IK_8",
+              "value": 56
+            },
+            {
+              "label": "IK_9",
+              "value": 57
+            },
+            {
+              "label": "IK_Unknown3A",
+              "value": 58
+            },
+            {
+              "label": "IK_Unknown3B",
+              "value": 59
+            },
+            {
+              "label": "IK_Unknown3C",
+              "value": 60
+            },
+            {
+              "label": "IK_Unknown3D",
+              "value": 61
+            },
+            {
+              "label": "IK_Unknown3E",
+              "value": 62
+            },
+            {
+              "label": "IK_Unknown3F",
+              "value": 63
+            },
+            {
+              "label": "IK_Unknown40",
+              "value": 64
+            },
+            {
+              "label": "IK_A",
+              "value": 65
+            },
+            {
+              "label": "IK_B",
+              "value": 66
+            },
+            {
+              "label": "IK_C",
+              "value": 67
+            },
+            {
+              "label": "IK_D",
+              "value": 68
+            },
+            {
+              "label": "IK_E",
+              "value": 69
+            },
+            {
+              "label": "IK_F",
+              "value": 70
+            },
+            {
+              "label": "IK_G",
+              "value": 71
+            },
+            {
+              "label": "IK_H",
+              "value": 72
+            },
+            {
+              "label": "IK_I",
+              "value": 73
+            },
+            {
+              "label": "IK_J",
+              "value": 74
+            },
+            {
+              "label": "IK_K",
+              "value": 75
+            },
+            {
+              "label": "IK_L",
+              "value": 76
+            },
+            {
+              "label": "IK_M",
+              "value": 77
+            },
+            {
+              "label": "IK_N",
+              "value": 78
+            },
+            {
+              "label": "IK_O",
+              "value": 79
+            },
+            {
+              "label": "IK_P",
+              "value": 80
+            },
+            {
+              "label": "IK_Q",
+              "value": 81
+            },
+            {
+              "label": "IK_R",
+              "value": 82
+            },
+            {
+              "label": "IK_S",
+              "value": 83
+            },
+            {
+              "label": "IK_T",
+              "value": 84
+            },
+            {
+              "label": "IK_U",
+              "value": 85
+            },
+            {
+              "label": "IK_V",
+              "value": 86
+            },
+            {
+              "label": "IK_W",
+              "value": 87
+            },
+            {
+              "label": "IK_X",
+              "value": 88
+            },
+            {
+              "label": "IK_Y",
+              "value": 89
+            },
+            {
+              "label": "IK_Z",
+              "value": 90
+            },
+            {
+              "label": "IK_Unknown5B",
+              "value": 91
+            },
+            {
+              "label": "IK_Unknown5C",
+              "value": 92
+            },
+            {
+              "label": "IK_Unknown5D",
+              "value": 93
+            },
+            {
+              "label": "IK_Unknown5E",
+              "value": 94
+            },
+            {
+              "label": "IK_Unknown5F",
+              "value": 95
+            },
+            {
+              "label": "IK_NumPad0",
+              "value": 96
+            },
+            {
+              "label": "IK_NumPad1",
+              "value": 97
+            },
+            {
+              "label": "IK_NumPad2",
+              "value": 98
+            },
+            {
+              "label": "IK_NumPad3",
+              "value": 99
+            },
+            {
+              "label": "IK_NumPad4",
+              "value": 100
+            },
+            {
+              "label": "IK_NumPad5",
+              "value": 101
+            },
+            {
+              "label": "IK_NumPad6",
+              "value": 102
+            },
+            {
+              "label": "IK_NumPad7",
+              "value": 103
+            },
+            {
+              "label": "IK_NumPad8",
+              "value": 104
+            },
+            {
+              "label": "IK_NumPad9",
+              "value": 105
+            },
+            {
+              "label": "IK_GreyStar",
+              "value": 106
+            },
+            {
+              "label": "IK_GreyPlus",
+              "value": 107
+            },
+            {
+              "label": "IK_Separator",
+              "value": 108
+            },
+            {
+              "label": "IK_GreyMinus",
+              "value": 109
+            },
+            {
+              "label": "IK_NumPadPeriod",
+              "value": 110
+            },
+            {
+              "label": "IK_GreySlash",
+              "value": 111
+            },
+            {
+              "label": "IK_F1",
+              "value": 112
+            },
+            {
+              "label": "IK_F2",
+              "value": 113
+            },
+            {
+              "label": "IK_F3",
+              "value": 114
+            },
+            {
+              "label": "IK_F4",
+              "value": 115
+            },
+            {
+              "label": "IK_F5",
+              "value": 116
+            },
+            {
+              "label": "IK_F6",
+              "value": 117
+            },
+            {
+              "label": "IK_F7",
+              "value": 118
+            },
+            {
+              "label": "IK_F8",
+              "value": 119
+            },
+            {
+              "label": "IK_F9",
+              "value": 120
+            },
+            {
+              "label": "IK_F10",
+              "value": 121
+            },
+            {
+              "label": "IK_F11",
+              "value": 122
+            },
+            {
+              "label": "IK_F12",
+              "value": 123
+            },
+            {
+              "label": "IK_F13",
+              "value": 124
+            },
+            {
+              "label": "IK_F14",
+              "value": 125
+            },
+            {
+              "label": "IK_F15",
+              "value": 126
+            },
+            {
+              "label": "IK_F16",
+              "value": 127
+            },
+            {
+              "label": "IK_F17",
+              "value": 128
+            },
+            {
+              "label": "IK_F18",
+              "value": 129
+            },
+            {
+              "label": "IK_F19",
+              "value": 130
+            },
+            {
+              "label": "IK_F20",
+              "value": 131
+            },
+            {
+              "label": "IK_F21",
+              "value": 132
+            },
+            {
+              "label": "IK_F22",
+              "value": 133
+            },
+            {
+              "label": "IK_F23",
+              "value": 134
+            },
+            {
+              "label": "IK_F24",
+              "value": 135
+            },
+            {
+              "label": "IK_Unknown88",
+              "value": 136
+            },
+            {
+              "label": "IK_Unknown89",
+              "value": 137
+            },
+            {
+              "label": "IK_Unknown8A",
+              "value": 138
+            },
+            {
+              "label": "IK_Unknown8B",
+              "value": 139
+            },
+            {
+              "label": "IK_Unknown8C",
+              "value": 140
+            },
+            {
+              "label": "IK_Unknown8D",
+              "value": 141
+            },
+            {
+              "label": "IK_Unknown8E",
+              "value": 142
+            },
+            {
+              "label": "IK_Unknown8F",
+              "value": 143
+            },
+            {
+              "label": "IK_NumLock",
+              "value": 144
+            },
+            {
+              "label": "IK_ScrollLock",
+              "value": 145
+            },
+            {
+              "label": "IK_Unknown92",
+              "value": 146
+            },
+            {
+              "label": "IK_Unknown93",
+              "value": 147
+            },
+            {
+              "label": "IK_Unknown94",
+              "value": 148
+            },
+            {
+              "label": "IK_Unknown95",
+              "value": 149
+            },
+            {
+              "label": "IK_Unknown96",
+              "value": 150
+            },
+            {
+              "label": "IK_Unknown97",
+              "value": 151
+            },
+            {
+              "label": "IK_Unknown98",
+              "value": 152
+            },
+            {
+              "label": "IK_Unknown99",
+              "value": 153
+            },
+            {
+              "label": "IK_Unknown9A",
+              "value": 154
+            },
+            {
+              "label": "IK_Unknown9B",
+              "value": 155
+            },
+            {
+              "label": "IK_Unknown9C",
+              "value": 156
+            },
+            {
+              "label": "IK_Unknown9D",
+              "value": 157
+            },
+            {
+              "label": "IK_Unknown9E",
+              "value": 158
+            },
+            {
+              "label": "IK_Unknown9F",
+              "value": 159
+            },
+            {
+              "label": "IK_LShift",
+              "value": 160
+            },
+            {
+              "label": "IK_RShift",
+              "value": 161
+            },
+            {
+              "label": "IK_LControl",
+              "value": 162
+            },
+            {
+              "label": "IK_RControl",
+              "value": 163
+            },
+            {
+              "label": "IK_UnknownA4",
+              "value": 164
+            },
+            {
+              "label": "IK_UnknownA5",
+              "value": 165
+            },
+            {
+              "label": "IK_UnknownA6",
+              "value": 166
+            },
+            {
+              "label": "IK_UnknownA7",
+              "value": 167
+            },
+            {
+              "label": "IK_UnknownA8",
+              "value": 168
+            },
+            {
+              "label": "IK_UnknownA9",
+              "value": 169
+            },
+            {
+              "label": "IK_UnknownAA",
+              "value": 170
+            },
+            {
+              "label": "IK_UnknownAB",
+              "value": 171
+            },
+            {
+              "label": "IK_UnknownAC",
+              "value": 172
+            },
+            {
+              "label": "IK_UnknownAD",
+              "value": 173
+            },
+            {
+              "label": "IK_UnknownAE",
+              "value": 174
+            },
+            {
+              "label": "IK_UnknownAF",
+              "value": 175
+            },
+            {
+              "label": "IK_UnknownB0",
+              "value": 176
+            },
+            {
+              "label": "IK_UnknownB1",
+              "value": 177
+            },
+            {
+              "label": "IK_UnknownB2",
+              "value": 178
+            },
+            {
+              "label": "IK_UnknownB3",
+              "value": 179
+            },
+            {
+              "label": "IK_UnknownB4",
+              "value": 180
+            },
+            {
+              "label": "IK_UnknownB5",
+              "value": 181
+            },
+            {
+              "label": "IK_UnknownB6",
+              "value": 182
+            },
+            {
+              "label": "IK_UnknownB7",
+              "value": 183
+            },
+            {
+              "label": "IK_UnknownB8",
+              "value": 184
+            },
+            {
+              "label": "IK_Unicode",
+              "value": 185
+            },
+            {
+              "label": "IK_Semicolon",
+              "value": 186
+            },
+            {
+              "label": "IK_Equals",
+              "value": 187
+            },
+            {
+              "label": "IK_Comma",
+              "value": 188
+            },
+            {
+              "label": "IK_Minus",
+              "value": 189
+            },
+            {
+              "label": "IK_Period",
+              "value": 190
+            },
+            {
+              "label": "IK_Slash",
+              "value": 191
+            },
+            {
+              "label": "IK_Tilde",
+              "value": 192
+            },
+            {
+              "label": "IK_UnknownC1",
+              "value": 193
+            },
+            {
+              "label": "IK_UnknownC2",
+              "value": 194
+            },
+            {
+              "label": "IK_UnknownC3",
+              "value": 195
+            },
+            {
+              "label": "IK_UnknownC4",
+              "value": 196
+            },
+            {
+              "label": "IK_UnknownC5",
+              "value": 197
+            },
+            {
+              "label": "IK_UnknownC6",
+              "value": 198
+            },
+            {
+              "label": "IK_UnknownC7",
+              "value": 199
+            },
+            {
+              "label": "IK_Joy1",
+              "value": 200
+            },
+            {
+              "label": "IK_Joy2",
+              "value": 201
+            },
+            {
+              "label": "IK_Joy3",
+              "value": 202
+            },
+            {
+              "label": "IK_Joy4",
+              "value": 203
+            },
+            {
+              "label": "IK_Joy5",
+              "value": 204
+            },
+            {
+              "label": "IK_Joy6",
+              "value": 205
+            },
+            {
+              "label": "IK_Joy7",
+              "value": 206
+            },
+            {
+              "label": "IK_Joy8",
+              "value": 207
+            },
+            {
+              "label": "IK_Joy9",
+              "value": 208
+            },
+            {
+              "label": "IK_Joy10",
+              "value": 209
+            },
+            {
+              "label": "IK_Joy11",
+              "value": 210
+            },
+            {
+              "label": "IK_Joy12",
+              "value": 211
+            },
+            {
+              "label": "IK_Joy13",
+              "value": 212
+            },
+            {
+              "label": "IK_Joy14",
+              "value": 213
+            },
+            {
+              "label": "IK_Joy15",
+              "value": 214
+            },
+            {
+              "label": "IK_Joy16",
+              "value": 215
+            },
+            {
+              "label": "IK_UnknownD8",
+              "value": 216
+            },
+            {
+              "label": "IK_UnknownD9",
+              "value": 217
+            },
+            {
+              "label": "IK_UnknownDA",
+              "value": 218
+            },
+            {
+              "label": "IK_LeftBracket",
+              "value": 219
+            },
+            {
+              "label": "IK_Backslash",
+              "value": 220
+            },
+            {
+              "label": "IK_RightBracket",
+              "value": 221
+            },
+            {
+              "label": "IK_SingleQuote",
+              "value": 222
+            },
+            {
+              "label": "IK_UnknownDF",
+              "value": 223
+            },
+            {
+              "label": "IK_UnknownE0",
+              "value": 224
+            },
+            {
+              "label": "IK_UnknownE1",
+              "value": 225
+            },
+            {
+              "label": "IK_UnknownE2",
+              "value": 226
+            },
+            {
+              "label": "IK_UnknownE3",
+              "value": 227
+            },
+            {
+              "label": "IK_MouseX",
+              "value": 228
+            },
+            {
+              "label": "IK_MouseY",
+              "value": 229
+            },
+            {
+              "label": "IK_MouseZ",
+              "value": 230
+            },
+            {
+              "label": "IK_MouseW",
+              "value": 231
+            },
+            {
+              "label": "IK_JoyU",
+              "value": 232
+            },
+            {
+              "label": "IK_JoyV",
+              "value": 233
+            },
+            {
+              "label": "IK_JoySlider1",
+              "value": 234
+            },
+            {
+              "label": "IK_JoySlider2",
+              "value": 235
+            },
+            {
+              "label": "IK_MouseWheelUp",
+              "value": 236
+            },
+            {
+              "label": "IK_MouseWheelDown",
+              "value": 237
+            },
+            {
+              "label": "IK_Unknown10E",
+              "value": 238
+            },
+            {
+              "label": "UK_Unknown10F",
+              "value": 239
+            },
+            {
+              "label": "IK_JoyX",
+              "value": 240
+            },
+            {
+              "label": "IK_JoyY",
+              "value": 241
+            },
+            {
+              "label": "IK_JoyZ",
+              "value": 242
+            },
+            {
+              "label": "IK_JoyR",
+              "value": 243
+            },
+            {
+              "label": "IK_UnknownF4",
+              "value": 244
+            },
+            {
+              "label": "IK_UnknownF5",
+              "value": 245
+            },
+            {
+              "label": "IK_Attn",
+              "value": 246
+            },
+            {
+              "label": "IK_CrSel",
+              "value": 247
+            },
+            {
+              "label": "IK_ExSel",
+              "value": 248
+            },
+            {
+              "label": "IK_ErEof",
+              "value": 249
+            },
+            {
+              "label": "IK_Play",
+              "value": 250
+            },
+            {
+              "label": "IK_Zoom",
+              "value": 251
+            },
+            {
+              "label": "IK_NoName",
+              "value": 252
+            },
+            {
+              "label": "IK_PA1",
+              "value": 253
+            },
+            {
+              "label": "IK_OEMClear",
+              "value": 254
+            }
+          ],
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "action",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "input_action",
+          "kind": "int",
+          "type": "ct22.Shortcut.Action.InputAction",
+          "enum": [
+            {
+              "label": "None",
+              "value": 0
+            },
+            {
+              "label": "Press",
+              "value": 1
+            },
+            {
+              "label": "Hold",
+              "value": 2
+            },
+            {
+              "label": "Release",
+              "value": 3
+            },
+            {
+              "label": "Axis",
+              "value": 4
+            }
+          ],
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.ShortcutItemWindow": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "alwaysShowOutline",
+          "kind": "bool",
+          "default": -1
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.SliderCtrl": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "numOfTick",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "currTick",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "thumbBtnWidth",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "thumbBtnHeight",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "backTexture",
+          "kind": "string",
+          "default": "L2UI_ch3.Button.slider_back"
+        },
+        {
+          "op": "field",
+          "name": "disableBackTexture",
+          "kind": "string",
+          "default": "L2UI_ch3.Button.slider_back"
+        },
+        {
+          "op": "field",
+          "name": "thumbBtnNormalTexture",
+          "kind": "string",
+          "default": "L2UI_ch3.Button.slider_cursor"
+        },
+        {
+          "op": "field",
+          "name": "thumbBtnDownTexture",
+          "kind": "string",
+          "default": "L2UI_ch3.Button.slider_cursor_down"
+        },
+        {
+          "op": "field",
+          "name": "pushBtnWidth",
+          "kind": "int",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "pushBtnHeight",
+          "kind": "int",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "pushBtnAutoHitTime",
+          "kind": "int",
+          "default": 300
+        },
+        {
+          "op": "field",
+          "name": "unk111",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "tickTexture",
+          "kind": "string",
+          "default": "L2UI_ch3.Button.slider_mark"
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.StatusBar": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "title",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "barWidth",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "barHeight",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "foreTex",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "foreLeftTex",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "foreRightTex",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "backTex",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "backLeftTex",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "backRightTex",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "regenLeftTex",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "regenTex",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "regenRightTex",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "warnTex",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "warnLeftTex",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "warnRightTex",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "gaugeFontTextureName",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "gaugeFontSizeX",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "gaugeFontSizeY",
+          "kind": "int",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.StatusIconCtrl": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "noClip",
+          "kind": "bool",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "noTooltip",
+          "kind": "bool",
+          "default": -1
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.Style": {
+      "base": null,
+      "ops": [
+        {
+          "op": "field",
+          "name": "name",
+          "kind": "string",
+          "default": "Style@${String.format(\"%08x\", hashCode())}"
+        },
+        {
+          "op": "field",
+          "name": "fontName",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "line",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "color",
+          "kind": "color",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.Tab": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "tabs",
+          "kind": "list",
+          "type": "ct22.Tab.TabElement",
+          "poly": false,
+          "count": "int",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.Tab.TabElement": {
+      "base": null,
+      "ops": [
+        {
+          "op": "field",
+          "name": "buttonName",
+          "kind": "int",
+          "default": -9999
+        },
+        {
+          "op": "field",
+          "name": "buttonNameText",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "target",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "width",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "height",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "normalTex",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "pushedTex",
+          "kind": "string",
+          "default": "undefined"
+        },
+        {
+          "op": "field",
+          "name": "movable",
+          "kind": "bool",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "gap",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "tooltip",
+          "kind": "int",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "noHighlight",
+          "kind": "int",
+          "default": -1
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.TextBox": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "text",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "textAlign",
+          "kind": "int",
+          "type": "ct22.TextBox.TextAlign",
+          "enum": [
+            {
+              "label": "Undefined",
+              "value": 0
+            },
+            {
+              "label": "Left",
+              "value": 1
+            },
+            {
+              "label": "Center",
+              "value": 2
+            },
+            {
+              "label": "Right",
+              "value": 3
+            },
+            {
+              "label": "MacroIcon",
+              "value": 4
+            }
+          ],
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "textVAlign",
+          "kind": "int",
+          "type": "ct22.TextBox.TextVAlign",
+          "enum": [
+            {
+              "label": "Undefined",
+              "value": 0
+            },
+            {
+              "label": "Top",
+              "value": 1
+            },
+            {
+              "label": "Middle",
+              "value": 2
+            },
+            {
+              "label": "Bottom",
+              "value": 3
+            }
+          ],
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "fontType",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "backTex",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "sysstring",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "systemMsg",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "textColor",
+          "kind": "color",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "emoticon",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "autosize",
+          "kind": "int",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.TextListBox": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "maxRow",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "showRow",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "lineGap",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "isShowScroll",
+          "kind": "int",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.Texture": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "file",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "type",
+          "kind": "int",
+          "type": "ct22.Texture.TextureCtrlType",
+          "enum": [
+            {
+              "label": "Stretch",
+              "value": 0
+            },
+            {
+              "label": "Normal",
+              "value": 1
+            },
+            {
+              "label": "Tile",
+              "value": 2
+            },
+            {
+              "label": "Draggable",
+              "value": 3
+            },
+            {
+              "label": "Control",
+              "value": 4
+            },
+            {
+              "label": "Mask",
+              "value": 5
+            }
+          ],
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "layer",
+          "kind": "int",
+          "type": "ct22.Texture.TextureLayer",
+          "enum": [
+            {
+              "label": "None",
+              "value": 0
+            },
+            {
+              "label": "Normal",
+              "value": 1
+            },
+            {
+              "label": "Background",
+              "value": 2
+            }
+          ],
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "u",
+          "kind": "float",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "v",
+          "kind": "float",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "uSize",
+          "kind": "float",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "vSize",
+          "kind": "float",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "alpha",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "isAnimTex",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "autoRotate",
+          "kind": "int",
+          "type": "ct22.Texture.AutoRotateType",
+          "enum": [
+            {
+              "label": "None",
+              "value": 0
+            },
+            {
+              "label": "Camera",
+              "value": 1
+            },
+            {
+              "label": "Pawn",
+              "value": 2
+            }
+          ],
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "maskLayer",
+          "kind": "float",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.TreeCtrl": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "saveExpandedNode",
+          "kind": "bool",
+          "default": -1
+        },
+        {
+          "op": "field",
+          "name": "multiExpand",
+          "kind": "int",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.Window": {
+      "base": "ct22.DefaultProperty",
+      "ops": [
+        {
+          "op": "field",
+          "name": "unk100",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk101",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk102",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk103",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk104",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk105",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk106",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk107",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk108",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk109",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk110",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk111",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk112",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk113",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk114",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk115",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk116",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk117",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk118",
+          "kind": "float",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk119",
+          "kind": "float",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk120",
+          "kind": "float",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk121",
+          "kind": "float",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk122",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk123",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk124",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk125",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk126",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk127",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk128",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk129",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk130",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk131",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk132",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk133",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk134",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk135",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk136",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk137",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk138",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk139",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk140",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk141",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk142",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk143",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk144",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "unk145",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "unk146",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "children",
+          "kind": "list",
+          "type": "ct22.DefaultProperty",
+          "poly": true,
+          "count": "int",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.WndDefPos": {
+      "base": null,
+      "ops": [
+        {
+          "op": "field",
+          "name": "wnd",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "op": "field",
+          "name": "alignment",
+          "kind": "int",
+          "type": "ct22.Alignment",
+          "enum": [
+            {
+              "label": "NONE",
+              "value": 0
+            },
+            {
+              "label": "TOP_LEFT",
+              "value": 1
+            },
+            {
+              "label": "TOP_CENTER",
+              "value": 2
+            },
+            {
+              "label": "TOP_RIGHT",
+              "value": 3
+            },
+            {
+              "label": "CENTER_LEFT",
+              "value": 4
+            },
+            {
+              "label": "CENTER",
+              "value": 5
+            },
+            {
+              "label": "CENTER_RIGHT",
+              "value": 6
+            },
+            {
+              "label": "BOTTOM_LEFT",
+              "value": 7
+            },
+            {
+              "label": "BOTTOM_CENTER",
+              "value": 8
+            },
+            {
+              "label": "BOTTOM_RIGHT",
+              "value": 9
+            }
+          ],
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "x",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "y",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "moveParent",
+          "kind": "bool",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "width",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "height",
+          "kind": "int",
+          "default": 0
+        }
+      ],
+      "abstract": false
+    },
+    "ct22.XDAT": {
+      "base": null,
+      "ops": [
+        {
+          "op": "field",
+          "name": "windows",
+          "kind": "list",
+          "type": "ct22.Window",
+          "poly": false,
+          "count": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "shortcuts",
+          "kind": "list",
+          "type": "ct22.Shortcut",
+          "poly": false,
+          "count": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "_reserved_0",
+          "kind": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "wndDefPos",
+          "kind": "list",
+          "type": "ct22.WndDefPos",
+          "poly": false,
+          "count": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "fonts",
+          "kind": "list",
+          "type": "ct22.Font",
+          "poly": false,
+          "count": "int",
+          "default": 0
+        },
+        {
+          "op": "field",
+          "name": "styles",
+          "kind": "list",
+          "type": "ct22.Style",
+          "poly": false,
+          "count": "int",
+          "default": 0
+        },
+        {
+          "op": "tail"
+        }
+      ],
+      "abstract": false
+    }
+  }
+}

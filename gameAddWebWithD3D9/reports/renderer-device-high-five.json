@@ -1,6 +1,6 @@
 {
   "profile": "high-five",
-  "system": "<LOCAL_INPUT>/input-0042/system",
+  "system": "<LOCAL_INPUT>/system",
   "processes": [
     {
       "pid": 0,

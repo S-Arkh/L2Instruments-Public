@@ -8,6 +8,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'app'))
 from _interface_core import Document
 from schema_tools import validate_package
+from schema_catalog import SchemaRepository
 
 
 def audit(package, data, schema=None, json_roundtrip=False):
@@ -54,11 +55,21 @@ def main():
     parser.add_argument('--sample', type=Path, action='append', required=True)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
-    package = json.loads(args.package.read_text(encoding='utf-8'))
+    source = args.package.read_bytes()
+    split = 'profiles' in json.loads(source)
+    if split:
+        repository = SchemaRepository(args.package)
+        text = repository.text(args.schema or repository.versions[0][1])
+    else:
+        text = source.decode('utf-8')
+    package = json.loads(text)
+    # Hash the loaded profile/dependencies; retain exact-file hashes for packages.
+    hash_data = text.encode('utf-8') if split else source
     results = [audit(package, p.read_bytes(), args.schema, args.json_roundtrip) for p in args.sample]
     report = {'format': 1, 'status': 'research',
               'schema': args.schema or package['versions'][0][1],
-              'schema_sha256': hashlib.sha256(args.package.read_bytes()).hexdigest(),
+              'schema_sha256': hashlib.sha256(hash_data).hexdigest(),
+              'schema_hash_scope': 'selected-profile' if split else 'source-file',
               'client_loading_validated': False, 'samples': results}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')

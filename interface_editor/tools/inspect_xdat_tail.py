@@ -10,6 +10,7 @@ import zlib
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'app'))
 from _interface_core import Document
+from schema_catalog import BUILTIN_INDEX, profile_text
 
 
 def inspect(data, schema_text, schema):
@@ -37,10 +38,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--sample', type=Path, action='append', required=True)
     parser.add_argument('--schema', required=True)
-    parser.add_argument('--catalog', type=Path, default=ROOT / 'schemas/schemas.json')
+    parser.add_argument('--catalog', type=Path, default=BUILTIN_INDEX)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
-    text = args.catalog.read_text(encoding='utf-8')
+    text = profile_text(args.schema, args.catalog)
     reports = [inspect(p.read_bytes(), text, args.schema) for p in args.sample]
     args.output.write_text(json.dumps({'format': 1, 'samples': reports}, indent=2) + '\n', encoding='utf-8')
     return 0 if all(r['compatible'] for r in reports) else 1

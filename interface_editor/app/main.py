@@ -25,7 +25,8 @@ from texture_manager import TextureManager, TextureBindingsDialog
 from localization import StringCatalog
 from strings_dialog import StringsDialog
 from _interface_core import register_dat_profile
-from schema_tools import load_schemas
+from schema_catalog import SchemaRepository
+from json_schema import document_schema
 from schema_dialog import analyze
 from schema_workbench import research, import_schema, export_schema
 
@@ -400,7 +401,8 @@ class Editor(QMainWindow):
         self.setWindowTitle('Interface Editor — C++ / Python')
         self.resize(1600, 900)
         self.user_schema_directory = Path(QStandardPaths.writableLocation(QStandardPaths.StandardLocation.GenericDataLocation)) / 'L2Tools' / 'InterfaceEditor' / 'schemas'
-        self.schema_text, self.schema_errors = load_schemas(ROOT / 'schemas/schemas.json', self.user_schema_directory)
+        self.schemas = SchemaRepository(ROOT / 'schemas/index.json', self.user_schema_directory)
+        self.schema_errors = self.schemas.errors
         self.document = None
         self.model = None
         self.clipboard_id = None
@@ -436,7 +438,7 @@ class Editor(QMainWindow):
         self.bar = self.addToolBar('Файл и правка')
         bar = self.bar
         self.version = QComboBox()
-        for label, schema in json.loads(self.schema_text)['versions']:
+        for label, schema in self.schemas.versions:
             self.version.addItem(label, schema)
         self.version.setCurrentIndex(max(0, self.version.findData('ct26.XDAT')))
         bar.addWidget(self.version)
@@ -940,24 +942,33 @@ class Editor(QMainWindow):
         self.submit(lambda: document.export_json(filename), done)
 
     def reload_schemas(self):
-        self.schema_text, self.schema_errors = load_schemas(ROOT / 'schemas/schemas.json', self.user_schema_directory)
+        if self.schemas.directory != self.user_schema_directory:
+            self.schemas = SchemaRepository(ROOT / 'schemas/index.json', self.user_schema_directory)
+        else:
+            self.schemas.refresh()
+        self.schema_errors = self.schemas.errors
         selected = self.version.currentData()
         self.version.clear()
-        for label, schema in json.loads(self.schema_text)['versions']:
+        for label, schema in self.schemas.versions:
             self.version.addItem(label, schema)
         self.version.setCurrentIndex(max(0, self.version.findData(selected)))
         if self.schema_errors:
             self.error('\n'.join(self.schema_errors))
 
     def load_file(self, filename, schema):
-        self.reload_schemas()
+        try:
+            self.reload_schemas()
+        except Exception as error:
+            self.error(str(error))
+            return
         self.set_busy(True, 'Чтение JSON…' if schema is None else 'Чтение XDAT…')
         for pane in self.panes:
             pane.generation += 1
             pane.timer.stop()
             pane.preview.invalidate()
         def load():
-            document = Document(self.schema_text)
+            selected = document_schema(filename) if schema is None else schema
+            document = Document(self.schemas.text(selected))
             if schema is None:
                 document.open_json(filename)
             else:

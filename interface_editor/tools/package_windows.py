@@ -1,6 +1,7 @@
-"""Cross-build a portable Windows x64 distribution from downloaded official archives.
+"""Package a portable Windows x64 distribution from downloaded official archives.
 
-Inputs are explicit local archives/toolchain paths; no downloads.
+Use a tested native module or cross-compile it with an explicit toolchain.
+Inputs are explicit local archives/module/toolchain paths; no downloads.
 The portable directory includes CPython and Qt Essentials.
 """
 import argparse
@@ -52,11 +53,20 @@ def export_definition(dll):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--cache', type=Path, required=True)
-    parser.add_argument('--cxx', required=True)
-    parser.add_argument('--dlltool', required=True)
+    native = parser.add_mutually_exclusive_group(required=True)
+    native.add_argument('--cxx', help='MinGW cross-compiler')
+    native.add_argument('--module', type=Path, help='Previously built and tested Windows x64 module')
+    parser.add_argument('--dlltool')
     parser.add_argument('--out', type=Path, default=ROOT / 'dist/windows')
     parser.add_argument('--resume', action='store_true', help='Retry an incomplete package (without BUILDINFO.json)')
     args = parser.parse_args()
+    if args.cxx and not args.dlltool:
+        parser.error('--cxx requires --dlltool')
+    if args.module:
+        binary = args.module.read_bytes()
+        pe = struct.unpack_from('<I', binary, 60)[0]
+        if binary[:2] != b'MZ' or binary[pe:pe + 4] != b'PE\0\0' or struct.unpack_from('<H', binary, pe + 4)[0] != 0x8664:
+            parser.error('--module must be a Windows x64 PE')
     out = args.out.resolve()
     if out.exists() and (not args.resume or (out / 'BUILDINFO.json').exists()):
         raise ValueError('Choose a new output directory')
@@ -75,6 +85,36 @@ def main():
     for wheel in wheels:
         with zipfile.ZipFile(wheel) as archive:
             archive.extractall(packages)
+    # Make MSVC runtime dependencies available before importing Qt or the core.
+    # These redistributable files and their notices are included in the Qt wheel.
+    for pattern in ('msvcp140*.dll', 'concrt140.dll'):
+        for dll in (packages / 'PySide6').glob(pattern):
+            shutil.copy2(dll, runtime / dll.name)
+    app = out / 'app'
+    app.mkdir(exist_ok=True)
+    native_inputs = []
+    if args.module:
+        shutil.copy2(args.module, app / '_interface_core.pyd')
+    else:
+        native_inputs = cross_build(args, cache, runtime, app)
+    for file in (ROOT / 'app').glob('*.py'):
+        shutil.copy2(file, app / file.name)
+    shutil.copytree(ROOT / 'schemas', out / 'schemas', dirs_exist_ok=True)
+    shutil.copy2(ROOT / 'LICENSE.acmi', out / 'LICENSE.acmi')
+    for name in ('LICENSE', 'LICENSE.dat-format', 'THIRD_PARTY_NOTICES.md'):
+        shutil.copy2(ROOT / name, out / name)
+    (out / 'Start.cmd').write_text('@echo off\r\n"%~dp0runtime\\python.exe" "%~dp0app\\main.py" %*\r\nif errorlevel 1 pause\r\n', encoding='ascii')
+    manifest = dict(python='3.12.10', qt='6.12.0', target='Windows x64',
+        inputs={p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in [embed, *native_inputs, *wheels]},
+        core_module='_interface_core.pyd',
+        runtime_files={'runtime/' + p.name: hashlib.sha256(p.read_bytes()).hexdigest()
+                       for p in sorted(runtime.glob('*.dll'))},
+        core_sha256=hashlib.sha256((app / '_interface_core.pyd').read_bytes()).hexdigest())
+    (out / 'BUILDINFO.json').write_text(json.dumps(manifest, indent=2), encoding='utf-8')
+    print(out)
+
+
+def cross_build(args, cache, runtime, app):
     headers = cache / 'interface-python312-headers'
     headers.mkdir(exist_ok=True)
     source = cache / 'Python-3.12.10.tgz'
@@ -91,27 +131,12 @@ def main():
     subprocess.run([args.dlltool, '-d', str(definition), '-l', str(library), '-D', 'python312.dll'], check=True)
     import pybind11
     import nlohmann_json
-    app = out / 'app'
-    app.mkdir(exist_ok=True)
     command = [args.cxx, '-std=c++17', '-O2', '-shared', '-static', '-static-libgcc', '-static-libstdc++',
                '-DMS_WIN64', '-I'+str(headers), '-I'+str(pybind11.get_include()), '-I'+str(nlohmann_json.get_include()),
                '-I'+str(ROOT / 'core'), str(ROOT / 'core/document.cpp'), str(ROOT / 'core/textures.cpp'), str(ROOT / 'core/dat.cpp'), str(ROOT / 'bindings/module.cpp'),
                str(library), '-o', str(app / '_interface_core.pyd')]
     subprocess.run(command, check=True)
-    for file in (ROOT / 'app').glob('*.py'):
-        shutil.copy2(file, app / file.name)
-    shutil.copytree(ROOT / 'schemas', out / 'schemas', dirs_exist_ok=True)
-    shutil.copy2(ROOT / 'LICENSE.acmi', out / 'LICENSE.acmi')
-    for name in ('LICENSE', 'LICENSE.dat-format', 'THIRD_PARTY_NOTICES.md'):
-        shutil.copy2(ROOT / name, out / name)
-    (out / 'Start.cmd').write_text('@echo off\r\n"%~dp0runtime\\python.exe" "%~dp0app\\main.py" %*\r\nif errorlevel 1 pause\r\n', encoding='ascii')
-    manifest = dict(python='3.12.10', qt='6.12.0', target='Windows x64',
-        inputs={p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in [embed, source, *wheels]},
-        core_module='_interface_core.pyd',
-        runtime_files={'runtime/zlib1.dll': hashlib.sha256((runtime / 'zlib1.dll').read_bytes()).hexdigest()},
-        core_sha256=hashlib.sha256((app / '_interface_core.pyd').read_bytes()).hexdigest())
-    (out / 'BUILDINFO.json').write_text(json.dumps(manifest, indent=2), encoding='utf-8')
-    print(out)
+    return [source]
 
 
 if __name__ == '__main__': main()

@@ -1,9 +1,11 @@
 """Annotate the optional HF/Gracia CRC trailer and verified sample protocols."""
 import argparse
-import json
 from pathlib import Path
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'app'))
+from schema_catalog import BUILTIN_INDEX, load_catalog, save_catalog
 LABELS = {'ct24.XDAT': 'Gracia Epilogue (protocol 152)',
           'ct26.XDAT': 'High Five (protocol 268)'}
 
@@ -20,10 +22,10 @@ def update(catalog):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--catalog', type=Path, default=ROOT / 'schemas/schemas.json')
+    parser.add_argument('--catalog', type=Path, default=BUILTIN_INDEX)
     args = parser.parse_args()
-    catalog = update(json.loads(args.catalog.read_text(encoding='utf-8')))
-    args.catalog.write_text(json.dumps(catalog, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
+    catalog = update(load_catalog(args.catalog))
+    save_catalog(args.catalog, catalog)
 
 
 if __name__ == '__main__':

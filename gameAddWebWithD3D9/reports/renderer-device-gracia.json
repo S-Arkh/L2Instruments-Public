@@ -1,6 +1,6 @@
 {
   "profile": "gracia",
-  "system": "<LOCAL_INPUT>/input-0041/system",
+  "system": "<LOCAL_INPUT>/system",
   "processes": [
     {
       "pid": 0,
