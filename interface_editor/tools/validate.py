@@ -10,8 +10,10 @@ import sys
 import time
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'app'))
 sys.path.insert(0, os.environ.get('INTERFACE_MODULE_DIR', str(ROOT / 'app')))
 from _interface_core import Document
+from schema_catalog import SchemaRepository
 
 
 def main():
@@ -22,8 +24,7 @@ def main():
     parser.add_argument('--json-roundtrip', action='store_true')
     parser.add_argument('--client-only', action='store_true')
     args = parser.parse_args()
-    schema_text = (ROOT / 'schemas/schemas.json').read_text(encoding='utf-8')
-    specs = json.loads(schema_text)
+    repository = SchemaRepository()
     fixtures = [] if args.client_only else json.loads((args.fixtures / 'manifest.json').read_text())
     if args.client_only and not args.client:
         parser.error('--client-only requires --client')
@@ -32,6 +33,7 @@ def main():
         cases.append((args.client, 'ct26.XDAT'))
     results = []
     for file, schema in cases:
+        schema_text = repository.text(schema)
         original = file.read_bytes()
         doc = Document(schema_text)
         start = time.perf_counter()
@@ -60,7 +62,7 @@ def main():
         print(f"PASS {file.name}: {row['nodes']} nodes, load {load_seconds:.3f}s, search median {row['search_median_ms']}ms", flush=True)
     tested = {row['schema'] for row in results}
     report = dict(platform=platform.platform(), python=sys.version, files=results,
-                  versions=[dict(label=label, schema=schema, fixture_tested=schema in tested) for label, schema in specs['versions']])
+                  versions=[dict(label=label, schema=schema, fixture_tested=schema in tested) for label, schema in repository.versions])
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding='utf-8')
 

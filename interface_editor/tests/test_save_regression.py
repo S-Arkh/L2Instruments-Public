@@ -6,13 +6,15 @@ import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'app'))
 sys.path.insert(0, os.environ.get('INTERFACE_MODULE_DIR', str(ROOT / 'app')))
 from _interface_core import Document
+from schema_catalog import catalog_text
 
 
 class SaveRegression(unittest.TestCase):
     def setUp(self):
-        self.document = Document((ROOT / 'schemas/schemas.json').read_text(encoding='utf-8'))
+        self.document = Document(catalog_text())
         self.original = (ROOT / 'tests/fixtures/Interface_high_five.xdat').read_bytes()
         self.document.load_bytes(self.original, 'ct26.XDAT')
         self.button = next(n for n in self.document.search('btnCredit')['matches']

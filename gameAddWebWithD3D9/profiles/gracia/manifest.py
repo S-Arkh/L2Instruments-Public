@@ -14,7 +14,8 @@ def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
 def verify_xdat():
     sys.path.insert(0, str(ROOT.parents[2]/'interface_editor/app'))
     from _interface_core import Document
-    schema = (ROOT.parents[2]/'interface_editor/schemas/schemas.json').read_text()
+    from schema_catalog import profile_text
+    schema = profile_text('ct24.XDAT')
     docs = []
     for path in (ROOT/'inputs/Interface.xdat', ROOT/'result/system/Interface.xdat'):
         doc = Document(schema); doc.load(str(path), 'ct24.XDAT')

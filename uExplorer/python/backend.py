@@ -13,6 +13,11 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def core_path():
+    if (ROOT/'portable.json').is_file():
+        library = ROOT/'bin'/'uexplorer_core.dll'
+        if not library.is_file():
+            raise RuntimeError('Portable core is missing: ' + str(library))
+        return library
     override = os.environ.get('UEXPLORER_CORE')
     candidates = [Path(override)] if override else []
     name = 'uexplorer_core.dll' if sys.platform == 'win32' else 'libuexplorer_core.so'
@@ -95,7 +100,8 @@ def view_text(result, ansi_encoding='cp1251'):
 
 
 def export_classes(core, package, classes, destination, dependencies=(), force=False,
-                   overwrite=False, cancelled=lambda: False, progress=lambda *args: None):
+                   overwrite=False, cancelled=lambda: False, progress=lambda *args: None,
+                   bytecode_profile='auto'):
     package = Path(package).resolve()
     paths = targets(package, classes, destination)
     if not overwrite:
@@ -103,7 +109,8 @@ def export_classes(core, package, classes, destination, dependencies=(), force=F
         if existing:
             raise FileExistsError('Output exists: '+existing[0])
     report = {'package': str(package), 'sha256': sha256(package), 'classes': [], 'cancelled': False,
-              'force_bytecode': force, 'dependencies': list(dependencies), 'core_sha256': sha256(core.library)}
+              'force_bytecode': force, 'dependencies': list(dependencies), 'core_sha256': sha256(core.library),
+              'bytecode_profile': bytecode_profile}
     for index, (item, path) in enumerate(zip(classes, paths)):
         if cancelled():
             report['cancelled'] = True
@@ -111,7 +118,7 @@ def export_classes(core, package, classes, destination, dependencies=(), force=F
         progress(index, len(classes), item['path'])
         try:
             response = core.request(operation='decompile', path=str(package), class_id=item['id'],
-                                    dependencies=list(dependencies), force_bytecode=force)
+                                    dependencies=list(dependencies), force_bytecode=force, bytecode_profile=bytecode_profile)
             result = response['result']
             report['diagnostics'] = response.get('diagnostics', [])
             data = bytes.fromhex(result['raw_hex']) if 'raw_hex' in result else result['code'].encode('utf-8')

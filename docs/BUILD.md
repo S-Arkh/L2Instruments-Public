@@ -4,6 +4,11 @@
 Основная среда: Python 3.12; Visual Studio 2022 C++/Windows SDK; CMake 3.24+.
 Используйте активированное виртуальное окружение и совпадающую разрядность Python/C++.
 
+Для uExplorer передавайте `-DPython_EXECUTABLE=<python-из-venv>` явно: CMake может
+найти системный Python без зависимостей даже при запуске через `python -m cmake`.
+Итоговая проверка script tools и варианты MSVC/MinGW описаны в
+[ROUNDTRIP_RELEASE.md](ROUNDTRIP_RELEASE.md).
+
 Для полного клиентского комплекта см.
 [пошаговый пример Clear HF](CLEAR_HF_WALKTHROUGH.md): внешние входы,
 импорт UCC/SDK, сборка, компиляция `.u`, установка и проверка.

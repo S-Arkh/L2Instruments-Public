@@ -4,11 +4,13 @@
 namespace l2client {
 constexpr int NativeIndex = 4000;
 constexpr int NativeTableSize = 4096;
-struct CoreProfile { const char* name; std::uintptr_t registerRva, tableRva, stepRva, undefinedRva; const char* throwExport; const char* assignExport; };
+struct CoreProfile { const char* name; std::uintptr_t registerRva, tableRva, stepRva, undefinedRva; const char* throwExport; const char* assignExport; const char* stepCode; };
 constexpr CoreProfile CoreProfiles[] = {
-    {"client_b3fb9af3", 0x5d600, 0xec6d8, 0x9210, 0x5d210, "?appThrowf@@YAXPB_WZZ", "??4FString@@QAEAAV0@PB_W@Z"},
-    {"gracia_epilogue_0941cac5", 0x5b410, 0xe3690, 0x9100, 0x5b020, "?appThrowf@@YAXPBGZZ", "??4FString@@QAEAAV0@PBG@Z"},
-    {"clear_hf_0677e909", 0x5d680, 0xea6d0, 0x9200, 0x5d290, "?appThrowf@@YAXPB_WZZ", "??4FString@@QAEAAV0@PB_W@Z"},
+    {"japan_modern_74eac821", 0xccdb0, 0x1e3b30, 0x1b880, 0xda2e0, "?appThrowf@@YAXPB_WZZ", "??4FString@@QAEAAV0@PB_W@Z", "\x55\x8b\xec\x8b\x41\x0c\xff\x75\x0c\x51\x0f\xb6\x10\x40\x89\x41"},
+    {"korean_modern_964ff724", 0xbbb80, 0x1d2ab0, 0x1b880, 0xc90b0, "?appThrowf@@YAXPB_WZZ", "??4FString@@QAEAAV0@PB_W@Z", "\x55\x8b\xec\x8b\x41\x0c\xff\x75\x0c\x51\x0f\xb6\x10\x40\x89\x41"},
+    {"client_b3fb9af3", 0x5d600, 0xec6d8, 0x9210, 0x5d210, "?appThrowf@@YAXPB_WZZ", "??4FString@@QAEAAV0@PB_W@Z", "\x8b\x41\x0c\x0f\xb6\x10\x83\xc0\x01\x89\x41\x0c\x8b\x44\x24\x08"},
+    {"gracia_epilogue_0941cac5", 0x5b410, 0xe3690, 0x9100, 0x5b020, "?appThrowf@@YAXPBGZZ", "??4FString@@QAEAAV0@PBG@Z", "\x8b\x41\x0c\x0f\xb6\x10\x83\xc0\x01\x89\x41\x0c\x8b\x44\x24\x08"},
+    {"clear_hf_0677e909", 0x5d680, 0xea6d0, 0x9200, 0x5d290, "?appThrowf@@YAXPB_WZZ", "??4FString@@QAEAAV0@PB_W@Z", "\x8b\x41\x0c\x0f\xb6\x10\x83\xc0\x01\x89\x41\x0c\x8b\x44\x24\x08"},
 };
 constexpr const char* RegisterExport = "?GRegisterNative@@YAEHABQ8UObject@@AEXAAUFFrame@@QAX@Z@Z";
 constexpr const char* TableExport = "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA";

@@ -8,13 +8,14 @@
 Требования: CMake 3.24+, VS2022 Desktop development with C++, Windows SDK.
 Для сборки нужен Python с `nlohmann_json`; для UI — PySide6.
 Проверяемое окружение: Python 3.12 x64 и зависимости из
-`interface_editor/requirements-release.txt`. Текущая проверенная сборка — x64 Release.
+`uExplorer/requirements-release.txt`. Текущая проверенная сборка — x64 Release.
+Автономная упаковка описана в [PORTABLE_BUILD.md](PORTABLE_BUILD.md).
 
 Из корня репозитория, если `.venv` ещё не создана:
 
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r interface_editor/requirements-release.txt
+.\.venv\Scripts\python.exe -m pip install -r uExplorer/requirements-release.txt
 ```
 
 Из каталога `uExplorer`:
@@ -53,7 +54,9 @@ MSVC runtime статический (`/MT`, Debug `/MTd`).
 backend ищет ядро: `UEXPLORER_CORE`, затем `bin`, `build/Release`, `build`.
 Если путь из переменной не существует, поиск продолжается. DLL должна
 соответствовать разрядности процесса Python. `run.ps1 -Python <путь>` позволяет
-выбрать интерпретатор; без аргумента приоритет у соседнего embedded runtime.
+выбрать интерпретатор; без аргумента первым проверяется собственный `runtime`,
+затем локальная `.venv`, окружения редактора и Python из PATH.
+Portable-сборка всегда загружает собственный `bin/uexplorer_core.dll`.
 
 ```powershell
 python -m pip install -r requirements.txt
@@ -74,7 +77,18 @@ CLI возвращает код/метаданные в JSON. Запись `.uc`
 
 ## Тесты
 
-Тесты используют внешние игровые эталоны; в чистом клоне их нет.
+Автономные проверки без игровых файлов: CTest (`package_tokens`),
+`tests/portable_smoke.py` (DLL, CLI, GUI, экспорт синтетического ScriptText),
+`tests/test_launcher.py` (выбор Python в Windows). Команды приведены в
+[PORTABLE_BUILD.md](PORTABLE_BUILD.md).
+
+CTest `generation`, compiler roundtrip и матрица пяти внешних клиентов для
+делегатов/`new`: [GENERATION_VALIDATION.md](GENERATION_VALIDATION.md).
+
+Within, native-метаданные, cast 57 и исследование PtrProperty:
+[CORE_METADATA_VALIDATION.md](CORE_METADATA_VALIDATION.md), CTest `metadata`.
+
+Следующие интеграционные тесты используют внешние игровые эталоны; в чистом клоне их нет.
 Для `validate.py` и `test_gui.py` укажите каталог с оригинальными Gracia
 `Interface.u` и `NWindow.u` через `UEXPLORER_GRACIA_SYSTEM`. Эти тесты ожидают
 конкретный эталон (239 классов), а не любой клиент с названием Gracia.

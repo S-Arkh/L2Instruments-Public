@@ -30,7 +30,7 @@ int main(int argc,char** argv) {
         for(auto bytes:{ue::Bytes{0x46,0,0},ue::Bytes{0x47,1,0},ue::Bytes{0x48}}) {
             rejects([&]{ue::Reader rr(bytes);ue::Decoder dd{p,rr};dd.expression();});
         }
-        for(auto profile:{std::pair<int,int>{123,37},{126,0}}) {
+        for(auto profile:{std::pair<int,int>{123,37},{126,0},{131,40}}) {
             header[4]=uint8_t(profile.first);header[6]=uint8_t(profile.second);
             {std::ofstream out(argv[1],std::ios::binary);out.write(reinterpret_cast<const char*>(header.data()),header.size());}
             ue::Package old(argv[1]);ue::Bytes bytes{0x1d,0xff,0xff,0xff,0xff};
@@ -38,6 +38,20 @@ int main(int argc,char** argv) {
             rejects([&]{ue::Reader sr(sort);ue::Decoder sd{old,sr};sd.expression();});
             ue::Bytes wide(9,0);wide[0]=0x46;
             rejects([&]{ue::Reader wr(wide);ue::Decoder wd{old,wr};wd.expression();});
+            if(profile.first==126){
+                old.setBytecodeProfile("sdk-client-sort");
+                check(old.version==126&&old.licensee==0);
+                ue::Reader sr(sort);ue::Decoder sd{old,sr};check(sd.script(12)[0].kind=="array_sort");
+                rejects([&]{ue::Reader wr(wide);ue::Decoder wd{old,wr};wd.expression();});
+                old.setBytecodeProfile("auto");
+                rejects([&]{ue::Reader sr2(sort);ue::Decoder sd2{old,sr2};sd2.expression();});
+            }else rejects([&]{old.setBytecodeProfile("sdk-client-sort");});
+            rejects([&]{old.setBytecodeProfile("unknown");});
+        }
+        for(auto profile:{std::pair<int,int>{131,0},{131,37},{132,40}}){
+            header[4]=uint8_t(profile.first);header[6]=uint8_t(profile.second);
+            {std::ofstream out(argv[1],std::ios::binary);out.write(reinterpret_cast<const char*>(header.data()),header.size());}
+            rejects([&]{ue::Package unsupported(argv[1]);});
         }
         p.names={"None"};ue::Entry cls;cls.name="DelegateProperty";cls.importClass="Class";p.imports.push_back(cls);
         ue::Entry prop;prop.name="Comparator";prop.cls=-1;prop.size=14;p.exports.push_back(prop);

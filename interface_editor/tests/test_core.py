@@ -9,8 +9,9 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'app'))
 from _interface_core import Document
+from schema_catalog import catalog_text
 
-SCHEMA = (ROOT / 'schemas/schemas.json').read_text(encoding='utf-8')
+SCHEMA = catalog_text()
 FIXTURES = json.loads((ROOT / 'tests/fixtures/manifest.json').read_text())
 
 

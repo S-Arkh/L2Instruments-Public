@@ -1,0 +1,22 @@
+{
+  "InstancedProbe": {
+    "contains": ["native noexport instanced"]
+  },
+  "EventProbe": {
+    "contains": [
+      "RegisterEvent(EV_Ready);",
+      "RegisterEvent(2030);",
+      "RegisterEvent(9999);",
+      "RegisterEvent(2010);",
+      "ExecuteEvent(EV_Ready, \"payload\");"
+    ],
+    "excludes": ["RegisterEvent(EV_AliasA)", "RegisterEvent(EV_AliasB)"]
+  },
+  "ExpressionProbe": {
+    "contains": ["-(-30)", "return Target.Named;", "return Target.Text;", "return Target.Fraction;", "Enum'Generation.ExpressionProbe.Mode'"],
+    "excludes": ["--30", "Target.0", "Target.1", "__UXContext"]
+  },
+  "ATypeConsumer": {
+    "contains": ["dependson(ZTypeBase) dependson(ZTypeOwner)", "ZTypeOwner.Payload", "case Second:"]
+  }
+}

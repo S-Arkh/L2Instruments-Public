@@ -1,0 +1,146 @@
+name: Release uExplorer
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Версия релиза (например 0.1.0 или 0.1.0-rc.1)'
+        required: true
+        type: string
+      prerelease:
+        description: 'Опубликовать как предварительный релиз'
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-uexplorer-${{ inputs.version }}
+  cancel-in-progress: false
+
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+
+jobs:
+  preflight:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      revision: ${{ steps.identity.outputs.revision }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate version and reject existing releases/tags
+        id: identity
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+          GH_TOKEN: ${{ github.token }}
+          IS_PRERELEASE: ${{ inputs.prerelease }}
+        run: |
+          python - <<'PY'
+          import os, subprocess, sys, urllib.error, urllib.request
+          sys.path.insert(0, 'uExplorer/tools')
+          from package_windows import validate_identity
+          version = os.environ['RELEASE_VERSION']
+          revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          validate_identity(version, revision)
+          if '-' in version and os.environ['IS_PRERELEASE'] != 'true':
+              raise ValueError('A version with a prerelease suffix must be marked prerelease')
+          tag = 'uexplorer-v' + version
+          base = os.environ['GITHUB_API_URL'] + '/repos/' + os.environ['GITHUB_REPOSITORY']
+          for route in ('/releases/tags/', '/git/ref/tags/'):
+              request = urllib.request.Request(base + route + tag, headers={
+                  'Authorization': 'Bearer ' + os.environ['GH_TOKEN'],
+                  'Accept': 'application/vnd.github+json'})
+              try:
+                  with urllib.request.urlopen(request, timeout=30):
+                      raise ValueError('Release or tag already exists: ' + tag)
+              except urllib.error.HTTPError as error:
+                  if error.code != 404:
+                      raise
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('revision=' + revision + '\n')
+          PY
+
+  build:
+    needs: preflight
+    runs-on: windows-2022
+    timeout-minutes: 30
+    env:
+      QT_QPA_PLATFORM: offscreen
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.preflight.outputs.revision }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.10'
+          architecture: x64
+      - run: python -B tools/check_publication.py
+      - run: python -B tools/check_privacy.py
+      - run: python -m pip install -r uExplorer/requirements-release.txt
+      - name: Configure Windows x64
+        run: |
+          $python = (Get-Command python).Source
+          python -m cmake -S uExplorer -B uExplorer/build-release -G "Visual Studio 17 2022" -A x64 "-DPython_EXECUTABLE=$python"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+      - run: python -m cmake --build uExplorer/build-release --config Release --parallel 2
+      - name: Test native core
+        run: |
+          python -c "import cmake, pathlib, subprocess; subprocess.run([str(pathlib.Path(cmake.CMAKE_BIN_DIR) / 'ctest.exe'), '--test-dir', 'uExplorer/build-release', '-C', 'Release', '--output-on-failure'], check=True)"
+      - run: python -m cmake --install uExplorer/build-release --config Release --prefix uExplorer
+      - name: Test synthetic package and launcher
+        run: |
+          python -B uExplorer/tests/portable_smoke.py
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          python -B -m unittest discover -s uExplorer/tests -p test_launcher.py -v
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+      - name: Package and test release archive
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: |
+          python -B uExplorer/tools/package_windows.py --version $env:RELEASE_VERSION --bin uExplorer/build-release/Release --cache "$env:RUNNER_TEMP/uexplorer-inputs" --out "$env:RUNNER_TEMP/uexplorer-release" --download
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          python -B tools/check_privacy.py --archive "$env:RUNNER_TEMP/uexplorer-release/publish/uExplorer-$env:RELEASE_VERSION-windows-x64.zip"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: uexplorer-release
+          path: ${{ runner.temp }}/uexplorer-release/publish/*
+          if-no-files-found: error
+          retention-days: 1
+
+  publish:
+    needs: [preflight, build]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: uexplorer-release
+          path: release
+      - name: Publish verified ZIP
+        working-directory: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_VERSION: ${{ inputs.version }}
+          RELEASE_REVISION: ${{ needs.preflight.outputs.revision }}
+          IS_PRERELEASE: ${{ inputs.prerelease }}
+        run: |
+          set -euo pipefail
+          sha256sum --check SHA256SUMS.txt
+          tag="uexplorer-v${RELEASE_VERSION}"
+          flags=()
+          latest=true
+          if [[ "$IS_PRERELEASE" == true ]]; then
+            flags+=(--prerelease)
+            latest=false
+          fi
+          gh release create "$tag" "uExplorer-${RELEASE_VERSION}-windows-x64.zip" SHA256SUMS.txt \
+            --target "$RELEASE_REVISION" --title "uExplorer ${RELEASE_VERSION}" \
+            --notes-file RELEASE_NOTES.md --draft "${flags[@]}"
+          gh release edit "$tag" --draft=false --latest="$latest"
+          echo "Published: https://github.com/${GH_REPO}/releases/tag/${tag}" >> "$GITHUB_STEP_SUMMARY"

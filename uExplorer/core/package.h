@@ -36,11 +36,13 @@ struct Node {
 struct Function {
     int id=0, fields[4]{}, native=0, precedence=0, size=0;
     uint32_t flags=0; std::string friendly;
+    int replicationOffset=-1;
     std::vector<Node> nodes;
 };
 struct Property {
     int id=0, next=0, dim=0, ref=0, meta=0;
     uint32_t flags=0; std::string kind, category;
+    int replicationOffset=-1;
     size_t tail=0;
 };
 struct StructInfo {
@@ -57,6 +59,8 @@ public:
     Bytes data;
     std::string envelope="plain";
     int version=0, licensee=0;
+    bool sdkClientSort=false;
+    void setBytecodeProfile(const std::string& profile);
     std::vector<std::string> names;
     std::vector<Entry> imports, exports;
     mutable std::map<int,std::string> paths;
@@ -94,7 +98,7 @@ public:
     std::map<int,std::pair<Symbol,Function>> natives;
     std::set<int> conflicts;
     Json diagnostics=Json::array();
-    Context(const std::filesystem::path& file,const std::vector<std::filesystem::path>& dirs);
+    Context(const std::filesystem::path& file,const std::vector<std::filesystem::path>& dirs,const std::string& bytecodeProfile="auto");
     Symbol resolve(const Package& from,int id) const;
     Json decompile(int classId,bool force=false) const;
 };

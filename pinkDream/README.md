@@ -18,6 +18,10 @@ pinkDream — единственный рабочий проект в этом �
 
 Из каталога `pinkDream`:
 
+Профили используют нейтральные относительные пути `local/clients/<profile>`.
+Для собственного расположения клиента передайте `--client <path>` инструментам
+`inventory.py` и `build_trial.py`; относительные пути считаются от текущего каталога.
+
 ```powershell
 python -m pip install -r requirements.txt
 python -B -m unittest discover -s tools -p 'test_*.py' -v

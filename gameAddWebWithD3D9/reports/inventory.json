@@ -1,6 +1,6 @@
 {
   "gracia/nwindow.dll": {
-    "path": "<LOCAL_INPUT>/input-0029/nwindow.dll",
+    "path": "gameAddWeb/inputs/gracia/nwindow.dll",
     "size": 5434442,
     "sha256": "14b838bbc6b6517ddc8294f0ab2fafdbe73daa5e4a39da224fdfd252c4545e06",
     "imports": {
@@ -24125,10 +24125,10 @@
         "forwarded": false
       }
     },
-    "source": "<LOCAL_INPUT>/input-0030/nwindow.dll"
+    "source": "local/clients/gracia/system/nwindow.dll"
   },
   "gracia/engine.dll": {
-    "path": "<LOCAL_INPUT>/input-0031/engine.dll",
+    "path": "gameAddWeb/inputs/gracia/engine.dll",
     "size": 7832064,
     "sha256": "7c3b792c92dbf3188b34a75c746b7c86d1043e9cb5cc4901ef64d9eda28fd48c",
     "imports": {
@@ -77672,10 +77672,10 @@
         "forwarded": false
       }
     },
-    "source": "<LOCAL_INPUT>/input-0032/Engine.dll"
+    "source": "local/clients/gracia/system/Engine.dll"
   },
   "gracia/d3ddrv.dll": {
-    "path": "<LOCAL_INPUT>/input-0033/d3ddrv.dll",
+    "path": "gameAddWeb/inputs/gracia/d3ddrv.dll",
     "size": 1388564,
     "sha256": "2d58fe2a6a4c8ce0f3f8fbd202a76407a9de2dd1cbba87ded38f421d52b84a33",
     "imports": {
@@ -78434,10 +78434,10 @@
         "forwarded": false
       }
     },
-    "source": "<LOCAL_INPUT>/input-0034/d3ddrv.dll"
+    "source": "local/clients/gracia/system/d3ddrv.dll"
   },
   "hf/nwindow.dll": {
-    "path": "<LOCAL_INPUT>/input-0035/nwindow.dll",
+    "path": "gameAddWeb/inputs/hf/nwindow.dll",
     "size": 14268948,
     "sha256": "94a8975ab729f077da69e62c507feada07393359d12d0ea32498b6be8d28b5b7",
     "imports": {
@@ -104244,10 +104244,10 @@
         "forwarded": false
       }
     },
-    "source": "<LOCAL_INPUT>/input-0016/nwindow.dll"
+    "source": "local/clients/high-five/system/nwindow.dll"
   },
   "hf/engine.dll": {
-    "path": "<LOCAL_INPUT>/input-0036/engine.dll",
+    "path": "gameAddWeb/inputs/hf/engine.dll",
     "size": 8242176,
     "sha256": "944605e867b17925336dc127dd03a6076f7b5ffcc1988ab4a077a85c09904417",
     "imports": {
@@ -160655,10 +160655,10 @@
         "forwarded": false
       }
     },
-    "source": "<LOCAL_INPUT>/input-0015/Engine.dll"
+    "source": "local/clients/high-five/system/Engine.dll"
   },
   "hf/d3ddrv.dll": {
-    "path": "<LOCAL_INPUT>/input-0037/d3ddrv.dll",
+    "path": "gameAddWeb/inputs/hf/d3ddrv.dll",
     "size": 1426452,
     "sha256": "7e2929635db1d16586726a2b491db3bbbf81d65cc338ab3ba7b117aa69314276",
     "imports": {
@@ -161430,10 +161430,10 @@
         "forwarded": false
       }
     },
-    "source": "<LOCAL_INPUT>/input-0017/D3DDrv.dll"
+    "source": "local/clients/high-five/system/D3DDrv.dll"
   },
   "scryde/nwindow.dll": {
-    "path": "<LOCAL_INPUT>/input-0038/nwindow.dll",
+    "path": "gameAddWeb/inputs/scryde/nwindow.dll",
     "size": 10913296,
     "sha256": "73735f1fb164f23bd1f83426e5918c315aed5916b13b50ec7c084571da8af831",
     "imports": {
@@ -188275,10 +188275,10 @@
         "forwarded": false
       }
     },
-    "source": "<LOCAL_INPUT>/input-0005/NWindow.dll"
+    "source": "local/clients/scryde/Scryde/NWindow.dll"
   },
   "scryde/engine.dll": {
-    "path": "<LOCAL_INPUT>/input-0039/engine.dll",
+    "path": "gameAddWeb/inputs/scryde/engine.dll",
     "size": 10553360,
     "sha256": "0255e9bf75ea7f9aafbae3ca84f36cabbc57be4b465c2105c0a4d365c9955332",
     "imports": {
@@ -244778,10 +244778,10 @@
         "forwarded": false
       }
     },
-    "source": "<LOCAL_INPUT>/input-0004/Engine.dll"
+    "source": "local/clients/scryde/Scryde/Engine.dll"
   },
   "scryde/d3ddrv.dll": {
-    "path": "<LOCAL_INPUT>/input-0040/d3ddrv.dll",
+    "path": "gameAddWeb/inputs/scryde/d3ddrv.dll",
     "size": 1438224,
     "sha256": "f636b22aa5fd99283c06293ed65e50434cbf22e920cd737aaa3c10cc98d06894",
     "imports": {
@@ -245553,6 +245553,6 @@
         "forwarded": false
       }
     },
-    "source": "<LOCAL_INPUT>/input-0006/D3DDrv.dll"
+    "source": "local/clients/scryde/Scryde/D3DDrv.dll"
   }
 }

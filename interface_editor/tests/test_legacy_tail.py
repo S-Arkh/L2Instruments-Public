@@ -7,6 +7,7 @@ import zlib
 import pytest
 from synthetic_fixtures import ROOT
 from _interface_core import Document
+from schema_catalog import catalog_text
 
 sys.path.insert(0, str(ROOT / 'tools'))
 from inspect_xdat_tail import inspect
@@ -15,7 +16,7 @@ from inspect_xdat_tail import inspect
 @pytest.mark.parametrize('schema', ['ct24.XDAT', 'ct26.XDAT'])
 @pytest.mark.parametrize('tail', [b'', struct.pack('<5I', 0, 7, 19, 0x12345678, 0), b'arbitrary trailer'])
 def test_legacy_tail_edit_json_and_undo(schema, tail):
-    catalog = (ROOT / 'schemas/schemas.json').read_text(encoding='utf-8')
+    catalog = catalog_text()
     doc = Document(catalog)
     doc.create(schema)
     windows = next(n['id'] for n in doc.children() if n['name'] == 'windows')
@@ -49,7 +50,7 @@ def test_legacy_tail_edit_json_and_undo(schema, tail):
 
 @pytest.mark.parametrize('schema', ['ct24.XDAT', 'ct26.XDAT'])
 def test_legacy_checksum_is_inspected_but_never_rewritten(schema):
-    catalog = (ROOT / 'schemas/schemas.json').read_text(encoding='utf-8')
+    catalog = catalog_text()
     doc = Document(catalog)
     doc.create(schema)
     payload = doc.serialize()
@@ -76,7 +77,7 @@ def test_legacy_checksum_is_inspected_but_never_rewritten(schema):
 
 @pytest.mark.parametrize('tail', [b'', b'opaque trailer', bytes(range(20)), b'\0' * 19, b'\0' * 21])
 def test_nonmatching_trailers_remain_opaque(tail):
-    catalog = (ROOT / 'schemas/schemas.json').read_text(encoding='utf-8')
+    catalog = catalog_text()
     doc = Document(catalog)
     doc.create('ct26.XDAT')
     data = doc.serialize() + tail

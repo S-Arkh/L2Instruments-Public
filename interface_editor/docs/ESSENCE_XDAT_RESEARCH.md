@@ -17,11 +17,12 @@ execution, not full game startup or visual validation.
 
 Three supplied client profiles are compared: Essence, Korea and Japan. Directory
 labels and user-supplied protocol numbers are not format evidence. Essence's
-unprotected executable statically maps `-L2ProtocolVersion` to revision 591;
-the Korean/Japanese network protocol numbers remain unverified.
-Catalog labels include Essence protocol 591, Japan protocol 230 and Korea
-protocol 290. The latter two are explicitly marked `user-reported`; native-reader
-verification applies to the supplied XDAT layouts, not those protocol numbers.
+unprotected executable statically maps `-L2ProtocolVersion` to revision 591.
+Japan protocol 591 and Korea protocol 606 were confirmed by running each supplied
+`L2.bin` with `-L2ProtocolVersion` and reading its dialog. Catalog labels now use
+these confirmed protocol numbers. The earlier Japan 230 / Korea 290 labels
+confused patch versions with network protocols. Native-reader verification
+applies to the supplied XDAT layouts, independently of those protocol numbers.
 
 ## Established package evidence
 
@@ -65,7 +66,7 @@ Follow-up native inspection resolved the initially unnamed fields:
 The style bitmask is preserved as two raw32 halves; individual bit meanings
 are not exhaustively documented. Native-reader acceptance is not a proof of
 every enum domain or runtime visual behavior. Use
-`tools/audit_native_xdat.py --package schemas/schemas.json --schema essence_native.XDAT
+`tools/audit_native_xdat.py --package schemas/index.json --schema essence_native.XDAT
 --sample <external.xdat> --output <report.json>` for a path-free edit/roundtrip
 report; this does not claim actual client validation.
 

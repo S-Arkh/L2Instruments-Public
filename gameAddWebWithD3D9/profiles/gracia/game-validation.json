@@ -1,23 +1,8 @@
 {
-  "date": "snapshot-anon0001",
   "source": "user-confirmed game test; agent read-only hash and process verification",
   "passed": true,
-  "checks": [
-    "browser image",
-    "above login window",
-    "RU/EN text",
-    "clicks",
-    "wheel",
-    "drag",
-    "minimize/restore",
-    "audio stops",
-    "browser closes",
-    "client exits"
-  ],
-  "agent_checks": [
-    "installed binaries/UI match bundle",
-    "L2 and GraciaBrowserHost absent after exit"
-  ],
+  "checks": ["browser image", "above login window", "RU/EN text", "clicks", "wheel", "drag", "minimize/restore", "audio stops", "browser closes", "client exits"],
+  "agent_checks": ["installed binaries/UI match bundle", "L2 and GraciaBrowserHost absent after exit"],
   "files": {
     "Core.dll": "7723e1145a5b8053d0a99cf54a1996f83248dccd083cdaccccae2a41ad2e6295",
     "ExtensionL2.dll": "7bcd09efc2e2831aa00da1f5d516a6d8b81544ca6b84a8440b1975756ba01cc1",

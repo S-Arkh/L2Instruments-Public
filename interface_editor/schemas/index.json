@@ -1,0 +1,136 @@
+{
+  "format": 1,
+  "versions": [
+    [
+      "Interlude",
+      "ct0.XDAT"
+    ],
+    [
+      "Kamael",
+      "ct1.XDAT"
+    ],
+    [
+      "Hellbound",
+      "ct15.XDAT"
+    ],
+    [
+      "Gracia Part 1/2",
+      "ct22.XDAT"
+    ],
+    [
+      "Gracia Final",
+      "ct23.XDAT"
+    ],
+    [
+      "Gracia Epilogue (protocol 152)",
+      "ct24.XDAT"
+    ],
+    [
+      "Freya",
+      "ct25.XDAT"
+    ],
+    [
+      "High Five (protocol 268)",
+      "ct26.XDAT"
+    ],
+    [
+      "Awakening/Harmony/Tauti/Glory Days",
+      "god25.XDAT"
+    ],
+    [
+      "Lindvior",
+      "god3.XDAT"
+    ],
+    [
+      "Epeisodion",
+      "god35.XDAT"
+    ],
+    [
+      "Ertheia/Infinite Odyssey[The Beginning of Journey]",
+      "etoa2.XDAT"
+    ],
+    [
+      "Infinite Odyssey[Shadows of Light](KR)",
+      "etoa2.XDAT"
+    ],
+    [
+      "Infinite Odyssey[Shadows of Light](RU/NA)",
+      "etoa2_2_ru.XDAT"
+    ],
+    [
+      "Infinite Odyssey[New Guardian of Astatine](KR)",
+      "etoa2_3.XDAT"
+    ],
+    [
+      "Infinite Odyssey[New Guardian of Astatine](RU/NA)",
+      "etoa2_3_ru.XDAT"
+    ],
+    [
+      "Infinite Odyssey[Hymn of the Soul/Will of the Ancients](KR)",
+      "etoa2_4.XDAT"
+    ],
+    [
+      "Helios_test(KR)",
+      "etoa3.XDAT"
+    ],
+    [
+      "Helios_test2(KR)",
+      "etoa3_.XDAT"
+    ],
+    [
+      "Helios(KR/NA)",
+      "etoa3__.XDAT"
+    ],
+    [
+      "Helios(RU)",
+      "etoa3_ru.XDAT"
+    ],
+    [
+      "Grand Crusade(KR)",
+      "etoa4.XDAT"
+    ],
+    [
+      "Grand Crusade Part 3(KR)",
+      "etoa4_p3.XDAT"
+    ],
+    [
+      "Salvation(KR)",
+      "etoa5.XDAT"
+    ],
+    [
+      "Essence / Japan (protocol 591) — native-reader verified",
+      "essence_native.XDAT"
+    ],
+    [
+      "Korea (protocol 606) — native-reader verified",
+      "korea_native.XDAT"
+    ]
+  ],
+  "profiles": [
+    "ct0.json",
+    "ct1.json",
+    "ct15.json",
+    "ct22.json",
+    "ct23.json",
+    "ct24.json",
+    "ct25.json",
+    "ct26.json",
+    "etoa2.json",
+    "etoa2_2_ru.json",
+    "etoa2_3.json",
+    "etoa2_3_ru.json",
+    "etoa2_4.json",
+    "etoa3.json",
+    "etoa3_.json",
+    "etoa3__.json",
+    "etoa3_ru.json",
+    "etoa4.json",
+    "etoa4_p3.json",
+    "etoa5.json",
+    "god25.json",
+    "god3.json",
+    "god35.json",
+    "essence_native.json",
+    "korea_native.json"
+  ]
+}
