@@ -1,0 +1,13 @@
+{
+  "profile": "gracia_epilogue_0941cac5",
+  "browser_status": "user_game_tested",
+  "xdat_schema": "ct24.XDAT",
+  "checked": {
+    "Engine.dll": "7c3b792c92dbf3188b34a75c746b7c86d1043e9cb5cc4901ef64d9eda28fd48c",
+    "NWindow.dll": "14b838bbc6b6517ddc8294f0ab2fafdbe73daa5e4a39da224fdfd252c4545e06",
+    "D3DDrv.dll": "2d58fe2a6a4c8ce0f3f8fbd202a76407a9de2dd1cbba87ded38f421d52b84a33",
+    "Interface.u": "5054aa3c3298af1dbee4ba122f8e8f094cd370144d8ef5335a30855fd74b2106",
+    "Interface.xdat": "3fda8882769a513780fb94697c1d8729d2d53d4ff66c9b5e8f4f3eadc0d7440e",
+    "Core.dll": "0941cac5e71039ca0fa1c4d33675a70aab8b995bece3437936eec980f4f452f0"
+  }
+}

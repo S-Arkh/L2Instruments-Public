@@ -1,0 +1,14 @@
+{
+  "schema": 2,
+  "id": "halloween",
+  "algorithm": "halloween-standard-v2",
+  "palette": {
+    "shadow": "#150f1d", "purple": "#503456", "bone": "#e5d4a8",
+    "pumpkin": "#ee7d22", "orange_shadow": "#a34617", "stem": "#73934b",
+    "web": "#a595b2", "spider": "#e8bb5e",
+    "stretch_shadow": "#21182b", "stretch_light": "#80698b", "plain_control_light": "#d8c8dc"
+  },
+  "decoration": {"web_radius": 20, "ornament_spacing": 34},
+  "alpha_policy": "preserve-source-exactly",
+  "description": "Pumpkins, webs and bones on decorative headers; monochrome plum sliders, scrollbars and tiled drag rails."
+}

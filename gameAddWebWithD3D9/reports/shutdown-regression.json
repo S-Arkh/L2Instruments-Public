@@ -1,0 +1,22 @@
+{
+  "tests": [
+    {
+      "fixture": "exit_fixture_old",
+      "ready": true,
+      "exited": true,
+      "exit_code": -1073741819,
+      "elapsed_ms": 2217
+    },
+    {
+      "fixture": "exit_fixture",
+      "ready": true,
+      "exited": true,
+      "exit_code": 0,
+      "elapsed_ms": 819
+    }
+  ],
+  "old_exit_failure_hex": "0xc0000005",
+  "hf_hang_retest_required": true,
+  "observed_hf_pid": 44960,
+  "observed_remaining_threads": 1
+}

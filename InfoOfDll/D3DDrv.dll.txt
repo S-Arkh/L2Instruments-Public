@@ -1,0 +1,33 @@
+D3DDrv.dll — штатный UE2 Direct3D renderer
+Уровень: PE-инвентаризация, проверка импортов/совместимости; не полный renderer RE.
+
+Исследованные файлы
+HF: 7e2929635db1d16586726a2b491db3bbbf81d65cc338ab3ba7b117aa69314276
+Gracia: 2d58fe2a6a4c8ce0f3f8fbd202a76407a9de2dd1cbba87ded38f421d52b84a33
+Scryde (инвентаризация): f636b22aa5fd99283c06293ed65e50434cbf22e920cd737aaa3c10cc98d06894
+
+Назначение и выводы
+Рисует игровую сцену и Canvas/UI через Direct3D. Исследованный HF импортирует
+Direct3DCreate9; наличие рабочего отдельного D3D9Ex-прототипа не превращает
+устройство игры в D3D9Ex.
+Рабочий браузер обновляет UTexture через Engine и использует штатный путь UI.
+Для итогового браузера D3DDrv не заменяли и shared texture прямо в device игры
+не внедряли. Перехват Present/Reset или восстановление всех внутренних структур
+renderer не являются подтверждённой частью этой реализации.
+
+Связь с Core
+При ошибочном использовании чужой Core Clear HF обнаружено несовпадение
+ожидаемой сигнатуры SetVGAInfo. Совместимость проверяется по полным decorated
+именам, не только по короткому названию функции. Исправление — профиль родной Core.
+
+Для переноса
+Сохранять DLL целевого клиента, проверять SHA256/импорты и соответствие Core.
+Если нужен прямой GPU-sharing, отдельно исследовать фактический device,
+создание ресурсов, reset/lost-device, синхронизацию и время жизни текстур.
+Успех нынешнего BGRA/readback-пути этих вопросов не решает.
+
+Источники
+gameAddWebWithD3D9/reports/inventory.json
+gameAddWebWithD3D9/reports/d3d9ex-shared-probe.json
+gameAddWebWithD3D9/native/gpu_probe.cpp
+dll/tools/check_core_dependencies.py; dll/CLEAR_HF_FIX.md

@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "profiles": {
+    "hf5_revision_268": {
+      "directory": "profiles/high-five",
+      "current_bundle": "out/high-five/system",
+      "inventory_prefix": "hf",
+      "xdat_schema": "ct26.XDAT",
+      "browser_status": "user_game_tested",
+      "texture": {"init_rva": "0x1c4510", "vtable_rva": "0x4e358c", "render_vtable_rva": "0x581904", "mips": "0xf8", "mip_count": "0xfc", "render": "0x108"}
+    },
+    "gracia_epilogue_0941cac5": {
+      "directory": "profiles/gracia",
+      "current_bundle": "out/gracia/system",
+      "inventory_prefix": "gracia",
+      "core_profile": "gracia_epilogue_0941cac5",
+      "xdat_schema": "ct24.XDAT",
+      "browser_status": "user_game_tested",
+      "interface_sha256": "5054aa3c3298af1dbee4ba122f8e8f094cd370144d8ef5335a30855fd74b2106",
+      "xdat_sha256": "3fda8882769a513780fb94697c1d8729d2d53d4ff66c9b5e8f4f3eadc0d7440e",
+      "texture": {"init_rva": "0x1b1930", "vtable_rva": "0x4b0c7c", "render_vtable_rva": "0x5436dc", "mips": "0xf4", "mip_count": "0xf8", "render": "0x104"}
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "adapter": "NVIDIA GeForce RTX 3080",
+  "adapter_luid_low": 249768320,
+  "capture_fps": 59.55979178016714,
+  "changed_fps": 54.46323078363335,
+  "changed_frames": 545,
+  "d3d9_readback_ms_avg": 2.586094295302017,
+  "distinct_colors": 117,
+  "elapsed_seconds": 10.006746300000001,
+  "frames": 596,
+  "game_tested": false,
+  "gpu_copy_and_fence_ms_avg": 0.8751649328859057,
+  "last_pixel": 4287704257,
+  "passed": true,
+  "pipeline": "WebView2 Composition -> WGC/D3D11 -> shared D3D9Ex -> validation readback",
+  "png_capture": false,
+  "shared_d3d11_d3d9ex_created": true
+}

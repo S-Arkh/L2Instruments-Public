@@ -1,0 +1,15 @@
+{
+  "profile": "gracia",
+  "system": "<LOCAL_INPUT>/input-0041/system",
+  "processes": [
+    {
+      "pid": 0,
+      "name": "L2",
+      "attach_exit": 0,
+      "log": {
+        "value": "observation_armed; no game device or texture replaced\nactual_device=1 pid=<LOCAL_ID> thread=<LOCAL_ID> QueryInterface_IDirect3DDevice9Ex=0x80004002 parameters=0x00000000 adapter=0 behavior=0x00000142\n"
+      }
+    }
+  ],
+  "error": null
+}

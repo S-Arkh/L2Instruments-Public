@@ -1,0 +1,14 @@
+class TextureWebAPI extends Object;
+native(4018) static final function bool TextureWebOpen();
+native(4019) static final function TextureWebHide();
+native(4020) static final function TextureWebNavigate(string URL);
+native(4021) static final function TextureWebCommand(int Command);
+native(4022) static final function int TextureWebStatus();
+native(4023) static final function bool TextureWebMouse(int Kind, int Left, int Top, int Width, int Height, int Modifiers);
+native(4024) static final function TextureWebKey(int KeyCode, bool Down, int Modifiers);
+native(4025) static final function TextureWebFocus(bool Active);
+native(4026) static final function TextureWebText(string Text);
+native(4027) static final function int TextureWebPoll(bool Active, bool Hover, int Left, int Top, int Width, int Height);
+native(4028) static final function bool TextureWebLeftPressed();
+native(4029) static final function TextureWebResume();
+native(4030) static final function TextureWebClose();

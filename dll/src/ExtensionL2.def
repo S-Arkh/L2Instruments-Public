@@ -1,0 +1,7 @@
+LIBRARY ExtensionL2
+EXPORTS
+    ExtensionL2Attach=_ExtensionL2Attach@4
+    ExtensionL2Index=_ExtensionL2Index@0
+    ExtensionL2LastStatus=_ExtensionL2LastStatus@0
+    ExtensionL2Count=_ExtensionL2Count@0
+    ExtensionL2GetBinding=_ExtensionL2GetBinding@12

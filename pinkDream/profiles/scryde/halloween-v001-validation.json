@@ -1,0 +1,13 @@
+{
+  "schema": 2,
+  "theme": "halloween",
+  "revision": "v001",
+  "textures": 446,
+  "mips": 492,
+  "alpha_preserved": true,
+  "outside_payloads_unchanged": true,
+  "stored_images_match_packages": true,
+  "real_install_rollback_from_reference": "passed",
+  "install_from_pristine_client": "hash-supported; original package copy unavailable for full installation test",
+  "game_tested": false
+}

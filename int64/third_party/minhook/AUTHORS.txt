@@ -1,0 +1,8 @@
+Tsuda Kageyu
+ Creator, maintainer
+
+Michael Maltsev
+ Added "Queue" functions. A lot of bug fixes.
+
+Andrey Unis
+ Rewrote the hook engine in plain C.

@@ -1,0 +1,6 @@
+{
+  "switch": "christmas/v001 -> glamour-pink/v001 -> rollback to christmas/v001",
+  "real_packages": 5,
+  "result": "passed",
+  "main_client_modified": false
+}

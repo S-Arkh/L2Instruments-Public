@@ -1,0 +1,15 @@
+build/
+work/
+tests/run-*/
+profiles/*/build/
+profiles/*/build-inprocess/
+profiles/*/archive/
+profiles/*/stage/
+profiles/*/workspace/
+profiles/*/tests/run*/
+profiles/*/tests/open-api-*/
+profiles/*/tests/vm/
+profiles/*/backups/
+prototype/stage/
+prototype/workspace/
+__pycache__/

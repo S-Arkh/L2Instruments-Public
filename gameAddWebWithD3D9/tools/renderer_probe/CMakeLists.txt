@@ -1,0 +1,16 @@
+cmake_minimum_required(VERSION 3.24)
+project(RendererProbe LANGUAGES C CXX)
+if(NOT WIN32 OR NOT CMAKE_SIZEOF_VOID_P EQUAL 4)
+  message(FATAL_ERROR "Windows Win32 required")
+endif()
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+set(MINHOOK "${CMAKE_CURRENT_SOURCE_DIR}/../../../int64/third_party/minhook")
+add_library(renderer_probe SHARED probe.cpp
+  ${MINHOOK}/src/buffer.c ${MINHOOK}/src/hook.c ${MINHOOK}/src/trampoline.c
+  ${MINHOOK}/src/hde/hde32.c)
+target_include_directories(renderer_probe PRIVATE ${MINHOOK}/include)
+target_link_libraries(renderer_probe PRIVATE d3d9 user32)
+target_compile_definitions(renderer_probe PRIVATE UNICODE _UNICODE)
+add_executable(renderer_attach attach.cpp)
+target_compile_definitions(renderer_attach PRIVATE UNICODE _UNICODE)

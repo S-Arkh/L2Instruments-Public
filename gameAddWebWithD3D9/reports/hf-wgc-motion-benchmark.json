@@ -1,0 +1,16 @@
+{
+  "capture_fps": 55.8832867928903,
+  "capture_ms_avg": 2.360924161073825,
+  "capture_ms_max": 5.9589,
+  "captures": 447,
+  "copies": 421,
+  "copy_fps": 52.63280478703986,
+  "copy_ms_avg": 0.12376722090261266,
+  "copy_ms_max": 0.5576,
+  "decode_ms_avg": 0.0,
+  "decode_ms_max": 0.0,
+  "elapsed_seconds": 7.9988136999999995,
+  "gpu_upload_measured": false,
+  "pipeline": "WGC D3D11 readback -> HF CPU mip (no PNG)",
+  "scheduler_wait_ms_avg": 0.0
+}

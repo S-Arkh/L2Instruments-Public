@@ -1,0 +1,10 @@
+{
+  "original_sha256": "5054aa3c3298af1dbee4ba122f8e8f094cd370144d8ef5335a30855fd74b2106",
+  "compiled_sha256": "045edb8ac69a20913c3122fa860533b0a16a967077ad76530b790fa64ca99727",
+  "verified_functions": 3259,
+  "verified_blocks": 21326,
+  "errors": {},
+  "metadata_errors": {},
+  "passed": true,
+  "scope": "function flags, CFG routing/expressions, dispatcher init/exit, login branch, helper, property metadata, enums and inheritance"
+}

@@ -1,0 +1,3 @@
+LIBRARY Ucc64Bridge
+EXPORTS
+    Ucc64Initialize=_Ucc64Initialize@4

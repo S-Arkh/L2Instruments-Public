@@ -1,0 +1,9 @@
+{
+  "revision": "trial-v001",
+  "game_tested": true,
+  "user_confirmation": "в игре работает, но не все текстуры интерфейса по виду заменены",
+  "manifest": "../../builds/scryde/trial-v001/manifest.json",
+  "installed_package_hashes_match_bundle": true,
+  "coverage_gaps": ["window resize edges", "inventory tabs and buttons", "window title area", "empty equipment slots"],
+  "scope": "User confirmed operation of v001; expanded revisions require separate game validation."
+}
