@@ -1,0 +1,140 @@
+name: Release Interface Editor
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (for example 0.5.1 or 0.5.1-rc.1)'
+        required: true
+        type: string
+      prerelease:
+        description: 'Publish as a prerelease'
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-interface-editor-${{ inputs.version }}
+  cancel-in-progress: false
+
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+
+jobs:
+  preflight:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      revision: ${{ steps.identity.outputs.revision }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate version and reject existing releases/tags
+        id: identity
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+          GH_TOKEN: ${{ github.token }}
+          IS_PRERELEASE: ${{ inputs.prerelease }}
+        run: |
+          python - <<'PY'
+          import os, subprocess, sys, urllib.error, urllib.request
+          sys.path.insert(0, 'interface_editor/tools')
+          from release_windows import validate_identity
+          version = os.environ['RELEASE_VERSION']
+          revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          validate_identity(version, revision)
+          if '-' in version and os.environ['IS_PRERELEASE'] != 'true':
+              raise ValueError('A version with a prerelease suffix must be marked prerelease')
+          tag = 'interface-editor-v' + version
+          base = os.environ['GITHUB_API_URL'] + '/repos/' + os.environ['GITHUB_REPOSITORY']
+          for route in ('/releases/tags/', '/git/ref/tags/'):
+              request = urllib.request.Request(base + route + tag, headers={
+                  'Authorization': 'Bearer ' + os.environ['GH_TOKEN'],
+                  'Accept': 'application/vnd.github+json'})
+              try:
+                  with urllib.request.urlopen(request) as response:
+                      raise ValueError('Release or tag already exists: ' + tag)
+              except urllib.error.HTTPError as error:
+                  if error.code != 404:
+                      raise
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('revision=' + revision + '\n')
+          PY
+
+  build:
+    needs: preflight
+    runs-on: windows-2022
+    timeout-minutes: 30
+    env:
+      QT_QPA_PLATFORM: offscreen
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.preflight.outputs.revision }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.10'
+          architecture: x64
+      - run: python -B tools/check_publication.py
+      - run: python -B tools/check_privacy.py
+      - run: python -m pip install -r interface_editor/requirements-release.txt
+      - run: python -m cmake -S interface_editor -B interface_editor/build -G "Visual Studio 17 2022" -A x64
+      - run: python -m cmake --build interface_editor/build --config Release --parallel 2
+      - name: Test source
+        working-directory: interface_editor
+        run: python -B -m pytest tests -q
+      - name: Package and test release archive
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+          RELEASE_REVISION: ${{ needs.preflight.outputs.revision }}
+        run: |
+          $modules = @(Get-ChildItem interface_editor/app/_interface_core*.pyd)
+          if ($modules.Count -ne 1) { throw 'Expected exactly one built native module' }
+          python -B interface_editor/tools/release_windows.py --version $env:RELEASE_VERSION --revision $env:RELEASE_REVISION --module $modules[0].FullName --work "$env:RUNNER_TEMP/interface-release" --cache "$env:RUNNER_TEMP/interface-inputs"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          python -B tools/check_privacy.py --archive "$env:RUNNER_TEMP/interface-release/publish/InterfaceEditor-$env:RELEASE_VERSION-windows-x64.zip"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: interface-editor-release
+          path: ${{ runner.temp }}/interface-release/publish/*
+          if-no-files-found: error
+          retention-days: 1
+
+  publish:
+    needs: [preflight, build]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: interface-editor-release
+          path: release
+      - name: Publish verified ZIP
+        working-directory: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_VERSION: ${{ inputs.version }}
+          RELEASE_REVISION: ${{ needs.preflight.outputs.revision }}
+          IS_PRERELEASE: ${{ inputs.prerelease }}
+        run: |
+          set -euo pipefail
+          sha256sum --check SHA256SUMS.txt
+          tag="interface-editor-v${RELEASE_VERSION}"
+          flags=()
+          latest=true
+          if [[ "$IS_PRERELEASE" == true ]]; then
+            flags+=(--prerelease)
+            latest=false
+          fi
+          # Create a draft first: incomplete uploads never become a published release.
+          # gh rejects an existing release; no --clobber or forced tag updates.
+          gh release create "$tag" "InterfaceEditor-${RELEASE_VERSION}-windows-x64.zip" SHA256SUMS.txt \
+            --target "$RELEASE_REVISION" --title "Interface Editor ${RELEASE_VERSION}" \
+            --notes-file RELEASE_NOTES.md --draft "${flags[@]}"
+          gh release edit "$tag" --draft=false --latest="$latest"
+          echo "Published: https://github.com/${GH_REPO}/releases/tag/${tag}" >> "$GITHUB_STEP_SUMMARY"
