@@ -10,16 +10,21 @@
 
 ## Быстрый запуск
 
+Для автономной Windows x64-сборки со встроенными Python/Qt см.
+[portable-сборку](docs/PORTABLE_BUILD.md). В готовом ZIP запускайте `Start.cmd`;
+настройки хранятся рядом в `data/settings.ini`.
+
 Из чистого клона сначала установите зависимости и соберите ядро по
 [общей инструкции](../docs/BUILD.md#interface-editor-и-uexplorer-x64).
 Затем запустите **`uExplorer\run.cmd`**. DLL и CLI создаются в `bin`;
 готовые файлы не включены в Git. Скрипт также поддерживает portable runtime редактора.
 
 `run.cmd` автоматически проверяет окружения в следующем порядке:
-1. `uExplorer/.venv`;
-2. `interface_editor/.venv`;
-3. portable runtime `interface_editor/dist/windows/runtime` с его `packages`;
-4. `python` из PATH.
+1. собственный `uExplorer/runtime`;
+2. `uExplorer/.venv`;
+3. `interface_editor/.venv`;
+4. portable runtime `interface_editor/dist/windows/runtime` с его `packages`;
+5. `python` из PATH.
 
 Выбирается первый Python 3.10+, в котором действительно загружаются QtCore,
 QtGui и QtWidgets. Непригодные окружения пропускаются. Если подходящего нет,
@@ -75,7 +80,7 @@ Windows SDK, CMake 3.24+ и Python с установленным `nlohmann_json`
 - При отсутствии пригодного ScriptText работает декомпилятор; сложные функции
   могут содержать диспетчер `__RecoveredPC`.
 - `partial` означает неполное восстановление; подробности и доступный AST/raw
-  находятся в JSON-отчёте. В частности, делегаты, часть defaults, replication
+  находятся в JSON-отчёте. В частности, неподтверждённые формы DelegateProperty, часть defaults, replication
   и state/latent-конструкций требуют доработки.
 - Native-функции разрешаются по метаданным зависимостей; машинный код DLL
   не декомпилируется.

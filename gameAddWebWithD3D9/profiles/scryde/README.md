@@ -8,7 +8,7 @@
 ## Итог: исследование остановлено
 
 После завершения удалены все три тестовые копии:
-`<TRIAL_OTHER_DISK>`, `<TRIAL_SAME_DISK>`, `tests/ui-trial-local-validation-104801`
+`<TRIAL_OTHER_DISK>`, `<TRIAL_SAME_DISK>`, `tests/ui-trial-snapshot-042`
 и неполный `stacks.xml`. Junction удалялись без обхода целевых ресурсов.
 Документация, аудит и готовые трассировки сохранены. Малые отчёты из копии C:
 перенесены в локальный `tests/retained-fixture-reports` рабочего дерева разработки;
@@ -47,7 +47,7 @@ HF-донор уже содержал BrowserWnd/AddWebAPI/TextureProbeAPI; эт
 
 ExtensionL2.dll удалена из основного клиента. Экземпляр DLL
 в копии на другом диске удалён вместе с копией при окончательной очистке.
-Неполный экспорт `tests/startup-trace-local-validation-113919/stacks.xml` размером
+Неполный экспорт `tests/startup-trace-snapshot-043/stacks.xml` размером
 8 182 180 130 байт также удалён; разбор стеков не завершён. Исходный PML сохранён.
 
 ### Документы
@@ -111,7 +111,7 @@ Interface.xdat остался исходным (SHA-256
 ## История: подготовка первой копии
 
 - Статический отчёт сохранён в `interface-audit.json`.
-- Создана копия `tests/ui-trial-local-validation-104801/Scryde` с исходным UI.
+- Создана копия `tests/ui-trial-snapshot-042/Scryde` с исходным UI.
 - Пары интерфейса сохранены в `original-ui` и `replacement-ui` рядом с копией.
 - Донор содержит прежние браузерные изменения, включая BrowserWnd/AddWebAPI.
 - Защищённые пакеты Scryde не декодированы; совпадение экспортов DLL не доказывает совместимость.

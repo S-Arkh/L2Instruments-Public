@@ -56,8 +56,10 @@ count and truncation flag.
 
 ## Remaining limitations
 
-Delegate declarations/assignments and some state/default constructs remain
-unsupported by the source writer and produce `partial` results. The inspected
-TimeZoneWnd, HelpWnd and RelicSummonWnd classes still report delegate issues.
+Delegate declarations, backing-property mapping, assignments, calls (including
+their argument trees) and `new` are now handled by the source writer. See
+[generation validation](GENERATION_VALIDATION.md) for compiler roundtrip tests
+and the external five-client comparison procedure. Unverified DelegateProperty
+forms and some state/default constructs still produce `partial` results.
 Successful structural audit does not establish recompilability, client execution
 equivalence, or the native XDAT layout. The latter is a separate investigation.
