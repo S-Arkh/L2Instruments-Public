@@ -1,0 +1,78 @@
+{
+  "format": 1,
+  "scope": "full-client-startup-login-rendering",
+  "captures_published": false,
+  "working_copy_restored_after_trials": true,
+  "cases": [
+    {
+      "profile": "gracia",
+      "variant": "no-tail",
+      "sample_sha256": "bd49e28adc2460f97b694c2950b1b39fbb8693f20f6b03cbc251989a8934e1d5",
+      "bytes": 1304221,
+      "launcher_sha256": "e000d76e4f8cbfc886f6abd318da968b6cddd73a90e39f0491452ef63dfb8739",
+      "module_sha256": "14b838bbc6b6517ddc8294f0ab2fafdbe73daa5e4a39da224fdfd252c4545e06",
+      "observation_seconds": 40,
+      "login_screen_capture_inspected": true,
+      "login_form_and_buttons_visible": true,
+      "credentials_entered": false,
+      "in_game_windows_validated": false,
+      "run_as_invoker": false
+    },
+    {
+      "profile": "gracia",
+      "variant": "changed-tail",
+      "sample_sha256": "f04e3e1ecbe9163e029718e4aed0e3ea70ae26760542dc6bcf70ecef763502cc",
+      "bytes": 1304241,
+      "launcher_sha256": "e000d76e4f8cbfc886f6abd318da968b6cddd73a90e39f0491452ef63dfb8739",
+      "module_sha256": "14b838bbc6b6517ddc8294f0ab2fafdbe73daa5e4a39da224fdfd252c4545e06",
+      "observation_seconds": 40,
+      "login_screen_capture_inspected": true,
+      "login_form_and_buttons_visible": true,
+      "credentials_entered": false,
+      "in_game_windows_validated": false,
+      "run_as_invoker": false
+    },
+    {
+      "profile": "high-five",
+      "variant": "original-tail",
+      "sample_sha256": "51f81c34ca52fc126bb613130515ad17bccd64eeb2a625e2653c0ae07059e12c",
+      "bytes": 1455361,
+      "launcher_sha256": "161115f9c82879db0651dd2986a8ce8046bd19048b92a8b8bc72e184b0fbe6dd",
+      "module_sha256": "94a8975ab729f077da69e62c507feada07393359d12d0ea32498b6be8d28b5b7",
+      "observation_seconds": 40,
+      "login_screen_capture_inspected": true,
+      "login_form_and_buttons_visible": true,
+      "credentials_entered": false,
+      "in_game_windows_validated": false,
+      "run_as_invoker": true
+    },
+    {
+      "profile": "high-five",
+      "variant": "no-tail",
+      "sample_sha256": "be30e5d9d729cd1d8917af8b1bc5197f55307fea88b7ffd9b698d38b81f81a84",
+      "bytes": 1455341,
+      "launcher_sha256": "161115f9c82879db0651dd2986a8ce8046bd19048b92a8b8bc72e184b0fbe6dd",
+      "module_sha256": "94a8975ab729f077da69e62c507feada07393359d12d0ea32498b6be8d28b5b7",
+      "observation_seconds": 40,
+      "login_screen_capture_inspected": true,
+      "login_form_and_buttons_visible": true,
+      "credentials_entered": false,
+      "in_game_windows_validated": false,
+      "run_as_invoker": true
+    },
+    {
+      "profile": "high-five",
+      "variant": "changed-tail",
+      "sample_sha256": "7cbb9d17e5c6dd79079f4eccd78e88d8bc0d3eec3e8b825007bb2d47768111aa",
+      "bytes": 1455361,
+      "launcher_sha256": "161115f9c82879db0651dd2986a8ce8046bd19048b92a8b8bc72e184b0fbe6dd",
+      "module_sha256": "94a8975ab729f077da69e62c507feada07393359d12d0ea32498b6be8d28b5b7",
+      "observation_seconds": 40,
+      "login_screen_capture_inspected": true,
+      "login_form_and_buttons_visible": true,
+      "credentials_entered": false,
+      "in_game_windows_validated": false,
+      "run_as_invoker": true
+    }
+  ]
+}

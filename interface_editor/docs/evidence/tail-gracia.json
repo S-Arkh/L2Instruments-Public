@@ -1,0 +1,25 @@
+{
+  "format": 1,
+  "samples": [
+    {
+      "sha256": "78dfea3e680ef5cbec1e1e0c64b0568a10f3c17f3096eb0b68f2f79edd68cbc7",
+      "bytes": 1304228,
+      "schema": "ct24.XDAT",
+      "compatible": true,
+      "tail_bytes": 20,
+      "tail_offset": 1304208,
+      "tail_sha256": "dc508b3c14714010251ee4d13b0225cf83d50b1e8ee69ad554287d669e9ec74b",
+      "words_le": [
+        0,
+        55,
+        182,
+        4149212963,
+        0
+      ],
+      "payload_crc32": 4136279560,
+      "word12_matches_payload_crc32": false,
+      "interpretation": "unconfirmed-five-words",
+      "preservation": "verbatim"
+    }
+  ]
+}

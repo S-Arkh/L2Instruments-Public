@@ -7,7 +7,7 @@ import time
 os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
 import pytest
 from PySide6.QtCore import QSettings
-from PySide6.QtWidgets import QApplication, QDialog, QComboBox, QPushButton, QProgressDialog, QInputDialog
+from PySide6.QtWidgets import QApplication, QDialog, QComboBox, QPushButton, QProgressDialog, QInputDialog, QFileDialog
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'app'))
@@ -114,6 +114,35 @@ def test_wrong_selection_offers_switch(ui, tmp_path, monkeypatch):
     assert shown == [2]
     assert window.document.summary()['schema'] == 'b.XDAT'
     assert window.document.serialize() == path.read_bytes()
+
+
+@pytest.mark.parametrize('schema', ['essence_native.XDAT', 'korea_native.XDAT'])
+def test_native_profile_gui_open_edit_save(ui, tmp_path, monkeypatch, schema):
+    sys.path.insert(0, str(ROOT / 'tools'))
+    from create_native_fixture import fixture
+    window, wait = ui
+    window.schema_text = SCHEMA
+    assert window.version.findData(schema) >= 0
+    source = tmp_path / 'native.xdat'
+    original = fixture(SCHEMA, schema).serialize()
+    source.write_bytes(original)
+    window.load_file(str(source), schema)
+    wait()
+    assert window.version.currentData() == schema
+    doc = window.document
+    windows = next(n['id'] for n in doc.children() if n['name'] == 'windows')
+    node = doc.children(windows)[0]['id']
+    window.mutate(lambda: doc.set(node, 'name', 'GuiNativeFixtureEdited'))
+    wait()
+    target = tmp_path / 'edited.xdat'
+    monkeypatch.setattr(QFileDialog, 'getSaveFileName', lambda *args: (str(target), ''))
+    window.save_file(True)
+    wait()
+    assert target.read_bytes() == doc.serialize() != original
+    assert source.read_bytes() == original
+    restored = Document(SCHEMA)
+    restored.load(str(target), schema)
+    assert restored.search('GuiNativeFixtureEdited')['matches']
 
 
 def test_no_match_keeps_existing_document(ui, tmp_path, monkeypatch):

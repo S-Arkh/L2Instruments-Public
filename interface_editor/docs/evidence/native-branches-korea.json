@@ -1,0 +1,20 @@
+{
+  "format": 1,
+  "scope": "isolated-native-serializer",
+  "full_client_ui_validated": false,
+  "module_sha256": "4ed1266cc4266d7612ac52f5cd12e587b8bd0a795e6c4972d31304e5aa7981a7",
+  "constructor_rva": "0x921520",
+  "serializer_rva": "0x91c770",
+  "stack_constructor": false,
+  "cases": [
+    {
+      "sha256": "a4c38b43d0e0cfd6335db3d2daff0d0920126718cd41885a6c0fff5b7090c9fe",
+      "bytes": 10977,
+      "returncode": 0,
+      "cursor": 10977,
+      "archive_calls": 5823,
+      "native_success": true,
+      "unconsumed_bytes": 0
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "format": 1,
+  "scope": "isolated-native-serializer",
+  "full_client_ui_validated": false,
+  "module_sha256": "94a8975ab729f077da69e62c507feada07393359d12d0ea32498b6be8d28b5b7",
+  "constructor_rva": "0x3aae30",
+  "serializer_rva": "0x3aafa0",
+  "stack_constructor": true,
+  "cases": [
+    {
+      "sha256": "68f10287b1caa09bd8127ff97e634be179a87f15b7597afcc2bc3ba3367b3af8",
+      "bytes": 1452494,
+      "returncode": 0,
+      "cursor": 1452474,
+      "archive_calls": 961118,
+      "native_success": true,
+      "unconsumed_bytes": 20
+    },
+    {
+      "sha256": "c1eb273fcaa2b1f5d64c469ee4d10e908c284ad5c2fd6bc5fd8bbd7d5c56e64c",
+      "bytes": 1452494,
+      "returncode": 0,
+      "cursor": 1452474,
+      "archive_calls": 961118,
+      "native_success": true,
+      "unconsumed_bytes": 20
+    },
+    {
+      "sha256": "ef760e59711fc6a634d653c69cabaac6128ec6f896569df66afe0fcc7f18cdf6",
+      "bytes": 1452474,
+      "returncode": 0,
+      "cursor": 1452474,
+      "archive_calls": 961118,
+      "native_success": true,
+      "unconsumed_bytes": 0
+    }
+  ]
+}
