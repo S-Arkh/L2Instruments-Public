@@ -6,18 +6,29 @@
 в целевом игровом клиенте проверены. Scryde в подтверждённые интеграции не входит.
 
 Требования: CMake 3.24+, VS2022 Desktop development with C++, Windows SDK.
-Для UI — Python 3.10+ и `PySide6>=6.6,<7`. Текущая проверенная сборка — x64 Release.
+Для сборки нужен Python с `nlohmann_json`; для UI — PySide6.
+Проверяемое окружение: Python 3.12 x64 и зависимости из
+`interface_editor/requirements-release.txt`. Текущая проверенная сборка — x64 Release.
+
+Из корня репозитория, если `.venv` ещё не создана:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r interface_editor/requirements-release.txt
+```
 
 Из каталога `uExplorer`:
 
 ```powershell
+..\.venv\Scripts\Activate.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File .\build.ps1
 ```
 
 Эквивалентные команды:
 
 ```powershell
-cmake -S . -B build-x64 -G "Visual Studio 17 2022" -A x64
+$Python = (Resolve-Path ../.venv/Scripts/python.exe).Path
+cmake -S . -B build-x64 -G "Visual Studio 17 2022" -A x64 "-DPython_EXECUTABLE=$Python"
 cmake --build build-x64 --config Release
 cmake --install build-x64 --config Release --prefix .
 ```
@@ -31,10 +42,11 @@ MSVC runtime статический (`/MT`, Debug `/MTd`).
 результат в тот же `bin`. Win32 не проверялся; для UI потребуется подходящий
 32-bit Python/Qt runtime. Рекомендуется проверенная x64-конфигурация.
 
-Заголовок JSON берётся из
-`../gameAddWebWithD3D9/browserTexture/vendor/nlohmann/json.hpp`.
-При переносе исходников сохраните этот путь или измените CMake include path.
-Самой готовой DLL этот каталог не нужен.
+Заголовки JSON берутся из Python-пакета `nlohmann_json`: CMake вызывает
+`nlohmann_json.get_include()` через выбранный `Python_EXECUTABLE`.
+Старый каталог `browserTexture/vendor` не используется. Самой готовой DLL
+пакет заголовков не нужен. Для `build.ps1` активируйте корневую `.venv`
+перед запуском; в ручной команде выше интерпретатор выбран явно.
 
 ## Выбор ядра и Python
 
@@ -62,16 +74,40 @@ CLI возвращает код/метаданные в JSON. Запись `.uc`
 
 ## Тесты
 
-Тесты используют реальные fixtures соседних проектов, поэтому для их запуска
-нужно полное дерево `rebuild`. Команды из `uExplorer`:
+Тесты используют внешние игровые эталоны; в чистом клоне их нет.
+Для `validate.py` и `test_gui.py` укажите каталог с оригинальными Gracia
+`Interface.u` и `NWindow.u` через `UEXPLORER_GRACIA_SYSTEM`. Эти тесты ожидают
+конкретный эталон (239 классов), а не любой клиент с названием Gracia.
+Команды из `uExplorer`, после сборки и установки ядра:
 
 ```powershell
-$python = '..\interface_editor\dist\windows\runtime\python.exe'
+$python = (Resolve-Path '..\.venv\Scripts\python.exe').Path
+$env:UEXPLORER_GRACIA_SYSTEM = Read-Host 'Абсолютный путь к эталонному Gracia System'
+$env:QT_QPA_PLATFORM = 'offscreen'
 & $python -B tests\validate.py
-& $python -B tests\validate_formats.py
+if ($LASTEXITCODE) { throw 'validate.py failed' }
 & $python -B tests\test_gui.py
+if ($LASTEXITCODE) { throw 'test_gui.py failed' }
+```
+
+Остальные сценарии не используют эту переменную для выбора всех входов.
+Перед их запуском подготовьте файлы по путям, указанным ниже:
+
+| Сценарий | Дополнительные входы относительно корня репозитория |
+|---|---|
+| `validate_formats.py` | `gameAddWebWithD3D9/archive/addWeb/inputs/{interface.u,NWindow.u}`, зависимости в `archive/addWeb/workspace/System` того же проекта, `int64/compiler/System/Interface.u`, `gameAddWebWithD3D9/profiles/gracia/inputs/{Engine.u,Interface.u}` |
+| `compile_recovered.py` | `gameAddWebWithD3D9/profiles/gracia/inputs/Interface.u`, подготовленные `gameAddWebWithD3D9/profiles/gracia/workspace` и `gameAddWebWithD3D9/toolchain` |
+| `verify_roundtrip.py` | Успешный предыдущий запуск `compile_recovered.py` и его исходные эталоны |
+
+Команды из `uExplorer`, с тем же `$python`:
+
+```powershell
+& $python -B tests\validate_formats.py
+if ($LASTEXITCODE) { throw 'validate_formats.py failed' }
 & $python -B tests\compile_recovered.py
+if ($LASTEXITCODE) { throw 'compile_recovered.py failed' }
 & $python -B tests\verify_roundtrip.py
+if ($LASTEXITCODE) { throw 'verify_roundtrip.py failed' }
 ```
 
 Проверяйте `$LASTEXITCODE` после каждой команды.
@@ -95,7 +131,10 @@ $python = '..\interface_editor\dist\windows\runtime\python.exe'
   dispatcher, helper, исходные свойства, enum и наследование. Оригинальные
   комментарии/форматирование, defaults и все class flags этим тестом не проверяются.
 
-## Результаты текущей проверки
+## Исторические результаты исходного проекта
+
+Таблица ниже относится к прежним эталонам и сборкам. Результаты проверки
+публикационного состава приведены в [общем отчёте](../../docs/VALIDATION.md).
 
 | Проверка | Результат |
 |---|---|

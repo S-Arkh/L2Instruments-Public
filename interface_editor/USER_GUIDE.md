@@ -14,7 +14,15 @@
 `<HF_CLIENT>` — корень установленного клиента High Five;
 подставьте его фактическое расположение.
 
-Сначала выполните сборку по [README](README.md), затем запустите **`run.cmd`**.
+После сборки по корневому [README](../README.md) запускайте из корня репозитория:
+
+```powershell
+.\.venv\Scripts\python.exe interface_editor/app/main.py
+```
+
+Если вы собирали редактор его собственным `interface_editor/build.ps1`,
+запускайте **`interface_editor/run.cmd`**: он использует локальную
+`interface_editor/.venv`. Корневую `.venv` этот `.cmd` не ищет.
 Готовый `dist/windows` не включён в Git. Локально подготовленный переносной
 комплект запускается через `dist/windows/Start.cmd` и переносится целиком.
 Целевая ОС — Windows 10/11 x64 с системными API ICU, используемыми Qt.

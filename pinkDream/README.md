@@ -3,7 +3,7 @@
 **Публикационная копия:** поставляются инструменты, генератор и рецепты тем.
 Библиотеки текстур, изображения и готовые UTX создаются локально.
 [Установка зависимостей и автономные тесты](../docs/BUILD.md#pinkdream).
-Готовые комплекты ниже описывают результаты исходного рабочего дерева.
+Прежние готовые комплекты описаны в [историческом перечне](docs/HISTORICAL_BUILDS.md).
 
 Сборка в Windows и все реализованные функции в игре проверены. Для Scryde
 pinkDream — единственный рабочий проект в этом наборе; в остальных проектах
@@ -14,27 +14,27 @@ pinkDream — единственный рабочий проект в этом �
 Темы стандартного интерфейса Lineage II с общей генерацией и профилями клиентов.
 Сохраняются оригиналы, редактируемые изображения, PNG/TGA, mip-уровни и готовые UTX.
 
-## Готовые комплекты Scryde
+## Начало работы из чистого клона
 
-| Тема | Папка с файлами для замены |
-|---|---|
-| Christmas v003 — леденцы и гирлянды; гладкие ползунки и края | `builds/scryde/christmas/v003/SysTextures` |
-| Halloween v002 — тыквы, паутина, кости; гладкие ползунки и края | `builds/scryde/halloween/v002/SysTextures` |
-| Glamour Pink v001 — розовая тема | `builds/scryde/glamour-pink/v001/SysTextures` |
+Из каталога `pinkDream`:
 
-Каждая тема: 446 текстур / 492 mip-уровня в пяти UTX. При закрытой игре файлы
-копируются в `<SCRYDE_CLIENT>\SysTextures` с резервным копированием предыдущих.
-`<SCRYDE_CLIENT>` — корень клиента Scryde, содержащий `SysTextures` и `Scryde`;
-подставьте путь к своей установке.
-**[Установка с автоматическим backup/откатом и переключение тем](docs/THEMES.md).**
-Актуальные версии проверены офлайн и в игре на Scryde.
+```powershell
+python -m pip install -r requirements.txt
+python -B -m unittest discover -s tools -p 'test_*.py' -v
+python tools/create_library.py --help
+python tools/build_theme.py --help
+```
 
-Предпросмотры:
+1. Подготовьте стандартный клиент и selection ресурсов своего профиля.
+2. Создайте inventory и исходную библиотеку по
+   [ADDING_THEMES, раздел 4](docs/ADDING_THEMES.md#4-подключение-другого-клиента).
+3. Передайте полученный `manifest.json` и рецепт из `themes` в `build_theme.py`
+   по [разделу 5](docs/ADDING_THEMES.md#5-сборка-и-импорт-ручных-изображений).
+4. Проверьте созданные UTX и изображения, затем используйте
+   [установку с backup/откатом](docs/THEMES.md), подставляя пути своей сборки.
 
-- `assets/generated/scryde/christmas/v003/previews/highlights.png`
-- `assets/generated/scryde/halloween/v002/previews/highlights.png`
-- Исправление повторяющихся узоров: `assets/previews/seasonal-scaling-fix.png`.
-- Полное сравнение каждой темы — соседние `page-*.png`.
+Библиотеки, previews и устанавливаемые UTX появляются только после этих шагов.
+Названия исторических ревизий не означают, что такие файлы уже есть в клоне.
 
 ## Разработка
 
@@ -43,9 +43,9 @@ pinkDream — единственный рабочий проект в этом �
 **[Техническое руководство по новым темам и клиентам](docs/ADDING_THEMES.md).**
 
 ```sh
-python -m pip install -r requirements.txt
 python tools/library.py list
-python tools/build_theme.py --library assets/libraries/scryde/standard-ui-v001/manifest.json --theme themes/halloween/theme.json --revision v002
+# После создания собственной библиотеки, подставьте её путь:
+python tools/build_theme.py --library path/to/library/manifest.json --theme themes/halloween/theme.json --revision custom-v001
 ```
 
 - `themes/` — общие рецепты Christmas, Halloween, Glamour Pink.
@@ -61,12 +61,7 @@ python tools/build_theme.py --library assets/libraries/scryde/standard-ui-v001/m
 HF и Gracia пока имеют заготовки профилей. Для них создаются свои библиотеки;
 рецепты общие, UTX Scryde для них не используются.
 
-## Очистка старых версий
+## История
 
-Ранние trial-v001…v004 UTX-дубликаты удалены после проверки. Их готовые изображения,
-оригиналы и метаданные сохранены по хешам: `assets/archives/legacy-trials-v1.json`.
-Современная библиотека и темы от прежних trial-каталогов не зависят.
-Christmas v001 сохранена как предыдущая установленная тема для переключения/отката;
-найденный в ней пользовательский `SysTextures.zip` сохранён.
-
-Итоги: [docs/CLEANUP.md](docs/CLEANUP.md). История первых экспериментов: `docs/history/`.
+[Прежние сборки и previews](docs/HISTORICAL_BUILDS.md),
+[результаты очистки исходного дерева](docs/CLEANUP.md), ранние эксперименты — `docs/history/`.
