@@ -1,4 +1,4 @@
-#include "package.h"
+#include "fixture_context.h"
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
@@ -10,7 +10,7 @@ int main(int argc,char** argv){
         if(argc!=2)throw std::runtime_error("Expected fixture path");
         ue::Bytes header(36,0);header[0]=0xc1;header[1]=0x83;header[2]=0x2a;header[3]=0x9e;header[4]=133;header[6]=40;
         {std::ofstream out(argv[1],std::ios::binary);out.write(reinterpret_cast<const char*>(header.data()),header.size());}
-        ue::Context ctx(argv[1],{});auto& p=*ctx.main;p.names={"None","Convert"};
+        FixtureContext ctx(argv[1],{});auto& p=*ctx.main;p.names={"None","Convert"};
         for(auto name:{"Function","PtrProperty","IntProperty"}){ue::Entry e;e.name=name;e.importClass="Class";p.imports.push_back(e);}
         auto add=[&](const char* name,int type,int outer,const ue::Bytes& bytes){
             ue::Entry e;e.name=name;e.cls=type;e.outer=outer;e.offset=p.data.size();e.size=bytes.size();
@@ -21,12 +21,26 @@ int main(int argc,char** argv){
         p.path="Core.u";auto result=ctx.decompile(1,true);auto code=result["code"].get<std::string>();
         check(result["status"]=="recovered",result.dump());
         check(code.find(" native noexport;")!=code.npos&&code.find(" within ")==code.npos,"Root Object flags/Within");
+        p.data[p.entry(1).offset+40]|=8;
+        check(ctx.decompile(1,true)["code"].get<std::string>().find(" transient ")!=std::string::npos,"CLASS_Transient flag lost");
+        p.data[p.entry(1).offset+40]=0x80;
+        check(ctx.decompile(1,true)["code"].get<std::string>().find(" transient ")==std::string::npos,"Unrelated class flag interpreted as transient");
+        p.data[p.entry(1).offset+40]=0;
         // A similarly named class in another package is not Core.Object.
         p.path="Other.u";result=ctx.decompile(1,true);check(result["status"]=="partial","Unrelated Object treated as root");
         add("Owner",0,0,ue::Bytes(66,0));p.data[p.entry(1).offset+62]=2;
         result=ctx.decompile(1,true);check(result["code"].get<std::string>().find(" within Owner")!=std::string::npos,result.dump());
         ue::Bytes prop{0,0,0};u32(prop,1);u32(prop,0x1002);prop.push_back(0);add("NativeHandle",-3,1,prop);
         result=ctx.decompile(1,true);check(result["code"].get<std::string>().find("var native const int NativeHandle;")!=std::string::npos,result.dump());
+        p.data[p.entry(3).offset+9]|=2;
+        check(ctx.decompile(1,true)["code"].get<std::string>().find("native const editconst int NativeHandle")!=std::string::npos,"CPF_EditConst flag lost");
+        p.data[p.entry(3).offset+9]=0;
+        for(auto modifier:{std::pair<uint32_t,const char*>{4,"input"},{0x10000,"travel"},{0x20000000,"deprecated"}}){
+            auto flags=0x1002|modifier.first;
+            for(int i=0;i<4;++i)p.data[p.entry(3).offset+7+i]=uint8_t(flags>>(8*i));
+            check(ctx.decompile(1,true)["code"].get<std::string>().find(std::string(modifier.second)+" int NativeHandle")!=std::string::npos,"Property modifier lost");
+        }
+        for(int i=0;i<4;++i)p.data[p.entry(3).offset+7+i]=uint8_t(0x1002u>>(8*i));
         p.data[p.entry(1).offset+62]=3;result=ctx.decompile(1,true);check(result["status"]=="partial","Non-class Within accepted");
         p.data[p.entry(1).offset+62]=2;
         // Keep the native pointer's metadata and original bytes; do not replace its type.

@@ -17,13 +17,25 @@ def test_credentials_are_rejected_even_in_dependencies_and_licenses():
 
 def test_personal_metadata_and_dates_are_rejected():
     for text in ['/' + 'home' + '/local-person/project',
-                 'local-person' + '@' + 'example.org', '-'.join(['2020', '01', '02'])]:
+                 'local-person' + '@' + 'example.org',
+                 '-'.join(['2020', '01', '02']),
+                 '.'.join(['02', '01', '2020']),
+                 ''.join(['2020', '01', '02']),
+                 '{"time' + 'stamp": ' + '1700000000}']:
         assert privacy.inspect('docs/report.md', text.encode())
 
 
-def test_licenses_and_relative_paths_are_allowed():
+def test_compact_hex_color_is_not_a_date():
+    assert not privacy.inspect('fixture.py', b"data_hex='20408080'")
+
+
+def test_source_notices_reject_emails_but_dependency_notices_are_preserved():
     email = ('upstream' + '@' + 'example.org').encode()
-    assert not privacy.inspect('third_party/AUTHORS.txt', email)
+    assert privacy.inspect('third_party/AUTHORS.txt', email)
+    assert not privacy.inspect('packages/AUTHORS.txt', email, dependency=True)
+
+
+def test_relative_paths_and_workflow_token_are_allowed():
     assert not privacy.inspect('docs/layout.md', b'`work/home/`, `work/tmp/`')
     assert not privacy.inspect('workflow.yml', b'GH_TOKEN: ${{ github.token }}')
 

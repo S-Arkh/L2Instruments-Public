@@ -41,12 +41,26 @@ def file_manifest(bundle):
             for p in sorted(bundle.rglob('*')) if p.is_file() and p != bundle/'BUILDINFO.json'}
 
 
+def prepare_output(out):
+    marker = out/'.uexplorer-package-output'
+    identity = 'uExplorer portable build output\n'
+    if out.is_symlink() or (hasattr(out,'is_junction') and out.is_junction()):
+        raise ValueError('Portable output must not be a symbolic link or junction: ' + str(out))
+    if out.exists():
+        if not marker.is_file() or marker.read_text() != identity:
+            raise ValueError('Existing output is not a managed portable build directory: ' + str(out))
+        shutil.rmtree(out)
+    out.mkdir(parents=True)
+    marker.write_text(identity)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--version', required=True)
     parser.add_argument('--bin', type=Path, required=True, help='Freshly built DLL and CLI directory')
     parser.add_argument('--cache', type=Path, required=True)
-    parser.add_argument('--out', type=Path, required=True, help='New output directory')
+    parser.add_argument('--out', type=Path, default=ROOT/'local/portable',
+                        help='Reusable managed output directory (default: local/portable)')
     parser.add_argument('--download', action='store_true', help='Download missing pinned inputs')
     parser.add_argument('--revision', help='Explicit full Git SHA (e.g. when Git runs in WSL); dirty state is recorded as unknown')
     args = parser.parse_args()
@@ -83,8 +97,12 @@ def main():
                 temporary.unlink(missing_ok=True)
         if digest(target) != item['sha256']:
             raise ValueError('Input hash mismatch: ' + item['name'])
+    # Check before resolve(): resolving first would hide a symlink/junction
+    # and allow a rebuild to remove the linked directory.
+    if args.out.is_symlink() or (hasattr(args.out,'is_junction') and args.out.is_junction()):
+        parser.error('Portable output must not be a symbolic link or junction')
     out = args.out.resolve()
-    out.mkdir(parents=True, exist_ok=False)
+    prepare_output(out)
     name = f'uExplorer-{args.version}-windows-x64'
     bundle = out/name
     bundle.mkdir()
@@ -144,7 +162,8 @@ def main():
         f'Ревизия исходников: `{revision}`.\n\n'
         'Распакуйте ZIP и запустите **Start.cmd**. Python и Qt включены в комплект.\n\n'
         'Проверено на распакованном архиве: загрузка native DLL, CLI, GUI '
-        '(Qt offscreen), экспорт синтетического пакета и локальные настройки.\n\n'
+        '(Qt offscreen), экспорт синтетического пакета, локальные настройки, '
+        'ресурсные виджеты и декодирование аудио в памяти с выключенным звуком.\n\n'
         'BUILDINFO.json содержит хеши файлов и зависимостей; SHA256SUMS.txt — хеш ZIP. '
         'Игровые пакеты, SDK и компилятор ucc64 в архив не входят. '
         'Проверка поставки не доказывает эквивалентность восстановленного кода '

@@ -18,6 +18,7 @@ from model import TreeModel, TreeFilter
 from comparison import align_properties, ORANGE, RED
 from i18n import text
 from wheel_guard import PropertyWheelGuard
+from color_editor import ColorEditor
 from preview_render import ResourceCache
 from preview_widget import PreviewWidget
 from texture_project import TextureProject
@@ -253,6 +254,13 @@ class Pane(QWidget):
                         combo.setStyleSheet(f'QComboBox {{ background-color: {color}; color: #111111; }}')
                     combo.activated.connect(lambda i, c=combo, p=prop: self.edit_requested.emit(self.node_id, p['name'], c.itemData(i)))
                     self.table.setCellWidget(row, 1, combo)
+                elif prop['kind'] in ('color', 'rgba'):
+                    editor = ColorEditor(value, prop['kind'], prop['readonly'], self.window.t, self.window.error)
+                    editor.setToolTip(self.window.t('{kind} — изменения применяются после Enter. {details}', kind=prop['kind'], details=tooltip))
+                    if color:
+                        editor.input.setStyleSheet(f'QLineEdit {{ background-color: {color}; color: #111111; }}')
+                    editor.committed.connect(lambda value, p=prop, node=self.node_id: self.edit_requested.emit(node, p['name'], value))
+                    self.table.setCellWidget(row, 1, editor)
                 else:
                     text = f'0x{value:08X}' if prop['kind'] in ('color', 'rgba') else str(value)
                     item = QTableWidgetItem(text)

@@ -1,6 +1,9 @@
 """UI translations. XDAT field names, enum labels and stored data stay untouched."""
 
 ENGLISH = {
+    'Выбрать цвет': 'Choose color',
+    'Яркость': 'Brightness',
+    'Подтвердить': 'Confirm',
     'Подозрительное значение (эвристика)': 'Suspicious value (heuristic)',
     'Образцов: {total}; побайтное совпадение: {matched}; без хвоста: {complete}': 'Samples: {total}; byte equality: {matched}; no tail: {complete}',
     'Убрать образец': 'Remove sample',

@@ -79,8 +79,16 @@ public:
     std::string constant(int id) const;
     Json scriptText(int id) const;
     Json summary() const;
+    Json resourceInventory() const;
+    Json staticMesh(int id) const;
+    Json geometry(int id, const std::string& operation) const;
+    Json blockingVolume(int id) const;
+    Json material(int id) const;
+    Json animatedResource(int id,const std::string& operation) const;
     Json audit() const;
+    Json metadata() const;
     const std::vector<int>& members(int id) const;
+    std::vector<int> orderedFields(int id) const;
 };
 struct Decoder {
     const Package& p; Reader& r; int pc=0; size_t count=0;
@@ -101,6 +109,7 @@ public:
     Context(const std::filesystem::path& file,const std::vector<std::filesystem::path>& dirs,const std::string& bytecodeProfile="auto");
     Symbol resolve(const Package& from,int id) const;
     Json decompile(int classId,bool force=false) const;
+    Json objectDefaults(int objectId) const;
 };
 Json request(const Json& input);
 }

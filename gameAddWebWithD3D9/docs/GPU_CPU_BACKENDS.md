@@ -50,7 +50,7 @@ GetCreationParameters=0x00000000 adapter=0 behavior=0x00000142
 Оба клиента вернули одинаковый результат выше и используют обычные D3D9-устройства.
 Первоначальное сообщение об отсутствии процесса HF было ошибкой обнаружения:
 неповышенному процессу был недоступен путь запущенного l2.exe. Подключение с
-повышенными правами к PID <LOCAL_ID> успешно получило данные реального устройства HF.
+повышенными правами к PID 33484 успешно получило данные реального устройства HF.
 Сохранённый
 `native/gpu_probe.cpp` использует отдельно созданное D3D9Ex-устройство и не
 является готовым адаптером рендерера игры. GPU-sharing того эксперимента
@@ -66,12 +66,11 @@ D3D9Ex), привязка GPU-текстуры к конкретной игро�
 
 ### Сохранённые свидетельства
 
-- [HF: отчёт устройства](../reports/renderer-device-high-five.json): PID <LOCAL_ID>,
+- [HF: отчёт устройства](../reports/renderer-device-high-five.json): PID скрыт,
   успешное подключение, E_NOINTERFACE на реальном EndScene.
-- [Gracia: отчёт устройства](../reports/renderer-device-gracia.json): PID <LOCAL_ID>,
+- [Gracia: отчёт устройства](../reports/renderer-device-gracia.json): PID скрыт,
   успешное подключение, тот же результат.
-- Исходные журналы: `work/renderer-probe/Release/renderer-<LOCAL_ID>.log` и
-  `work/renderer-probe/Release/renderer-<LOCAL_ID>.log`.
+- Исходные журналы: `work/renderer-probe/Release/renderer-<LOCAL_ID>.log`.
 - Исходники диагностики: `tools/renderer_probe/`; сборка Win32 MSVC прошла.
 
 Диагностика не заменяла Core, ExtensionL2, графическое устройство или игровые

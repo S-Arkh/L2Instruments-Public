@@ -11,9 +11,17 @@
 
 - Две независимые панели дерева и поиска, общая история Undo/Redo.
 - Редактирование свойств, сравнение узлов, JSON roundtrip с сохранением raw.
+- Выбор цвета в свойствах `color`/`rgba`: цветовой круг, ползунки RGB и
+  числовой код. При выборе через диалог старший байт сохраняется, отдельное
+  поле alpha не изменяется.
+  [Управление цветом](USER_GUIDE.md#выбор-цвета).
 - Русский и английский интерфейс, статический preview для Gracia Epilogue / High Five / Японии / Кореи
-  (Window, Button, Texture, TextBox, ScrollArea) и экспорт PNG.
-- Чтение UTX, собственные текстурные проекты из PNG/TGA и сборка RGBA8 UTX.
+  (Window, Button, Texture, TextBox, ScrollArea) и экспорт PNG. Для Японии и
+  Кореи учитываются выбранный уровень UI и ограниченные повороты; игровые
+  скрипты и динамические состояния не исполняются.
+  [Возможности и ограничения preview](docs/JAPAN_KOREA_PREVIEW.md).
+- Чтение UTX, собственные текстурные проекты из PNG/TGA и сборка RGBA8 UTX
+  профиля HF 125/38 с одним mip. [Проекты текстур](docs/TEXTURES_PREVIEW.md).
 - Таблицы SysString, несколько языков, привязка текста кнопок к ID.
 - DAT plain (явно), XOR111/120/121, Blowfish211/212, RSA411–414 l2encdec.
   Оригинальные RSA-профили доступны только для чтения.
@@ -38,7 +46,7 @@
 ## Windows: сборка и запуск
 
 Готовый portable можно собирать вручную в GitHub Actions и публиковать в Releases:
-выберите **Release Interface Editor → Run workflow**, укажите версию и `prerelease`.
+[инструкция выпуска Windows x64](docs/RELEASES.md).
 
 Установите Python **3.12 x64** и Visual Studio 2022 C++ tools:
 

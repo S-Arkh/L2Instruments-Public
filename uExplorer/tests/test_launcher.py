@@ -28,6 +28,7 @@ class LauncherTests(unittest.TestCase):
         (package / 'QtCore.py').write_text('def qVersion(): return "test-qt"\n')
         for module in ('QtGui', 'QtWidgets'):
             (package / (module + '.py')).write_text('')
+        (package / 'QtMultimedia.py').write_text('class QAudioBufferOutput: pass\n')
 
     def run_launcher(self, *args):
         return subprocess.run(['powershell.exe', '-NoProfile', '-ExecutionPolicy', 'Bypass',
@@ -65,6 +66,14 @@ class LauncherTests(unittest.TestCase):
         self.assertIn('requirements.txt', result.stdout)
         self.assertNotIn('Traceback', result.stdout + result.stderr)
         self.assertNotIn('test-qt', result.stdout)
+
+    def test_explicit_python_without_audio_buffer_is_rejected(self):
+        multimedia=self.python.parents[1] / 'Lib/site-packages/PySide6/QtMultimedia.py'
+        multimedia.write_text('')
+        result=self.run_launcher('-Python',str(self.python),'-CheckRuntime')
+        self.assertEqual(result.returncode,1)
+        self.assertIn('QAudioBufferOutput',result.stdout)
+        self.assertNotIn('test-qt',result.stdout)
 
     def test_own_runtime_is_preferred(self):
         runtime = self.app / 'runtime'

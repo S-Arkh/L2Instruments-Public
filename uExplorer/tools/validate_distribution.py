@@ -65,7 +65,20 @@ def main():
             subprocess.run(f'"{env["COMSPEC"]}" /d /c ""{bundle / "Start.cmd"}""',
                            cwd=temp, env=env, stdin=subprocess.DEVNULL, check=True, timeout=90)
             result = json.loads(report.read_text(encoding='utf-8'))
-            if not all(result.get(key) is True for key in ('native', 'cli', 'gui', 'export', 'settings')):
+            if not all(result.get(key) is True for key in ('native', 'cli', 'gui', 'export', 'settings',
+                                                          'texture', 'geometry', 'animation', 'audio', 'comparison',
+                                                          'vertmesh', 'materials', 'textured_raster', 'skinning',
+                                                          'stored_frames', 'material_state', 'combiner', 'tex_scaler',
+                                                          'uv_offset', 'implicit_mask', 'masked_add', 'tex_panner',
+                                                          'skinning_uv_time', 'planar_panner', 'fixed_rotator',
+                                                          'animated_rotator', 'tex_oscillator', 'masked_blend',
+                                                          'oscillator_stretch_pivot', 'nested_uv', 'masked_add_alpha',
+                                                          'fragment_preparation', 'panner_scaler_chain',
+                                                          'pitched_panner', 'extended_uv_chain',
+                                                          'stationary_rotator', 'spatial_rotator',
+                                                          'zero_repeat_subquantum_roll',
+                                                          'precision_invariant_roll',
+                                                          'double_rotator_power2')):
                 raise ValueError(result)
             print('PASS Start.cmd: ' + json.dumps(result))
         finally:

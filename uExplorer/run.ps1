@@ -26,7 +26,7 @@ foreach ($candidate in $candidates) {
     }
 }
 if (!$selected) {
-    Write-Host 'uExplorer requires Python 3.10+ with working PySide6 (QtCore, QtGui, QtWidgets).'
+    Write-Host 'uExplorer requires Python 3.10+ with PySide6 6.8+ (QtCore, QtGui, QtWidgets, QtMultimedia).'
     Write-Host 'From the uExplorer directory, create an environment and install dependencies:'
     Write-Host '  py -3 -m venv .venv'
     Write-Host '  .\.venv\Scripts\python.exe -m pip install -r requirements.txt'

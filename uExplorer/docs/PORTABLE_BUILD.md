@@ -46,18 +46,25 @@ if ($LASTEXITCODE) { throw 'Install failed' }
 if ($LASTEXITCODE) { throw 'Synthetic smoke failed' }
 & $python -B -m unittest discover -s tests -p test_launcher.py -v
 if ($LASTEXITCODE) { throw 'Launcher tests failed' }
-& $python -B tools/package_windows.py --version 0.1.0-dev.1 --bin bin --cache local/portable-cache --out dist/portable-0.1.0-dev.1 --download
+& $python -B tools/package_windows.py --version 0.1.0-dev.1 --bin bin --cache local/portable-cache --out dist/portable --download
 if ($LASTEXITCODE) { throw 'Packaging failed' }
 ```
 
-`--out` должен указывать на новый каталог. `--download` разрешает скачивание
+`--out` должен указывать на новый каталог либо ранее созданный упаковщиком
+каталог с маркером `.uexplorer-package-output`. Непомеченный существующий
+каталог, символическая ссылка или junction не перезаписываются. При прямой
+повторной упаковке содержимое
+помеченного каталога удаляется **до** сборки и проверки. Чтобы сохранить
+последнюю рабочую версию при ошибке, сначала собирайте и проверяйте во
+временном подкаталоге, а замену выполняйте только после успешной проверки.
+`--download` разрешает скачивание
 отсутствующих входов из `tools/portable_inputs.json`; без него используется
 только локальный cache. SHA-256 проверяется в обоих режимах. Версия передаётся
 явно; упаковщик записывает текущий Git SHA и признак dirty рабочей копии.
 Если Git доступен только в WSL, передайте полный SHA через `--revision <SHA>`;
 в этом режиме `dirty` в manifest равен `null` (состояние рабочей копии неизвестно).
 
-Результат — `dist/portable-0.1.0-dev.1/publish/`: ZIP, `SHA256SUMS.txt` и
+Результат — `dist/portable/publish/`: ZIP, `SHA256SUMS.txt` и
 русское описание релиза `RELEASE_NOTES.md`.
 Каталог `publish` появляется только после успешной проверки распакованного ZIP.
 Проверка запускает реальный `Start.cmd` с Qt offscreen, из другого рабочего

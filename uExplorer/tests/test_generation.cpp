@@ -1,4 +1,4 @@
-#include "package.h"
+#include "fixture_context.h"
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
@@ -14,7 +14,7 @@ int main(int argc,char** argv) {
         if(argc!=2&&argc!=3)throw std::runtime_error("Expected fixture path and optional generated-source path");
         ue::Bytes header(36,0);header[0]=0xc1;header[1]=0x83;header[2]=0x2a;header[3]=0x9e;header[4]=133;header[6]=40;
         {std::ofstream out(argv[1],std::ios::binary);out.write(reinterpret_cast<const char*>(header.data()),header.size());}
-        ue::Context ctx(argv[1],{});auto& p=*ctx.main;
+        FixtureContext ctx(argv[1],{});auto& p=*ctx.main;
         p.names={"None","Notify","Test"};
         for(auto name:{"Function","DelegateProperty"}){ue::Entry e;e.name=name;e.importClass="Class";p.imports.push_back(e);}
         auto add=[&](const char* name,int cls,int outer,const ue::Bytes& data){
@@ -33,6 +33,12 @@ int main(int argc,char** argv) {
         for(auto text:{"delegate Notify();","Notify = Notify;","Notify();","(new Class'Probe')"})
             check(code.find(text)!=code.npos,std::string("Missing ")+text+"\n"+code);
         check(code.find("__Notify__Delegate")==code.npos,"Backing property leaked into source");
+        auto classFlags=p.entry(1).offset+40;
+        p.data[classFlags]=0x40;p.data[classFlags+1]=0x3a;
+        r=ctx.decompile(1,true);code=r["code"].get<std::string>();
+        for(auto modifier:{"safereplace","nativereplication","placeable","editinlinenew","collapsecategories"})
+            check(code.find(modifier)!=code.npos,std::string("Missing class modifier ")+modifier);
+        p.data[classFlags]=0;p.data[classFlags+1]=0;
         auto f=p.function(4);
         check(f.nodes.size()==4&&f.nodes[1].children.size()==1&&f.nodes[1].finish==21,"Delegate arguments/PC were not consumed");
         // Metadata mismatch must retain partial + AST, rather than inventing a name.
@@ -55,6 +61,13 @@ int main(int argc,char** argv) {
         check(r["status"]=="partial"&&r["functions"][1]["decoded"]==true,"Sparse new was silently accepted");
         p.exports[3]=saved;
         // A prefix minus applied to a signed literal must not become a -- token.
+        auto classCast=function(2,0x20002,{0x13,1,0x2a,4,11},8);
+        p.exports[3].offset=p.data.size();p.exports[3].size=classCast.size();
+        p.data.insert(p.data.end(),classCast.begin(),classCast.end());
+        r=ctx.decompile(1,true);code=r["code"].get<std::string>();
+        check(r["status"]=="recovered"&&code.find("class<Probe>(None)")!=code.npos,
+              "Metaclass cast was rendered as an object cast: "+code);
+        p.exports[3]=saved;
         ue::Function negate;negate.flags=0x1010;negate.friendly="-";
         ctx.natives[143]=std::make_pair(ue::Symbol{&p,2},negate);
         ue::Bytes negative{0x8f,0x1d};u32(negative,uint32_t(-30));
@@ -67,6 +80,13 @@ int main(int argc,char** argv) {
               "Prefix negation merged into decrement: "+code);
         p.exports[3]=saved;
         // EX_IntZero/EX_IntOne are constants too, including under primitive casts.
+        auto latent=function(2,0x20409,{},0);
+        p.exports[3].offset=p.data.size();p.exports[3].size=latent.size();
+        p.data.insert(p.data.end(),latent.begin(),latent.end());
+        r=ctx.decompile(1,true);code=r["code"].get<std::string>();
+        check(r["status"]=="recovered"&&code.find("native final latent function Test")!=code.npos,
+              "Native latent declaration flag lost: "+code);
+        p.exports[3]=saved;
         for(uint8_t literal:{uint8_t(0x25),uint8_t(0x26)})for(bool cast:{false,true}){
             ue::Bytes body;if(cast)body.insert(body.end(),{0x39,0x3a});
             body.insert(body.end(),{0x19,0x17,1,0,4,literal,4,11});
@@ -77,6 +97,24 @@ int main(int argc,char** argv) {
             check(r["status"]=="recovered"&&code.find("self.0")==code.npos&&code.find("self.1")==code.npos
                   &&code.find("__UXContextInt(self, ")!=code.npos&&code.find("int(__UXContextInt")==code.npos,
                   "Invalid integer context expression: "+code);
+        }
+        p.exports[3]=saved;
+        // Large verified loops stay structured; arbitrary back edges retain
+        // dispatcher recovery rather than being dropped by the fast path.
+        for(bool structured:{true,false}){
+            ue::Bytes body;
+            if(structured)body={7,0,0,0x27};
+            body.resize(33000,0x0b);
+            body.insert(body.end(),{6,0,0});
+            if(structured){body[1]=uint8_t(body.size());body[2]=uint8_t(body.size()>>8);}
+            body.insert(body.end(),{4,11});
+            auto data=function(2,0x20002,body,int(body.size()));
+            p.exports[3].offset=p.data.size();p.exports[3].size=data.size();
+            p.data.insert(p.data.end(),data.begin(),data.end());
+            r=ctx.decompile(1,true);code=r["code"].get<std::string>();
+            check(r["status"]=="recovered",r.dump());
+            check((code.find("__RecoveredPC")!=code.npos)!=structured,
+                  "Large control-flow recovery selected the wrong path");
         }
         p.exports[3]=saved;
         // A matching class constant must not be rendered as class.static.Const:
@@ -144,6 +182,47 @@ int main(int argc,char** argv) {
         --p.exports.back().size;bool truncated=false;
         try{p.function(int(p.exports.size()));}catch(const std::exception&){truncated=true;}
         check(truncated,"Truncated function replication offset accepted");
+        {
+            // Equal export indices in different packages are different symbols.
+            FixtureContext cross(argv[1],{});auto& child=*cross.main;
+            auto base=std::make_shared<ue::Package>(argv[1]);base->path="Base.u";
+            for(auto* pkg:{&child,base.get()}){
+                pkg->names={"None","Test"};pkg->imports.clear();pkg->exports.clear();
+                pkg->children.clear();pkg->paths.clear();pkg->paths[0]="None";
+                ue::Entry fn;fn.name="Function";fn.importClass="Class";pkg->imports.push_back(fn);
+                ue::Entry cl;cl.name=pkg==&child?"Child":"Parent";cl.offset=pkg->data.size();cl.size=66;
+                pkg->data.insert(pkg->data.end(),66,0);pkg->exports.push_back(cl);
+                auto body=function(1,0x20002,pkg==&child?ue::Bytes{0x1c,0x84,0x16,4,11}:ue::Bytes{4,11},pkg==&child?8:2);
+                ue::Entry method;method.name="Test";method.cls=-1;method.outer=1;
+                method.offset=pkg->data.size();method.size=body.size();
+                pkg->data.insert(pkg->data.end(),body.begin(),body.end());pkg->exports.push_back(method);
+                pkg->children[1].push_back(2);pkg->data[cl.offset+3]=2;
+            }
+            ue::Entry module;module.name="Base";module.importClass="Package";child.imports.push_back(module);
+            ue::Entry parent;parent.name="Parent";parent.importClass="Class";parent.outer=-2;child.imports.push_back(parent);
+            ue::Entry method;method.name="Test";method.importClass="Function";method.outer=-3;child.imports.push_back(method);
+            child.exports[0].super=-3;cross.packages.push_back(base);
+            auto recovered=cross.decompile(1,true);
+            check(recovered["status"]=="recovered"&&recovered["code"].get<std::string>().find("super.Test();")!=std::string::npos,
+                  "Cross-package direct base call became virtual recursion: "+recovered.dump());
+            child.exports[1].name="Other";child.names[1]="Other";
+            child.paths.clear();child.paths[0]="None";
+            recovered=cross.decompile(1,true);
+            check(recovered["status"]=="recovered"&&recovered["code"].get<std::string>().find("super.Test();")!=std::string::npos,
+                  "Inherited direct call without a local override became virtual: "+recovered.dump());
+            auto middle=base->exports[0];middle.name="Middle";middle.super=1;
+            middle.offset=base->data.size();base->data.insert(base->data.end(),66,0);
+            base->exports.push_back(middle);
+            auto override=base->exports[1];override.outer=3;
+            base->exports.push_back(override);base->children[3].push_back(4);
+            base->data[middle.offset+3]=4;
+            auto middleImport=parent;middleImport.name="Middle";
+            child.imports.push_back(middleImport);child.exports[0].super=-5;
+            child.paths.clear();child.paths[0]="None";base->paths.clear();base->paths[0]="None";
+            recovered=cross.decompile(1,true);
+            check(recovered["status"]=="recovered"&&recovered["code"].get<std::string>().find("super(Parent).Test();")!=std::string::npos,
+                  "Skipped ancestor direct call rebound to nearest override: "+recovered.dump());
+        }
         std::filesystem::remove(argv[1]);std::cout<<"Delegate/new generation and decoder checks passed\n";return 0;
     }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}
 }

@@ -3,7 +3,8 @@
 Корневая MIT-лицензия относится к собственному коду проекта.
 
 - MinHook: BSD-2-Clause, [лицензия](int64/third_party/minhook/LICENSE.txt),
-  [происхождение](int64/third_party/minhook/UPSTREAM.json).
+  [происхождение](int64/third_party/minhook/UPSTREAM.json). Контактные адреса
+  из списка авторов удалены; имена и лицензионные уведомления сохранены.
 - XDAT-схемы: acmi, [LICENSE.acmi](interface_editor/LICENSE.acmi).
 - DAT-форматы/константы: acmi, [LICENSE.dat-format](interface_editor/LICENSE.dat-format).
 - Единственный включённый runtime DLL — zlib для редактора:

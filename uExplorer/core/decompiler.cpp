@@ -1,16 +1,28 @@
 #include "package.h"
 #include <algorithm>
 #include <cmath>
+#include <cstring>
 #include <functional>
 #include <iterator>
 #include <regex>
 #include <sstream>
 #include <stdexcept>
+#include <tuple>
 
 namespace ue {
-static std::string quote(const std::string& s){std::string out="\"";for(char c:s){switch(c){case '\\':out+="\\\\";break;case '"':out+="\\\"";break;case '\r':out+="\\r";break;case '\n':out+="\\n";break;case '\t':out+="\\t";break;default:out+=c;}}return out+'"';}
+static std::string quote(const std::string& s,char delimiter='"'){std::string out(1,delimiter);for(char c:s){switch(c){case '\\':out+="\\\\";break;case '\r':out+="\\r";break;case '\n':out+="\\n";break;case '\t':out+="\\t";break;default:if(c==delimiter)out+='\\';out+=c;}}return out+delimiter;}
 static std::string join(const std::vector<std::string>& parts,const std::string& sep=", "){std::string r;for(size_t i=0;i<parts.size();++i){if(i)r+=sep;r+=parts[i];}return r;}
 static bool propertyKind(const std::string& s){return s.size()>=8&&s.substr(s.size()-8)=="Property";}
+// Default-only openUCC escape preserving nonfinite IEEE-754 payload bits.
+static std::string defaultFloat(Reader& r){
+    auto bits=r.u32();
+    if((bits&0x7f800000u)==0x7f800000u){
+        const char* digits="0123456789ABCDEF";std::string text(8,'0');
+        for(int i=0;i<8;++i)text[i]=digits[(bits>>(28-4*i))&15];
+        return "__FloatBits(\""+text+"\")";
+    }
+    float value;std::memcpy(&value,&bits,4);return Json(value).dump();
+}
 Context::Context(const std::filesystem::path& file,const std::vector<std::filesystem::path>& directories,const std::string& bytecodeProfile){
     main=std::make_shared<Package>(file);packages.push_back(main);
     main->setBytecodeProfile(bytecodeProfile);
@@ -159,8 +171,19 @@ struct Writer {
     }
     std::string declaration(Symbol s,bool parameter=false,const std::string& inlineType="") const {
         auto prop=s.p->property(s.id);std::string out;
-        if(parameter){if(prop.flags&0x10)out+="optional ";if(prop.flags&0x100)out+="out ";if(prop.flags&0x800)out+="coerce ";}
-        else{if(prop.flags&0x1000)out+="native ";if(prop.flags&2)out+="const ";if(prop.flags&0x2000)out+="transient ";if(prop.flags&0x4000)out+="config ";if(prop.flags&0x8000)out+="localized ";if(prop.flags&0x40000)out+="globalconfig ";}
+        if(parameter){if(prop.flags&0x10)out+="optional ";if(prop.flags&0x100)out+="out ";if(prop.flags&0x800)out+="coerce ";if(prop.flags&0x200)out+="skip ";}
+        else{if(prop.flags&0x1000)out+="native ";if(prop.flags&2)out+="const ";if(prop.flags&0x2000)out+="transient ";if(prop.flags&0x4000)out+="config ";if(prop.flags&0x8000)out+="localized ";if(prop.flags&0x40000)out+="globalconfig ";if(prop.flags&0x20000)out+="editconst ";}
+        if(!parameter){
+            if((prop.flags&0x50000000)==0x50000000 ||
+               ((prop.flags&0x50000000)&&!(prop.flags&0x4000000)))
+                throw std::runtime_error("Unsupported editinline flag combination");
+            for(auto modifier:{std::pair<uint32_t,const char*>{4,"input"},{8,"export"},{0x40,"editconstarray"},
+                               {0x10000,"travel"},{0x8000000,"edfindable"},{0x20000000,"deprecated"}})
+                if(prop.flags&modifier.first)out+=std::string(modifier.second)+" ";
+            if(prop.flags&0x10000000)out+="editinlineuse ";
+            else if(prop.flags&0x40000000)out+="editinlinenotify ";
+            else if(prop.flags&0x4000000)out+="editinline ";
+        }
         out+=(inlineType.empty()?type(s):inlineType)+" "+s.p->entry(s.id).name;if(prop.dim>1)out+="["+std::to_string(prop.dim)+"]";return out;
     }
     Symbol returnType(Symbol s) const {if(!s)return {};for(auto prop:fields(s))if(prop.p->property(prop.id).flags&0x400)return prop;return {};}
@@ -251,7 +274,7 @@ struct Writer {
         else if(value.kind=="constant")text=value.value.dump();
         else if(value.kind=="true"||value.kind=="false")text=value.kind;
         else if(value.kind=="string")text=quote(value.text);
-        else if(value.kind=="name")text="'"+value.text+"'";
+        else if(value.kind=="name")text=quote(value.text,'\'');
         else return {};
         std::set<std::pair<const Package*,int>> seen;std::set<std::string> shadowed;
         for(;scope;scope=ctx.resolve(*scope.p,scope.p->entry(scope.id).super)){
@@ -349,14 +372,14 @@ struct Writer {
         if(k=="nothing"||k=="end_parameters")return "";
         if(k=="skip"||k=="bool_variable"||k=="discard_string")return e(0);
         if(k=="true"||k=="false"||k=="self")return k;if(k=="none")return "None";
-        if(k=="string")return quote(n.text);if(k=="name")return "'"+n.text+"'";
+        if(k=="string")return quote(n.text);if(k=="name")return quote(n.text,'\'');
         if(k=="object"){
             if(!n.ref)return "None";
             auto kind=p.kind(n.ref),path=n.text;
             // Unlike a class literal, the SDK resolves Enum objects by their
             // package-qualified object path even for same-package references.
             if(kind=="Enum"&&n.ref>0)path=p.path.stem().u8string()+"."+path;
-            return kind+"'"+path+"'";
+            return kind+quote(path,'\'');
         }
         if(k=="native"||k=="final_call"||k=="virtual_call"||k=="global_call"){
             Symbol call;Function f;std::string name=leaf(n.text);
@@ -415,8 +438,23 @@ struct Writer {
                 throw std::runtime_error("Native operator arity mismatch");
             }
             if(k=="global_call")name="global."+name;
-            if(k=="final_call"&&!context&&call&&owner&&call.p==owner.p&&call.p->entry(call.id).outer!=owner.id){
-                auto same=findCall(name,owner);if(same&&same.id!=call.id)name="super."+name;
+            if(k=="final_call"&&!context&&call&&owner&&
+               (call.p!=owner.p||call.p->entry(call.id).outer!=owner.id)){
+                auto same=findCall(name,owner);
+                auto declaring=Symbol{call.p,call.p->entry(call.id).outer};
+                auto scope=owner;
+                if(scope.p->kind(scope.id)=="State")scope={scope.p,scope.p->entry(scope.id).outer};
+                auto parent=ctx.resolve(*scope.p,scope.p->entry(scope.id).super);
+                bool ancestor=false;
+                std::set<std::pair<const Package*,int>> visited;
+                for(auto base=parent;base&&visited.insert({base.p,base.id}).second;
+                    base=ctx.resolve(*base.p,base.p->entry(base.id).super))
+                    if(base.p==declaring.p&&base.id==declaring.id){ancestor=true;break;}
+                if(ancestor){
+                    auto nearest=findCall(name,parent);
+                    if(nearest&&nearest.p==call.p&&nearest.id==call.id)name="super."+name;
+                    else name="super("+declaring.p->entry(declaring.id).name+")."+name;
+                }else if(same&&(same.p!=call.p||same.id!=call.id))name="super."+name;
             }
             return name+"("+join(args)+")";
         }
@@ -448,7 +486,8 @@ struct Writer {
             if(target=="int"&&integerContext(c[0])&&(c[0].kind=="class_context"||namedConstant(c[0].children[1],receiver(c[0].children[0],owner)).empty()))return e(0);
             return target+"("+e(0)+")";
         }
-        if(k=="dynamic_cast"||k=="class_cast")return leaf(n.text)+"("+e(0)+")";
+        if(k=="dynamic_cast")return leaf(n.text)+"("+e(0)+")";
+        if(k=="class_cast")return "class<"+leaf(n.text)+">("+e(0)+")";
         if(k=="array_element"||k=="dynamic_array_element")return e(1)+"["+e(0)+"]";
         if(k=="array_length")return e(0)+".Length";
         if(k=="struct_member")return e(0)+"."+propertyName(ctx.resolve(p,n.ref),n.text);
@@ -575,6 +614,12 @@ struct Writer {
     }
     std::string body(const Function& f,Symbol owner,const std::string& locals,Symbol ret){
         if(std::any_of(f.nodes.begin(),f.nodes.end(),[](const Node& n){return n.kind=="iterator";}))return structuredBody(f,owner,locals,ret);
+        // Avoid wrapping large, already structured functions in another PC
+        // dispatcher. Keep the general recovery path for unverified layouts.
+        if(f.size>32768){
+            try{return structuredBody(f,owner,locals,ret);}
+            catch(const std::runtime_error&){}
+        }
         auto& roots=f.nodes;std::map<int,size_t> positions;for(size_t i=0;i<roots.size();++i)positions[roots[i].pc]=i;
         bool flow=false;for(auto& n:roots)if(n.kind=="jump"||n.kind=="jump_if_not"||n.kind=="switch")flow=true;
         std::string pcName="__RecoveredPC";for(auto s:fields({&p,f.id}))while(lower(s.p->entry(s.id).name)==lower(pcName))pcName+="_";
@@ -631,8 +676,9 @@ struct Writer {
                 if(first.kind=="IntProperty"&&first.dim==1&&second.kind=="StrProperty"&&second.dim==1)
                     currentEventParameter=parameters[0].id;
             }
+            if(f.flags&0x40000)header+="private ";else if(f.flags&0x80000)header+="protected ";else if(f.flags&0x20000)header+="public ";
             if(f.flags&0x400)header+="native"+(f.native?"("+std::to_string(f.native)+")":"")+" ";
-            for(auto flag:{std::pair<uint32_t,const char*>{1,"final"},{2,"defined"},{4,"iterator"},{0x100,"simulated"},{0x200,"exec"},{0x2000,"static"},{0x20,"singular"}})if(flag.first!=2&&(f.flags&flag.first))header+=std::string(flag.second)+" ";
+            for(auto flag:{std::pair<uint32_t,const char*>{1,"final"},{2,"defined"},{4,"iterator"},{8,"latent"},{0x100,"simulated"},{0x200,"exec"},{0x2000,"static"},{0x20,"singular"}})if(flag.first!=2&&(f.flags&flag.first))header+=std::string(flag.second)+" ";
             if(f.flags&0x1000)header+=(f.flags&0x10)?"preoperator ":f.precedence?"operator("+std::to_string(f.precedence)+") ":"postoperator ";
             else header+=(f.flags&0x100000)?"delegate ":(f.flags&0x800)?"event ":"function ";
             if(ret)header+=type(ret)+" ";header+=f.friendly+"("+join(params)+")";
@@ -707,8 +753,11 @@ struct Writer {
         std::string out;
         std::set<int> inlineEnums;
         auto children=p.members(owner),structures=children;
+        std::vector<int> ordered;
+        try{ordered=p.orderedFields(owner);}catch(const std::exception& ex){issue(p.ref(owner),ex.what());return "// INCOMPLETE field chain: see report\n";}
+        std::set<int> emittedDelegates;
         try{structures=orderedStructs(owner);}catch(const std::exception& ex){issue(p.ref(owner),ex.what());}
-        for(auto wanted:{"Const","Enum","Struct","Property","Function","State"})for(int id:std::string(wanted)=="Struct"?structures:children){
+        for(auto wanted:{"Const","Enum","Struct","Property","Function","State"})for(int id:std::string(wanted)=="Struct"?structures:ordered){
             auto kind=p.kind(id);if((std::string(wanted)=="Property")?!propertyKind(kind):kind!=wanted)continue;
             try{
                 if(kind=="Const")out+="const "+p.entry(id).name+" = "+p.constant(id)+";\n\n";
@@ -718,7 +767,11 @@ struct Writer {
                 }
                 else if(kind=="Struct")out+="struct "+p.entry(id).name+(p.entry(id).super?" extends "+qualifiedType(ctx.resolve(p,p.entry(id).super)):"")+"\n{\n"+members(id,true)+"};\n\n";
                 else if(propertyKind(kind)){auto prop=p.property(id);if((prop.flags&0x20)&&!replicatedMembers.count(id))issue(p.ref(id),"Replicated property; replication block not reconstructed");
-                    if(kind=="DelegateProperty"&&delegateStorage({&p,id}))continue;
+                    if(kind=="DelegateProperty"&&delegateStorage({&p,id})){
+                        auto signature=delegateSignature({&p,id});
+                        if(!emittedDelegates.insert(signature.id).second)throw std::runtime_error("Duplicate delegate storage");
+                        out+=function(signature.id)+"\n";continue;
+                    }
                     std::string edit;
                     if(prop.flags&1){
                         // Struct members only accept var(); the SDK supplies
@@ -736,11 +789,14 @@ struct Writer {
                     out+=(isStruct?"    var":"var")+edit+" "+declaration({&p,id},false,inlineType)+";\n";
                     if(!inlineType.empty())inlineEnums.erase(prop.ref);
                 }
-                else if(kind=="Function")out+=function(id)+"\n";
+                else if(kind=="Function"&&!emittedDelegates.count(id))out+=function(id)+"\n";
                 else if(kind=="State"){
                     auto state=p.structure(id,false,true);std::string ignores;
                     if(state.ignore!=UINT64_MAX){try{ignores=stateIgnores(id,state.ignore);}catch(const std::exception& ex){issue(p.ref(id),ex.what());}}
-                    out+=((state.stateFlags&2)?"auto ":"")+std::string("state ")+p.entry(id).name+(p.entry(id).super?" extends "+leaf(p.ref(p.entry(id).super)):"")+"\n{\n"+ignores+members(id);
+                    auto base=p.entry(id).super?leaf(p.ref(p.entry(id).super)):std::string{};
+                    // A same-name inherited state is an implicit override.
+                    if(lower(base)==lower(p.entry(id).name))base.clear();
+                    out+=((state.stateFlags&2)?"auto ":"")+std::string((state.stateFlags&1)?"state() ":"state ")+p.entry(id).name+(!base.empty()?" extends "+base:"")+"\n{\n"+ignores+members(id);
                     try{out+=stateBody(id,state);}catch(const std::exception& ex){issue(p.ref(id),"State script: "+std::string(ex.what()));out+="    // INCOMPLETE state script: see report\n";}
                     // Non-probe ignored functions remain no-body declarations
                     // emitted by members(), independently of the probe mask.
@@ -801,9 +857,8 @@ struct Writer {
             for(auto field:{"B","G","R","A"})parts.push_back(std::string(field)+"="+std::to_string(r.byte()));
         }else if(kind=="vector"||kind=="rotator"){
             for(auto field:kind=="vector"?std::vector<std::string>{"X","Y","Z"}:std::vector<std::string>{"Pitch","Yaw","Roll"}){
-                auto value=kind=="vector"?Json(r.f32()):Json(r.i32());
-                if(value.is_number_float()&&!std::isfinite(value.get<double>()))throw std::runtime_error("Nonfinite default float");
-                parts.push_back(field+"="+value.dump());
+                auto value=kind=="vector"?defaultFloat(r):std::to_string(r.i32());
+                parts.push_back(field+"="+value);
             }
         }else{
             for(size_t count=0;;++count){
@@ -834,10 +889,18 @@ struct Writer {
                         if(prop.ref){auto en=ctx.resolve(*member.p,prop.ref);if(!en)throw std::runtime_error("Unresolved default enum");auto names=en.p->enumeration(en.id);if(size_t(byte)>=names.size())throw std::runtime_error("Invalid default enum value");value=names[byte];}
                     }
                     else if(type==2)value=std::to_string(v.i32());
-                    else if(type==4){auto f=v.f32();if(!std::isfinite(f))throw std::runtime_error("Nonfinite default float");value=Json(f).dump();}
-                    else if(type==6)value="'"+p.name(v.index())+"'";
+                    else if(type==4)value=defaultFloat(v);
+                    else if(type==6)value=quote(p.name(v.index()),'\'');
                     else if(type==13)value=quote(v.string());
-                    else if(type==5){int object=v.index();value=object?p.kind(object)+"'"+p.ref(object)+"'":"None";}
+                    else if(type==5){int object=v.index();value=object?p.kind(object)+quote(p.ref(object),'\''):"None";}
+                    else if(type==9){
+                        if(!member||member.p->kind(member.id)!="ArrayProperty")throw std::runtime_error("Unresolved nested array default "+field);
+                        auto inner=ctx.resolve(*member.p,member.p->property(member.id).ref);
+                        int elements=v.index();if(elements<0||elements>100000)throw std::runtime_error("Invalid nested array default count");
+                        std::vector<std::string> values;
+                        for(int i=0;i<elements;++i)values.push_back(arrayDefaultElement(v,inner,depth+1));
+                        value="("+join(values,",")+")";
+                    }
                     else throw std::runtime_error("Unsupported nested default type "+std::to_string(type));
                     if(v.pos!=v.end)throw std::runtime_error("Nested default payload size mismatch");
                 }
@@ -847,18 +910,39 @@ struct Writer {
         // The supported SDK's struct ImportText does not trim after commas.
         return "("+join(parts,",")+")";
     }
-    std::string arrayDefaultElement(Reader& r,Symbol inner){
+    std::string arrayDefaultElement(Reader& r,Symbol inner,int depth=0){
+        if(depth>32)throw std::runtime_error("Default array nesting limit");
         if(!inner)throw std::runtime_error("Unresolved array default element");
         auto prop=inner.p->property(inner.id);
         if(prop.kind=="StrProperty")return quote(r.string());
-        if(prop.kind=="NameProperty")return "'"+p.name(r.index())+"'";
+        if(prop.kind=="NameProperty")return quote(p.name(r.index()),'\'');
         if(prop.kind=="ObjectProperty"||prop.kind=="ClassProperty"){
-            int object=r.index();return object?p.kind(object)+"'"+p.ref(object)+"'":"None";
+            int object=r.index();return object?p.kind(object)+quote(p.ref(object),'\''):"None";
         }
         if(prop.kind=="IntProperty")return std::to_string(r.i32());
-        if(prop.kind=="FloatProperty"){auto value=r.f32();if(!std::isfinite(value))throw std::runtime_error("Nonfinite array default");return Json(value).dump();}
-        if(prop.kind=="StructProperty")return structDefault(r,leaf(inner.p->ref(prop.ref)),0,ctx.resolve(*inner.p,prop.ref));
+        if(prop.kind=="FloatProperty")return defaultFloat(r);
+        if(prop.kind=="StructProperty")return structDefault(r,leaf(inner.p->ref(prop.ref)),depth+1,ctx.resolve(*inner.p,prop.ref));
         throw std::runtime_error("Unsupported array default element "+prop.kind);
+    }
+    std::string defaultObjects(int owner,int depth=0){
+        if(depth>64)throw std::runtime_error("Default subobject nesting limit");
+        std::string out;
+        for(size_t i=0;i<p.exports.size();++i){
+            int id=int(i)+1;const auto& entry=p.entry(id);
+            if(entry.outer!=owner||!entry.cls)continue;
+            auto type=ctx.resolve(p,entry.cls);
+            if(!type||type.p->kind(type.id)!="Class")continue;
+            if(depth)throw std::runtime_error("Nested default instance ownership requires explicit reconstruction support: "+p.ref(id));
+            if(entry.super||(entry.flags&0x02000000))throw std::runtime_error("Unsupported default subobject header: "+p.ref(id));
+            if(!std::regex_match(entry.name,std::regex("[A-Za-z_][A-Za-z_0-9]*")))throw std::runtime_error("Unsupported default subobject name");
+            typeDependency(type);
+            auto body=defaultObjects(id,depth+1)+defaultTags(p.reader(id),type,p.ref(id));
+            out+="    Begin Object Class="+p.ref(entry.cls)+" Name="+entry.name+"\n";
+            std::istringstream lines(body);std::string line;
+            while(std::getline(lines,line))out+="    "+line+"\n";
+            out+="    End Object\n";
+        }
+        return out;
     }
     std::string defaults(int id,const StructInfo& s){
         auto r=p.reader(id);r.pos=s.tail;r.skip(16);int count=r.index();if(count<0||count>1000000)throw std::runtime_error("Invalid class dependency count");for(int i=0;i<count;++i){p.ref(r.index());r.skip(8);}
@@ -882,7 +966,10 @@ struct Writer {
             else issue(p.ref(id),"Unsupported config class name: "+config);
         }
         count=r.index();if(count<0||count>100000)throw std::runtime_error("Invalid hide category count");while(count--)p.name(r.index());
-        std::string out="defaultproperties\n{\n";
+        return "defaultproperties\n{\n"+defaultObjects(id)+defaultTags(r,{&p,id},p.ref(id))+"}\n";
+    }
+    std::string defaultTags(Reader r,Symbol owner,const std::string& scope){
+        std::string out;
         for(size_t tags=0;;++tags){if(tags>100000)throw std::runtime_error("Default tag limit");auto name=p.name(r.index());if(name=="None")break;int info=r.byte(),kind=info&15,sizeCode=(info>>4)&7;std::string structName;
             if(kind==10)structName=p.name(r.index());
             int size=0;switch(sizeCode){case 0:size=1;break;case 1:size=2;break;case 2:size=4;break;case 3:size=12;break;case 4:size=16;break;case 5:size=r.byte();break;case 6:size=r.u16();break;case 7:size=r.i32();break;}
@@ -890,29 +977,64 @@ struct Writer {
             std::string value;
             if(kind==3)value=(info&128)?"True":"False";
             else{if(size<0)throw std::runtime_error("Negative default size");r.require(size_t(size));Reader v(p.data,r.pos,size_t(size));r.skip(size_t(size));
-                if(kind==1)value=std::to_string(v.byte());else if(kind==2)value=std::to_string(v.i32());else if(kind==4)value=Json(v.f32()).dump();else if(kind==6)value="'"+p.name(v.index())+"'";
-                else if(kind==13)value=quote(v.string());else if(kind==5){int object=v.index();value=object?p.kind(object)+"'"+p.ref(object)+"'":"None";}
-                else if(kind==10){auto property=defaultProperty({&p,id},name);auto definition=property?ctx.resolve(*property.p,property.p->property(property.id).ref):Symbol{};value=structDefault(v,structName,0,definition);
+                if(kind==1){
+                    auto number=v.byte();value=std::to_string(number);
+                    auto field=defaultProperty(owner,name);
+                    if(field){
+                        auto prop=field.p->property(field.id);
+                        if(prop.kind=="ByteProperty"&&prop.ref){
+                            auto enumeration=ctx.resolve(*field.p,prop.ref);
+                            if(!enumeration)throw std::runtime_error("Unresolved enum default type");
+                            auto names=enumeration.p->enumeration(enumeration.id);
+                            if(number>=names.size())throw std::runtime_error("Enum default outside declared values");
+                            value=names[number];
+                        }
+                    }
+                }else if(kind==2)value=std::to_string(v.i32());else if(kind==4)value=defaultFloat(v);else if(kind==6)value=quote(p.name(v.index()),'\'');
+                else if(kind==13)value=quote(v.string());else if(kind==5){int object=v.index();value=object?p.kind(object)+quote(p.ref(object),'\''):"None";}
+                else if(kind==10){auto property=defaultProperty(owner,name);auto definition=property?ctx.resolve(*property.p,property.p->property(property.id).ref):Symbol{};value=structDefault(v,structName,0,definition);
                 }else if(kind==9){
-                    auto property=defaultProperty({&p,id},name);
+                    auto property=defaultProperty(owner,name);
                     if(!property||property.p->kind(property.id)!="ArrayProperty")throw std::runtime_error("Unresolved array default property "+name);
                     auto inner=ctx.resolve(*property.p,property.p->property(property.id).ref);
                     int elements=v.index();if(elements<=0||elements>100000)throw std::runtime_error("Unsupported empty/oversized array default "+name);
                     std::string lines;for(int i=0;i<elements;++i)lines+="    "+name+"("+std::to_string(i)+")="+arrayDefaultElement(v,inner)+"\n";
                     if(v.pos!=v.end)throw std::runtime_error("Array default payload size mismatch for "+name);
                     out+=lines;continue;
-                }else{issue(p.ref(id)+".default."+name,"Unsupported tagged default type "+std::to_string(kind)+"; raw bytes retained");
+                }else{issue(scope+".default."+name,"Unsupported tagged default type "+std::to_string(kind)+"; raw bytes retained");
                     auto raw=hex(Bytes(p.data.begin()+v.pos,p.data.begin()+v.end));
-                    unrecoveredDefaults.push_back({{"name",p.ref(id)+".default."+name},{"tag_type",kind},
+                    unrecoveredDefaults.push_back({{"name",scope+".default."+name},{"tag_type",kind},
                         {"struct_name",structName},{"array_index",arrayIndex},{"raw_hex",raw}});
                     out+="    // INCOMPLETE "+name+" raw="+raw+"\n";continue;}
                 if(v.pos!=v.end)throw std::runtime_error("Default payload size mismatch for "+name);
             }
             out+="    "+name+(arrayIndex>=0?"("+std::to_string(arrayIndex)+")":"")+"="+value+"\n";
         }
-        if(r.pos!=r.end)throw std::runtime_error("Trailing class/default bytes");return out+"}\n";
+        if(r.pos!=r.end)throw std::runtime_error("Trailing class/default bytes");return out;
     }
 };
+Json Context::objectDefaults(int objectId) const {
+    const auto& p=*main;
+    if(objectId<1||size_t(objectId)>p.exports.size()||!p.entry(objectId).cls)
+        throw std::runtime_error("Select an exported object instance");
+    const auto& entry=p.entry(objectId);
+    auto type=resolve(p,entry.cls);
+    if(!type||type.p->kind(type.id)!="Class")throw std::runtime_error("Unresolved object class");
+    Writer w{*this,p};
+    Json result={{"id",objectId},{"path",p.ref(objectId)},{"class",p.ref(entry.cls)},
+                 {"outer",p.ref(entry.outer)},{"flags",entry.flags},{"status","recovered"}};
+    try{
+        if(entry.super||(entry.flags&0x02000000))throw std::runtime_error("Unsupported object header");
+        result["properties"]=w.defaultTags(p.reader(objectId),type,p.ref(objectId));
+    }catch(const std::exception& ex){w.issue(p.ref(objectId),ex.what());}
+    if(!w.issues.empty()){
+        result["status"]="partial";
+        auto r=p.reader(objectId);result["raw_hex"]=hex(Bytes(p.data.begin()+r.pos,p.data.begin()+r.end));
+    }
+    result["issues"]=w.issues;
+    if(!w.unrecoveredDefaults.empty())result["unrecovered_defaults"]=w.unrecoveredDefaults;
+    return result;
+}
 Json Context::decompile(int classId,bool force) const {
     auto& p=*main;if(classId<1||size_t(classId)>p.exports.size()||p.kind(classId)!="Class")throw std::runtime_error("Select an exported class: package="+p.path.u8string()+", export_id="+std::to_string(classId));
     Writer w{*this,p};w.rootClass=classId;Json result={{"class",p.ref(classId)},{"id",classId},{"method","bytecode"},{"status","recovered"}};
@@ -923,9 +1045,19 @@ Json Context::decompile(int classId,bool force) const {
         result["method"]="ScriptText";result["status"]="source";result["code"]=text;result["raw_hex"]=source["raw_hex"];result["encoding"]=source["encoding"];result["issues"]=w.issues;return result;
     }}catch(const std::exception& ex){w.issue(p.ref(classId)+".ScriptText",ex.what());}}
     auto s=p.structure(classId,true);std::string header="class "+p.entry(classId).name+(p.entry(classId).super?" extends "+p.ref(p.entry(classId).super):"");
-    if(s.classFlags&1)header+=" abstract";if(s.classFlags&0x80)header+=" transient";
+    if(s.classFlags&1)header+=" abstract";if(s.classFlags&8)header+=" transient";
     if(p.entry(classId).flags&0x04000000)header+=" native";
     if(s.classFlags&0x100)header+=" noexport";
+    uint32_t baseFlags=0;
+    if(p.entry(classId).super){auto base=resolve(p,p.entry(classId).super);if(base)baseFlags=base.p->structure(base.id,true).classFlags;}
+    for(auto modifier:{std::pair<uint32_t,const char*>{0x40,"safereplace"},{0x800,"nativereplication"}})
+        if(s.classFlags&modifier.first)header+=" "+std::string(modifier.second);
+    for(auto modifier:{std::tuple<uint32_t,const char*,const char*>{0x200,"placeable","notplaceable"},
+                       {0x1000,"editinlinenew","noteditinlinenew"},{0x2000,"collapsecategories","dontcollapsecategories"}}){
+        auto flag=std::get<0>(modifier);
+        if(s.classFlags&flag)header+=" "+std::string(std::get<1>(modifier));
+        else if(baseFlags&flag)header+=" "+std::string(std::get<2>(modifier));
+    }
     if(s.classFlags&0x200000)header+=" instanced";
     if(s.classFlags&0x400000)header+=" dynamicrecompile";
     for(int id:p.members(classId))while(lower(p.entry(id).name)==lower(w.helper))w.helper+="_";

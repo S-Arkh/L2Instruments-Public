@@ -16,6 +16,7 @@ def main():
         return 1
     try:
         from PySide6 import QtCore, QtGui, QtWidgets
+        from PySide6.QtMultimedia import QAudioBufferOutput
     except (ImportError, OSError) as error:
         print('uExplorer: PySide6 could not be loaded: ' + str(error))
         print('Use run.cmd to select a working environment, or install requirements.txt with this Python.')

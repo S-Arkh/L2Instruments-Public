@@ -16,7 +16,12 @@ METADATA = {
     'personal email': r'\b[A-Za-z0-9_.+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b',
     'user directory': r'(?<![\w/])(?:/(?:home|Users)/[\w.-]+|[A-Za-z]:[\\/]+Users[\\/]+[\w.-]+)',
     'mounted local directory': r'/mnt/[a-z]/',
-    'development date': r'\b20\d{2}[-/]\d{2}[-/]\d{2}(?:T[\d:.+-]+Z?)?\b|\b20\d{6}\b',
+    'development date': (
+        r'\b(?:19|20)\d{2}[-/.]\d{2}[-/.]\d{2}(?:T[\d:.+-]+Z?)?\b'
+        r'|\b\d{2}[-/.]\d{2}[-/.](?:19|20)\d{2}\b'
+        r'|\b(?:19|20)\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])\b'
+    ),
+    'timestamp field': r'''(?im)(?:^|[{,])\s*["'](?:timestamp|started|created_at|updated_at)["']\s*:\s*["']?\d{4,}''',
     'conversation transcript': r'(?im)^\s*(?:<\|(?:im_start|im_end)\|>|<system-reminder>|(?:user|assistant|system)\s*:\s)',
 }
 
@@ -26,8 +31,12 @@ def inspect(name, data, dependency=False):
     text = data.decode('utf-8', errors='replace')
     patterns = dict(SECRETS)
     license_file = any(word in name.lower() for word in ('license', 'authors', 'third_party', 'notices', 'copying'))
-    if not dependency and not license_file and b'\0' not in data:
-        patterns.update(METADATA)
+    if not dependency and b'\0' not in data:
+        # Source notices must not contain contact addresses either. Preserve
+        # other license metadata, and leave bundled dependency notices intact.
+        patterns['personal email'] = METADATA['personal email']
+        if not license_file:
+            patterns.update(METADATA)
     findings = []
     for label, pattern in patterns.items():
         for match in re.finditer(pattern, text):

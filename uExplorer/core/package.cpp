@@ -45,14 +45,30 @@ std::string Reader::string(){
 }
 Package::Package(const std::filesystem::path& file):path(file){
     std::ifstream in(file,std::ios::binary|std::ios::ate);if(!in)bad("Cannot open package: "+file.u8string());
-    auto length=in.tellg();if(length<36||length>512*1024*1024)bad("Package size outside 36 bytes..512 MiB");
+    auto length=in.tellg();if(length<36||length>1024*1024*1024)bad("Package size outside 36 bytes..1 GiB");
     data.resize(size_t(length));in.seekg(0);if(!in.read(reinterpret_cast<char*>(data.data()),length))bad("Package read failed");
-    for(const std::string marker:{"Lineage2Ver111","GamekitData111"}){
+    for(const std::string marker:{"Lineage2Ver111","GamekitData111","Lineage2Ver121"}){
         Bytes prefix;for(char c:marker){prefix.push_back(uint8_t(c));prefix.push_back(0);}
-        if(data.size()>=prefix.size()&&std::equal(prefix.begin(),prefix.end(),data.begin())){data.erase(data.begin(),data.begin()+prefix.size());for(auto& c:data)c^=0xac;envelope=marker;break;}
+        if(data.size()>=prefix.size()&&std::equal(prefix.begin(),prefix.end(),data.begin())){
+            uint8_t key=0xac;
+            if(marker=="Lineage2Ver121"){
+                key=0;
+                for(unsigned char c:file.filename().u8string()){
+                    if(c>=128)bad("Ver121 requires a verified ASCII filename");
+                    if(c>='A'&&c<='Z')c+='a'-'A';
+                    key=uint8_t(key+c);
+                }
+            }
+            data.erase(data.begin(),data.begin()+prefix.size());for(auto& c:data)c^=key;envelope=marker;break;
+        }
     }
     Reader r(data);if(r.u32()!=0x9e2a83c1)bad("Unsupported envelope or invalid Unreal signature");
-    version=r.u16();licensee=r.u16();if(!((version==123&&(licensee==0||licensee==37))||(version==126&&licensee==0)||((version==131||version==133)&&licensee==40)))bad("Unsupported package version "+std::to_string(version)+"/"+std::to_string(licensee));
+    version=r.u16();licensee=r.u16();
+    const std::set<int> legacy={0,12,14,15,16,18,19,20,22,23,25,28,31,33,35,36,37,38};
+    if(!((version==118&&licensee==0)||(version==123&&legacy.count(licensee))||
+         (version==126&&licensee==0)||(version==125&&(licensee==38||licensee==39))||
+         (version>=126&&version<=129&&licensee==39)||((version>=130&&version<=133)&&licensee==40)))
+        bad("Unsupported package version "+std::to_string(version)+"/"+std::to_string(licensee));
     r.u32();int nc=r.i32(),no=r.i32(),ec=r.i32(),eo=r.i32(),ic=r.i32(),io=r.i32();
     for(auto pair:{std::pair<int,int>{nc,no},{ec,eo},{ic,io}})if(pair.first<0||pair.first>2000000||size_t(pair.first)>data.size()||pair.second<0||size_t(pair.second)>=data.size())bad("Invalid table bounds");
     r.pos=size_t(no);for(int i=0;i<nc;++i){names.push_back(r.string());r.u32();}
@@ -73,6 +89,22 @@ std::string Package::kind(int id) const {const auto& e=entry(id);return id<0?e.i
 int Package::find(const std::string& pathName) const {for(size_t i=0;i<exports.size();++i)if(lower(ref(int(i)+1))==lower(pathName))return int(i)+1;return 0;}
 Reader Package::reader(int id) const {auto& e=entry(id);if(id<1)bad("Import has no serialized data");if(e.flags&0x02000000)bad("Serialized execution stack unsupported");return Reader(data,e.offset,e.size);}
 const std::vector<int>& Package::members(int id) const {static const std::vector<int> empty;auto i=children.find(id);return i==children.end()?empty:i->second;}
+std::vector<int> Package::orderedFields(int id) const {
+    auto ownerKind=kind(id);
+    int child=ownerKind=="Function"?function(id).fields[3]:structure(id,ownerKind=="Class",ownerKind=="State").fields[3];
+    auto isField=[](const std::string& k){return k=="Function"||k=="State"||k=="Struct"||k=="Enum"||k=="Const"||(k.size()>=8&&k.substr(k.size()-8)=="Property");};
+    std::set<int> seen;std::vector<int> result;
+    while(child){
+        if(child<0||!seen.insert(child).second)throw std::runtime_error("Invalid/cyclic field chain: "+ref(id));
+        if(entry(child).outer!=id||!isField(kind(child)))throw std::runtime_error("Field chain owner/kind mismatch: "+ref(id));
+        result.push_back(child);auto r=reader(child);
+        if(name(r.index())!="None")throw std::runtime_error("Tagged field metadata: "+ref(child));
+        r.index();child=r.index();
+    }
+    for(int member:members(id))if(isField(kind(member))&&!seen.count(member))
+        throw std::runtime_error("Incomplete field chain: "+ref(member));
+    return result;
+}
 int Decoder::reference(bool){pc+=4;return r.index();}
 int Decoder::byte(){++pc;return r.byte();}int Decoder::word(){pc+=2;return r.u16();}int Decoder::integer(){pc+=4;return r.i32();}
 Node Decoder::expression(int depth){
@@ -155,6 +187,32 @@ void Package::setBytecodeProfile(const std::string& profile){
 Json Package::summary() const {
     Json classes=Json::array();for(size_t i=0;i<exports.size();++i)if(exports[i].cls==0)classes.push_back({{"id",i+1},{"name",exports[i].name},{"path",ref(int(i)+1)},{"super",ref(exports[i].super)}});
     return {{"file",path.u8string()},{"version",version},{"licensee",licensee},{"bytecode_profile",sdkClientSort?"sdk-client-sort":"auto"},{"envelope",envelope},{"names",names.size()},{"imports",imports.size()},{"exports",exports.size()},{"classes",classes}};
+}
+Json Package::resourceInventory() const {
+    Json objects=Json::array(),types=Json::object(),dependencies=Json::array();
+    size_t excluded=0;
+    for(size_t i=0;i<exports.size();++i){
+        int id=int(i)+1;const auto& e=exports[i];auto k=kind(id);
+        if(k=="Class"||k=="Function"||k=="State"||k=="Struct"||k=="Enum"||k=="Const"||k=="TextBuffer"||
+           (k.size()>=8&&k.substr(k.size()-8)=="Property")){++excluded;continue;}
+        auto type=ref(e.cls);
+        if(!types.contains(type))types[type]={{"count",0},{"serial_bytes",0}};
+        types[type]["count"]=types[type]["count"].get<size_t>()+1;
+        types[type]["serial_bytes"]=types[type]["serial_bytes"].get<size_t>()+e.size;
+        objects.push_back({{"id",id},{"path",ref(id)},{"class",type},{"outer",ref(e.outer)},
+                           {"flags",e.flags},{"offset",e.offset},{"serial_bytes",e.size}});
+    }
+    for(size_t i=0;i<imports.size();++i){
+        const auto& e=imports[i];
+        dependencies.push_back({{"id",-int(i)-1},{"path",ref(-int(i)-1)},
+                                {"class_package",e.classPackage},{"class",e.importClass},
+                                {"outer",ref(e.outer)}});
+    }
+    // Candidates include class-owned objects and unknown native classes. Table
+    // inspection cannot establish body coverage or discover payload references.
+    return {{"schema",1},{"version",version},{"licensee",licensee},{"envelope",envelope},
+            {"scope","export/import tables only"},{"native_bodies_checked",false},
+            {"excluded_script_exports",excluded},{"types",types},{"candidates",objects},{"imports",dependencies}};
 }
 Json Package::audit() const {
     Json counts=Json::object(),issues=Json::array();size_t failures=0;

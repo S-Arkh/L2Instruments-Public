@@ -1,4 +1,4 @@
-#include "package.h"
+#include "fixture_context.h"
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
@@ -10,7 +10,7 @@ int main(int argc,char** argv){
         if(argc!=2)throw std::runtime_error("Expected fixture path");
         ue::Bytes header(36,0);header[0]=0xc1;header[1]=0x83;header[2]=0x2a;header[3]=0x9e;header[4]=133;header[6]=40;
         {std::ofstream out(argv[1],std::ios::binary);out.write(reinterpret_cast<const char*>(header.data()),header.size());}
-        ue::Context ctx(argv[1],{});auto& p=*ctx.main;p.names={"None","Each","Run"};
+        FixtureContext ctx(argv[1],{});auto& p=*ctx.main;p.names={"None","Each","Run"};
         ue::Entry imported;imported.name="Function";imported.importClass="Class";p.imports.push_back(imported);
         auto generate=[&](const ue::Bytes& script,int size){
             p.exports.clear();p.children.clear();p.data.resize(36);

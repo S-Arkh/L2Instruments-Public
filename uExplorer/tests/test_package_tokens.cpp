@@ -48,7 +48,7 @@ int main(int argc,char** argv) {
             }else rejects([&]{old.setBytecodeProfile("sdk-client-sort");});
             rejects([&]{old.setBytecodeProfile("unknown");});
         }
-        for(auto profile:{std::pair<int,int>{131,0},{131,37},{132,40}}){
+        for(auto profile:{std::pair<int,int>{131,0},{131,37},{129,40}}){
             header[4]=uint8_t(profile.first);header[6]=uint8_t(profile.second);
             {std::ofstream out(argv[1],std::ios::binary);out.write(reinterpret_cast<const char*>(header.data()),header.size());}
             rejects([&]{ue::Package unsupported(argv[1]);});
