@@ -13,13 +13,13 @@
 
 ## Клиентские профили
 
-| Клиент | Каталог | Актуальный комплект | Статус |
+| Клиент | Каталог | Выход после полной подготовки | Исторический игровой статус |
 |---|---|---|---|
 | High Five REVISION 268 EN | [profiles/high-five](profiles/high-five/README.md) | `out/high-five/system` | Проверен в игре |
 | Gracia Epilogue | [profiles/gracia](profiles/gracia/README.md) | `out/gracia/system` | Проверен в игре, без helper EXE |
 | Scryde | [profiles/scryde](profiles/scryde/README.md) | Нет | Исследование закрыто; тестовые клиенты удалены |
 
-Актуальные комплекты поддерживают:
+Реализованный API браузера:
 
 ```uc
 BrowserWnd(GetScript("BrowserWnd")).OpenBrowser("https://example.com", true);
@@ -41,27 +41,30 @@ BrowserWnd(GetScript("BrowserWnd")).OpenBrowser("https://example.com", true);
 
 Общий BrowserWnd и WebView/WGC-исходники пока находятся в high-five;
 подготовка Gracia явно использует их. Скомпилированные файлы разных клиентов
-не взаимозаменяемы. Компилятор находится в `toolchain/`, SDK/editor — в `sdk/`,
+не взаимозаменяемы. Компилятор импортируется в `toolchain/`, SDK/editor — в `sdk/`,
 общие UE2-инструменты — в `tools/ue2/`. Соседние addWeb и gameAddWeb больше не нужны.
 Ранние реализации и исследования сохранены в `archive/addWeb/` и
 `archive/gameAddWeb/`. [Перенос и проверки](docs/MIGRATION.md).
 
 ## Сборка
 
-Базовая HF-сборка: `profiles/high-five/build.ps1`.
-Gracia без helper: `profiles/gracia/build_inprocess.ps1`.
-Пересборка Interface с аргументами открытия из подготовленных workspace:
+Для чистого клона выполните [PUBLICATION_BUILD](docs/PUBLICATION_BUILD.md):
+установите SDK, подготовьте native-stage, соберите DLL/EXE. Эти шаги не требуют
+игровых файлов и создают результаты в `profiles/high-five/build/Release` и
+`profiles/gracia/build-inprocess/Release`.
+
+Для полного UI-комплекта дополнительно нужны импортированные клиентские входы,
+UCC/SDK и Classes. После их подготовки из каталога `gameAddWebWithD3D9`:
+HF — `./profiles/high-five/build.ps1`, Gracia — `./profiles/gracia/build_inprocess.ps1`.
+Пересборка Interface с аргументами открытия из уже подготовленных workspace:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\build_browser_options.ps1
 ```
 
-В `out/<клиент>/` находится текущая пользовательская сборка.
-В каждом профиле `result` — предыдущий базовый комплект; у Gracia `result` содержит старый helper,
-а `result-inprocess` — предыдущий вариант без helper. Прежние install.py обслуживают
-именно `result`, поэтому для обновления установленного соответствующего комплекта
-на Browser Options заменяется Interface.u из `out/<клиент>/system`
-при закрытом клиенте с сохранением предыдущего файла.
+`out/<клиент>/` создаётся этим последним сценарием, а не native-сборкой.
+Готовые `out`, `result` и workspace в Git не входят. Прежние комплекты и правила
+их обновления описаны отдельно в [HISTORICAL_LAYOUT](docs/HISTORICAL_LAYOUT.md).
 
 ## После переноса каталогов
 
@@ -74,10 +77,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\build_browser_options.ps1
 | `build_browser_open_api.ps1` | `build_browser_options.ps1` |
 
 Исторические логи/JSON могут содержать старые абсолютные пути: это запись условий
-тех запусков, а не актуальные команды. Старые CMake-каталоги с абсолютным cache
-сохранены в `profiles/<клиент>/archive/pre-layout-build*`; новые сборки используют
-новые build-каталоги. Подтверждение работы относится к конкретным хешам,
-не автоматически к любой последующей пересборке.
+тех запусков, а не актуальные команды. Подтверждение работы относится к конкретным
+хешам, не автоматически к любой последующей пересборке.
 
 Проверка переноса: [reports/profile-layout-validation.json](reports/profile-layout-validation.json).
 Старый пустой каталог `gracia/` удалён; отсутствие проверено.
