@@ -52,7 +52,7 @@ Package::Package(const std::filesystem::path& file):path(file){
         if(data.size()>=prefix.size()&&std::equal(prefix.begin(),prefix.end(),data.begin())){data.erase(data.begin(),data.begin()+prefix.size());for(auto& c:data)c^=0xac;envelope=marker;break;}
     }
     Reader r(data);if(r.u32()!=0x9e2a83c1)bad("Unsupported envelope or invalid Unreal signature");
-    version=r.u16();licensee=r.u16();if(!((version==123&&(licensee==0||licensee==37))||(version==126&&licensee==0)))bad("Unsupported package version "+std::to_string(version)+"/"+std::to_string(licensee));
+    version=r.u16();licensee=r.u16();if(!((version==123&&(licensee==0||licensee==37))||(version==126&&licensee==0)||(version==133&&licensee==40)))bad("Unsupported package version "+std::to_string(version)+"/"+std::to_string(licensee));
     r.u32();int nc=r.i32(),no=r.i32(),ec=r.i32(),eo=r.i32(),ic=r.i32(),io=r.i32();
     for(auto pair:{std::pair<int,int>{nc,no},{ec,eo},{ic,io}})if(pair.first<0||pair.first>2000000||size_t(pair.first)>data.size()||pair.second<0||size_t(pair.second)>=data.size())bad("Invalid table bounds");
     r.pos=size_t(no);for(int i=0;i<nc;++i){names.push_back(r.string());r.u32();}
@@ -102,6 +102,14 @@ Node Decoder::expression(int depth){
     case 0x19:case 0x12:n.kind=op==0x19?"context":"class_context";child();n.target=word();n.index=byte();child();break;
     case 0x13:case 0x2e:n.kind=op==0x13?"class_cast":"dynamic_cast";n.ref=reference();n.text=p.ref(n.ref);child();break;
     case 0x1d:case 0x1e:case 0x24:case 0x2c:n.kind="constant";if(op==0x1e){pc+=4;n.value=r.f32();}else n.value=op==0x1d?integer():byte();break;
+    case 0x46:{
+        if(p.version!=133 || p.licensee!=40)bad("INT64 literal requires package profile 133/40");
+        auto bits=r.u64();int64_t value;std::memcpy(&value,&bits,8);pc+=8;
+        n.kind="int64_constant";n.value=value;break;
+    }
+    case 0x47:
+        if(p.version!=133 || p.licensee!=40)bad("Array sort requires package profile 133/40");
+        n.kind="array_sort";child();child();break;
     case 0x1f:case 0x34:n.kind="string";for(;;){uint32_t c=op==0x34?word():byte();if(!c)break;if(op==0x34&&c>=0xd800&&c<=0xdbff){auto lo=word();if(lo<0xdc00||lo>0xdfff)bad("Invalid bytecode surrogate");c=0x10000+((c-0xd800)<<10)+(lo-0xdc00);}n.text+=utf8(c);}break;
     case 0x20:case 0x21:n.kind=op==0x20?"object":"name";n.ref=reference();n.text=op==0x20?p.ref(n.ref):p.name(n.ref);break;
     case 0x22:case 0x23:case 0x35:n.kind=op==0x22?"rotation":op==0x23?"vector":"range";n.value=Json::array();for(int i=0;i<(op==0x35?2:3);++i){if(op==0x22)n.value.push_back(integer());else{pc+=4;n.value.push_back(r.f32());}}break;
@@ -127,8 +135,8 @@ Function Package::function(int id) const {
 }
 Property Package::property(int id) const {
     auto r=reader(id);if(name(r.index())!="None")bad("Tagged property metadata unsupported");r.index();Property v;v.id=id;v.next=r.index();v.kind=kind(id);v.dim=r.i32();v.flags=r.u32();v.category=name(r.index());if(v.flags&0x20)r.u16();
-    if(v.kind=="ByteProperty"||v.kind=="ObjectProperty"||v.kind=="ClassProperty"||v.kind=="StructProperty"||v.kind=="ArrayProperty")v.ref=r.index();
-    if(v.kind=="ClassProperty")v.meta=r.index();if(v.dim<0||v.dim>1000000)bad("Invalid property dimension");return v;
+    if(v.kind=="ByteProperty"||v.kind=="ObjectProperty"||v.kind=="ClassProperty"||v.kind=="StructProperty"||v.kind=="ArrayProperty"||v.kind=="DelegateProperty")v.ref=r.index();
+    if(v.kind=="ClassProperty")v.meta=r.index();if(v.dim<0||v.dim>1000000)bad("Invalid property dimension");v.tail=r.pos;return v;
 }
 std::vector<std::string> Package::enumeration(int id) const {auto r=reader(id);if(name(r.index())!="None")bad("Enum properties unsupported");r.index();r.index();int count=r.index();if(count<0||count>256)bad("Invalid enum count");std::vector<std::string> v;while(count--)v.push_back(name(r.index()));if(r.pos!=r.end)bad("Trailing enum bytes");return v;}
 std::string Package::constant(int id) const {auto r=reader(id);if(name(r.index())!="None")bad("Const properties unsupported");r.index();r.index();auto text=r.string();if(r.pos!=r.end)bad("Trailing const bytes");return text;}
@@ -142,6 +150,31 @@ Json Package::scriptText(int id) const {
 Json Package::summary() const {
     Json classes=Json::array();for(size_t i=0;i<exports.size();++i)if(exports[i].cls==0)classes.push_back({{"id",i+1},{"name",exports[i].name},{"path",ref(int(i)+1)},{"super",ref(exports[i].super)}});
     return {{"file",path.u8string()},{"version",version},{"licensee",licensee},{"envelope",envelope},{"names",names.size()},{"imports",imports.size()},{"exports",exports.size()},{"classes",classes}};
+}
+Json Package::audit() const {
+    Json counts=Json::object(),issues=Json::array();size_t failures=0;
+    for(size_t i=0;i<exports.size();++i){
+        int id=int(i)+1;auto k=kind(id);bool supported=true;
+        if(!counts.contains(k))counts[k]={{"total",0},{"checked",0},{"failed",0}};
+        counts[k]["total"]=counts[k]["total"].get<size_t>()+1;
+        try {
+            if(k=="Function")function(id);
+            else if(k=="Class")structure(id,true);
+            else if(k=="State")structure(id,false,true);
+            else if(k=="Struct")structure(id);
+            else if(k=="Enum")enumeration(id);
+            else if(k=="Const")constant(id);
+            else if(k.size()>=8 && k.substr(k.size()-8)=="Property"){
+                auto v=property(id);ref(v.next);ref(v.ref);ref(v.meta);
+                if(v.tail!=exports[i].offset+exports[i].size)bad("Trailing property metadata");
+            } else supported=false;
+            if(supported)counts[k]["checked"]=counts[k]["checked"].get<size_t>()+1;
+        } catch(const std::exception& e){
+            ++failures;counts[k]["failed"]=counts[k]["failed"].get<size_t>()+1;
+            if(issues.size()<100)issues.push_back({{"export",id},{"kind",k},{"offset",exports[i].offset},{"error",e.what()}});
+        }
+    }
+    return {{"version",version},{"licensee",licensee},{"counts",counts},{"failures",failures},{"issues",issues},{"issues_truncated",failures>issues.size()}};
 }
 Json nodeJson(const Node& n){Json c=Json::array();for(auto& child:n.children)c.push_back(nodeJson(child));return {{"pc",n.pc},{"end",n.finish},{"opcode",n.op},{"kind",n.kind},{"reference",n.ref},{"text",n.text},{"value",n.value},{"index",n.index},{"target",n.target},{"children",c}};}
 }

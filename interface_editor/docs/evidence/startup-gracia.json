@@ -1,0 +1,14 @@
+{
+  "format": 1,
+  "scope": "full-client-startup-login-rendering",
+  "sample_sha256": "9767dee1b60aa22bc33de1c71cc54d5a8a8bcc6fa0bb82ef24c66c00f78d62d7",
+  "module_sha256": "14b838bbc6b6517ddc8294f0ab2fafdbe73daa5e4a39da224fdfd252c4545e06",
+  "observation_seconds": 40,
+  "visible_game_window": true,
+  "login_screen_capture_inspected": true,
+  "login_form_and_buttons_visible": true,
+  "credentials_entered": false,
+  "in_game_windows_validated": false,
+  "trailer_variant": "original-preserved",
+  "capture_published": false
+}

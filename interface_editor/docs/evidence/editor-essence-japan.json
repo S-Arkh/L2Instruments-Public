@@ -1,0 +1,57 @@
+{
+  "format": 1,
+  "status": "research",
+  "schema": "essence_native.XDAT",
+  "samples": [
+    {
+      "sha256": "dd735cf3b8806f497e855720b00d7c1020c0c7d43d568fd630ed157081a26136",
+      "bytes": 7501625,
+      "compatible": true,
+      "cursor": 7501625,
+      "tail_bytes": 0,
+      "anomaly_present": true,
+      "roundtrip_identical": true,
+      "edit_reload": true,
+      "undo_identical": true,
+      "json_roundtrip_identical": true
+    },
+    {
+      "sha256": "03760dc45f844c395aee4b05578d0f3933b03cf7840243c098b3883f6d5528ac",
+      "bytes": 8257313,
+      "compatible": true,
+      "cursor": 8257313,
+      "tail_bytes": 0,
+      "anomaly_present": true,
+      "roundtrip_identical": true,
+      "edit_reload": true,
+      "undo_identical": true,
+      "json_roundtrip_identical": true
+    },
+    {
+      "sha256": "c3b05f1e851f243516d02d38ac8d119caa516351b4f032e17237c62981af1328",
+      "bytes": 7501731,
+      "compatible": true,
+      "cursor": 7501731,
+      "tail_bytes": 0,
+      "anomaly_present": true,
+      "roundtrip_identical": true,
+      "edit_reload": true,
+      "undo_identical": true,
+      "json_roundtrip_identical": true
+    },
+    {
+      "sha256": "3bda6e28235a8648221ee164a98707046ef960e989bd7895d7cfe5c0b3d96638",
+      "bytes": 8257419,
+      "compatible": true,
+      "cursor": 8257419,
+      "tail_bytes": 0,
+      "anomaly_present": true,
+      "roundtrip_identical": true,
+      "edit_reload": true,
+      "undo_identical": true,
+      "json_roundtrip_identical": true
+    }
+  ],
+  "schema_sha256": "002c90111e342562c7b495363d0f0421c1a66297ac8ba713d2eb9d2b0df27fd8",
+  "client_loading_validated": false
+}

@@ -92,6 +92,8 @@ struct Writer {
         auto& k=n.kind;auto& c=n.children;
         auto e=[&](size_t i){return expression(c.at(i),owner);};
         auto number=[&]()->std::string{if(k=="int_zero")return "0";if(k=="int_one")return "1";return n.value.dump();};
+        if(k=="int64_constant")return "INT64("+quote(n.value.dump())+")";
+        if(k=="array_sort")return e(0)+".Sort("+e(1)+")";
         if(k=="constant"||k=="int_zero"||k=="int_one"){
             if(n.value.is_number_float()&&!std::isfinite(n.value.get<double>()))throw std::runtime_error("Nonfinite float");
             if(expected){auto prop=expected.p->property(expected.id);if(prop.kind=="ByteProperty"&&prop.ref){int value=std::stoi(number());auto en=ctx.resolve(*expected.p,prop.ref);if(en){auto members=en.p->enumeration(en.id);if(value>=0&&size_t(value)<members.size())return members[value];}return leaf(expected.p->ref(prop.ref))+"("+number()+")";}}
