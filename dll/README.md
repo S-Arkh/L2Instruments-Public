@@ -3,13 +3,15 @@
 **Публикационная копия:** внешние пути и команды —
 [SCRIPT_TOOLS](../docs/SCRIPT_TOOLS.md), [BUILD](../docs/BUILD.md).
 Клиентские DLL подключаются отдельно; готовые комплекты создаются локально.
-Пути разработки ниже описывают исходное рабочее дерево.
+Исторические комплекты и пути исходного рабочего дерева вынесены в
+[HISTORICAL_LAYOUT.md](HISTORICAL_LAYOUT.md).
 
 Сборка в Windows и все реализованные native-функции в игре проверены на целевых
 клиентах. Scryde исключён: рабочая интеграция не получена, исследования прекращены.
 
 Рабочий каталог: `dll` относительно корня репозитория.
-Пользовательские функции: **`src/extensionL2.cpp`**. Готовые комплекты: **`dist/profiles`**.
+Пользовательские функции: **`src/extensionL2.cpp`**. Новые комплекты создаются
+в **`work/prepared-<дата>/client`** либо в явно заданном `-Destination/client`.
 Сборка: **`build.ps1`**. Подготовка/проверка комплекта: **`prepare_extension.ps1`**.
 Все команды ниже выполняются из этого каталога.
 
@@ -18,19 +20,13 @@
 | Каталог | Назначение |
 |---|---|
 | `src/`, `tools/`, `tests/`, `ExtensionL2/` | Исходники, инструменты и тесты |
-| `dist/profiles/Clear_hf/` | Готовый Core-комплект High Five |
-| `dist/profiles/Gracia_epilogue/` | Актуальный Core-комплект Gracia (бывший prepared-gracia-epilogue-v2/client) |
-| `dist/profiles/client_b3fb9af3/` | Комплект другого поддерживаемого Core-профиля |
-| `dist/client/`, `dist/win32/` | Общий клиентский модуль и готовые инструменты |
-| `build/` | Нативная сборка CMake |
-| `work/gracia/v2/` | Сохранённые workspace, bindings и тестовый bytecode актуальной подготовки Gracia |
+| `build/Release/` | Локальный результат нативной сборки CMake |
 | `work/prepared-<дата>/` | Новые подготовки через prepare_extension.ps1 по умолчанию; результат внутри client/ |
-| `archive/gracia/v1/` | Предыдущая подготовка Gracia целиком, включая client и workspace |
 | `reports/` | Журнал переноса и контрольные хеши |
 
-При переносе 2026-10-30 проверено побайтовое сохранение всех 101 файлов.
-Исторические абсолютные пути в bundle.json и логах отражают прежние запуски.
-Журнал: `reports/layout-20261030.json`.
+`build` и `work` создаются локально, в чистом клоне готовых комплектов нет.
+Полный пример с внешними входами, сборкой `.u` и установкой:
+[Clear HF walkthrough](../docs/CLEAR_HF_WALKTHROUGH.md).
 
 Для браузера используйте ExtensionL2.dll из браузерного комплекта:
 Core-комплект содержит базовую версию расширения, а не браузерную.
@@ -84,14 +80,14 @@ INT64_MIN. В клиенте такой функции не было. Её ре�
 только при компиляции UC с типом int64. Реализация новой функции исполняется
 из **ExtensionL2.dll в клиенте**.
 
-Готовые проверенные инструменты находятся в `dist/win32`, общая DLL/UC — в
-`dist/client`, а Core.dll для конкретного клиента — в `dist/profiles/<профиль>`.
-Хеши и границы выполненной проверки
-описаны в VALIDATION.md и JSON-манифестах рядом с файлами.
+Собранные native-инструменты находятся в `build/Release`. Клиентский комплект
+с `.u`, патченной Core и `bundle.json` появляется после `prepare_extension.ps1`.
+Исторические хеши и границы прежних проверок описаны в [VALIDATION.md](VALIDATION.md);
+новая подготовка записывает собственный манифест и логи.
 
 ## 1. Сборка DLL и тестового EXE
 
-Из каталога `rebuild/dll`, в Developer PowerShell for VS 2022:
+Из каталога `dll`, в Developer PowerShell for VS 2022:
 
 ```powershell
 cmake -S . -B build -G "Visual Studio 17 2022" -A Win32
@@ -122,11 +118,12 @@ py -3 tools/build_mingw.py
 
 ```powershell
 $ClientSystem = Read-Host 'Полный путь к system целевого клиента HF'
-.\prepare_extension.ps1 -ClientCore ..\..\Clear_hf\Core.dll -ClientSystem $ClientSystem
+.\prepare_extension.ps1 -ClientCore (Join-Path $ClientSystem 'Core.dll') `
+    -ClientSystem $ClientSystem -Launcher ../int64/build/Release/ucc64.exe
 ```
 
 Скрипт использует `build/Release/ExtensionL2.dll`, генерирует объявления, компилирует
-ExtensionL2.u, проверяет сигнатуры и создаёт новый каталог `prepared-<дата-время>`.
+ExtensionL2.u, проверяет сигнатуры и создаёт новый каталог `work/prepared-<дата-время>`.
 `-ClientCore` обязателен; это оригинал из выбранного клиента. Можно указать
 `-NativeDll`, `-Launcher`, `-ClientSystem` и `-Destination`.
 Он не устанавливает файлы в каталог игры.
@@ -136,7 +133,7 @@ ExtensionL2.u, проверяет сигнатуры и создаёт новы�
 ```powershell
 & build/Release/extension_bindings.exe build/Release/ExtensionL2.dll ExtensionL2/Classes/ExtensionL2API.uc build/bindings.json
 py -3 tools/prepare_uc.py extension-workspace
-py -3 ../int64/tools/run_compile.py extension-workspace/System --launcher ../int64/dist/win32/ucc64.exe
+py -3 ../int64/tools/run_compile.py extension-workspace/System --launcher ../int64/build/Release/ucc64.exe
 py -3 tools/check_uc.py extension-workspace/System/ExtensionL2.u --bindings-json build/bindings.json --bytecode-output extension-workspace/compiled-call.bin
 ```
 
@@ -190,21 +187,24 @@ if (!attach || !attach(core)) {
 
 ## 4. Вариант подключения B: модифицированная копия клиентской Core.dll
 
-Это конкретный пример изменения клиентской DLL. Патчер поддерживает два
-оригинала **клиентской** Core.dll, каждый со своим ABI-профилем:
+Это конкретный пример изменения клиентской DLL. Патчер поддерживает утверждённые
+оригиналы **клиентской** Core.dll из `core_profiles.json`, каждый со своим ABI-профилем:
 
 ```text
 SHA256 b3fb9af30a4fc9429b6765e9d897acb00478e7ba0a1e6c48266d475bfadf0f3c
 SHA256 0677e909b10ec398543dbd04cf4d8714ed97befd23d5f928aef17b1a5d844471 (Clear HF)
+SHA256 0941cac5e71039ca0fa1c4d33675a70aab8b995bece3437936eec980f4f452f0 (Gracia Epilogue)
 ```
 
-Из каталога `rebuild/dll`:
+Из каталога `dll`, после настройки внешних входов по [SCRIPT_TOOLS](../docs/SCRIPT_TOOLS.md):
 
 ```powershell
-py -3 tools/check_core_dependencies.py ../../Clear_hf --core ../../Clear_hf/Core.dll
-py -3 tools/patch_core.py ../../Clear_hf/Core.dll client/Core.dll
+$ClientSystem = $env:L2_CLIENT_SYSTEM
+$ClientCore = $env:L2_CLIENT_CORE
+py -3 tools/check_core_dependencies.py $ClientSystem --core $ClientCore
+py -3 tools/patch_core.py $ClientCore client/Core.dll
 Copy-Item build/Release/ExtensionL2.dll client/ExtensionL2.dll
-py -3 ../int64/tools/package_client.py extension-workspace/System/ExtensionL2.u client/ExtensionL2.u --like ../../decompilled/client_dll/u_files/interface.u
+py -3 ../int64/tools/package_client.py extension-workspace/System/ExtensionL2.u client/ExtensionL2.u --like (Join-Path $ClientSystem 'Interface.u')
 ```
 
 Выходной Core.dll должен быть новым файлом. Оригинал не перезаписывается.
@@ -248,7 +248,7 @@ ExtensionL2.u    — скриптовый класс с объявлением �
 Пример ручного подключения (все DLL-пути лучше задать абсолютными):
 
 ```powershell
-$Core = (Resolve-Path ../../decompilled/client_dll/Core.dll).Path
+$Core = (Resolve-Path $env:L2_CLIENT_CORE).Path
 $Extension = (Resolve-Path build/Release/ExtensionL2.dll).Path
 $Deps = 'D:\YourClient\System'
 $Call = (Resolve-Path extension-workspace/compiled-call.bin).Path

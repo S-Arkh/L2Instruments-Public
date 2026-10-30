@@ -53,6 +53,45 @@ cmake --build dll/build --config Release --target generate_native_uc
 известный ABI и хеши. Неизвестная Core анализируется как кандидат, но не
 добавляется в разрешённые профили автоматически.
 
+### Импорт компилятора и runtime SDK
+
+Из корня репозитория в активированной Python 3.12 `.venv`:
+
+```powershell
+$CompilerSource = Read-Host 'Абсолютный путь к оригинальному компилятору (с System и Core)'
+$RuntimeInstaller = Read-Host 'Абсолютный путь к UE2Runtime-22261903.exe'
+python int64/tools/import_compiler.py $CompilerSource --destination int64/compiler
+if ($LASTEXITCODE) { throw 'Compiler import failed' }
+python int64/tools/import_runtime_sdk.py $RuntimeInstaller int64/sdk/runtime2226
+if ($LASTEXITCODE) { throw 'Runtime SDK import failed' }
+$env:L2_COMPILER_SYSTEM = (Resolve-Path int64/compiler/System).Path
+$env:L2_RUNTIME_SDK = (Resolve-Path int64/sdk/runtime2226).Path
+```
+
+Каталоги назначения должны быть новыми. Импорт не скачивает входы и не запускает
+установщик. `import_compiler.py` ожидает `System/{UCC.exe,Core.dll,Editor.dll,Engine.dll}`
+и `Core/Classes/Object.uc`; также копирует остальные имеющиеся `.exe/.dll/.u/.int/.ini`
+из System. Предоставьте полный рабочий System с зависимостями UCC.
+`import_runtime_sdk.py` создаёт отдельные `manifest.json` и `System` с пакетами
+`Core.u`, `Engine.u`, `Editor.u`, `License.int`; он не заменяет импорт компилятора.
+
+Поддерживаемый runtime installer — **UE2 Runtime 2226.19.03**.
+Ожидаемые контрольные суммы (другие версии нельзя подставлять по одному имени):
+
+| Вход | Алгоритм | Ожидаемый хеш |
+|---|---|---|
+| `UE2Runtime-22261903.exe` | SHA-1 | `2356fafdf7dd77b3f74f766f28dcd451849dfb9b` |
+| Компилятор `UCC.exe` | SHA-256 | `c68ba1ce0eab03af23b04dc1c991c3f1cc047a8a2076c6850e3071892806fb65` |
+| Компилятор `Core.dll` | SHA-256 | `5bff274734cae994353a8c60f4bfe1087dbdd9aa3883c7b2a7eff6ea2f51dc7e` |
+| Компилятор `Editor.dll` | SHA-256 | `d64995c1282956c6e9d67dd70715a69b5101331aa727a2d44b03e25fd7f2cd2e` |
+| Компилятор `Engine.dll` | SHA-256 | `a89b7c00697808861c9c86b003014d4c7f4a732ecf476440b4c187c880a710b6` |
+
+Источник истины: `int64/tools/verify_profile.py` (`HASHES`) и
+`int64/tools/import_runtime_sdk.py` (`ARCHIVE_SHA1`, `ENGINE_HASH`, URL источника).
+Клиентская Core — другой файл; её утверждённые профили находятся в
+`dll/core_profiles.json`. Полный пример настройки и установки:
+[Clear HF walkthrough](CLEAR_HF_WALKTHROUGH.md).
+
 ```powershell
 $env:L2_COMPILER_SYSTEM = 'C:\LocalInputs\compiler\System'
 $env:L2_CLIENT_CORE = 'C:\LocalInputs\client\System\Core.dll'

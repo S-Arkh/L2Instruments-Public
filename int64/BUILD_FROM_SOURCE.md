@@ -93,8 +93,9 @@ ctest --test-dir build -C Release --output-on-failure
 Studio и собирать нужные проекты из IDE. Для повторной сборки после изменения
 `.cpp`/`.h` достаточно `cmake --build build --config Release`.
 
-`build/Release` — ваши новые сборки. Готовые файлы в `dist/win32` автоматически
-ими не заменяются. Для запуска новой версии передавайте её путь через
+`build/Release` — ваши новые сборки. Исторический `dist/win32` в Git не включён;
+если вы создали его локально, сборка CMake его не обновляет.
+Для запуска новой версии передавайте её путь через
 `-Launcher`, как показано ниже. DLL должна находиться рядом с выбранным EXE.
 
 ### Сборка отдельной цели
@@ -138,8 +139,8 @@ cmake --build build --config Release --target client_native_probe
 вашего установленного клиента:
 
 ```powershell
-$ClientCore = (Resolve-Path ..\decompilled\client_dll\Core.dll).Path
 $ClientSystem = 'D:\YourClient\System'
+$ClientCore = Join-Path $ClientSystem 'Core.dll'
 & .\build\Release\client_native_probe.exe $ClientCore $ClientSystem
 ```
 
@@ -149,9 +150,15 @@ Probe печатает `PASS` для выполненных проверок. О
 
 ## 5. Собрать Int64Smoke.u из его исходников
 
-Редактируйте файлы в **`smoke/Int64Smoke/Classes`**. Оригинальные бинарники и
-базовые Core-исходники уже скопированы в **`rebuild/int64/compiler`**. Для проверки профиля нужна
-предоставленная клиентская `Core.dll` в `int64_UCC/decompilled/client_dll`.
+Редактируйте файлы в **`smoke/Int64Smoke/Classes`**. Оригинальные бинарники UCC,
+базовые Core-исходники и клиентская `Core.dll` в Git не включены.
+Сначала выполните импорт и настройку внешних входов из
+[SCRIPT_TOOLS](../docs/SCRIPT_TOOLS.md#импорт-компилятора-и-runtime-sdk).
+`L2_COMPILER_SYSTEM` должен указывать на System импортированного UCC,
+рядом с System нужен `Core/Classes/Object.uc`; `L2_CLIENT_CORE` — на оригинальную
+Core выбранного клиента. Используйте абсолютные пути: PowerShell-сценарий
+меняет рабочий каталог на `int64`. Runtime SDK нужен для Interface, но не
+для отдельного Int64Smoke.
 
 После C++ сборки выполните:
 
@@ -234,15 +241,16 @@ py -3 tools/build_mingw.py --cc i686-w64-mingw32-gcc --cxx i686-w64-mingw32-g++ 
 
 ## 8. Что сохранить на будущее
 
-Для EXE/DLL компилятора сохраните весь `rebuild/int64`, особенно `src`, C++ файлы из `tests`,
+Для EXE/DLL компилятора сохраните весь `int64`, особенно `src`, C++ файлы из `tests`,
 `third_party/minhook`, `CMakeLists.txt`, `build.ps1` и эту инструкцию.
 
 Для повторной сборки `.u` дополнительно сохраните:
 
 - `smoke`, `tools` и скрипты `build_smoke.ps1` / `build_interface.ps1`;
 - `workspace` с вашими изменёнными UC и `sdk/runtime2226`;
-- локальный комплект `rebuild/int64/compiler` с оригинальными UCC.exe и DLL;
-- предоставленные клиентские DLL и пакеты в `int64_UCC/decompilled/client_dll`.
+- импортированный `int64/compiler` с оригинальными UCC.exe, DLL и Core/Classes;
+- внешние клиентские DLL, пакеты и Classes, а также значения переменных
+  `L2_*` из [SCRIPT_TOOLS](../docs/SCRIPT_TOOLS.md).
 
 Смещения ABI в `src/editor_bridge.cpp` и проверки в `tools/verify_profile.py`
 относятся к конкретным исходным бинарникам UCC/Core/Editor. При изменении
