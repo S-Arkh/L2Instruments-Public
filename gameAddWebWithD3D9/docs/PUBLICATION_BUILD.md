@@ -47,8 +47,8 @@ python gameAddWebWithD3D9/tools/prepare_inputs.py --profile gracia --client-syst
 5. Соберите HF:
    `gameAddWebWithD3D9/profiles/high-five/build.ps1 -Python python -ClientSystem C:\LocalInputs\HF\System`.
 6. Для Gracia сначала подготовьте baseline UI/восстановленные Classes через
-   `profiles/gracia/build.ps1 -Python python -ExportedClasses C:\LocalInputs\Gracia\Classes -ClientSystem C:\LocalInputs\Gracia\System`.
-   Затем выполните `profiles/gracia/build_inprocess.ps1 -Python python`.
+    `./gameAddWebWithD3D9/profiles/gracia/build.ps1 -Python python -ExportedClasses C:\LocalInputs\Gracia\Classes -ClientSystem C:\LocalInputs\Gracia\System`.
+   Затем выполните `./gameAddWebWithD3D9/profiles/gracia/build_inprocess.ps1 -Python python`.
 7. `gameAddWebWithD3D9/build_browser_options.ps1 -Python python` пересобирает UI
    с API `OpenBrowser(url, hideControls)` из подготовленных workspace.
 
