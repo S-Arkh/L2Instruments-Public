@@ -1,0 +1,9 @@
+[project]
+name = "l2-interface-editor"
+version = "0.5.0"
+description = "C++ XDAT core and two-pane PySide6 desktop editor"
+requires-python = ">=3.12"
+dependencies = ["PySide6-Essentials>=6.10,<7"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,60 @@
+NWindow.dll — XML/XDAT UI, скрипты окон и native UI API
+Уровень: PE/импорты, выбранные участки загрузчика/перекомпиляции, игровой UI-тест.
+
+1. Идентификация
+HF SHA256: 94a8975ab729f077da69e62c507feada07393359d12d0ea32498b6be8d28b5b7
+Gracia SHA256: 14b838bbc6b6517ddc8294f0ab2fafdbe73daa5e4a39da224fdfd252c4545e06
+Адреса ниже относятся ТОЛЬКО к этой Gracia, preferred base 0x10000000.
+Все указанные адреса — preferred VA; при релокации переводить в RVA.
+
+2. Роль в интеграции
+Создаёт штатные окна/контролы, привязывает их к UIScript, обслуживает события,
+таймеры и TextureHandle. Декларации API получены из NWindow.u; DLL и .u — разные
+артефакты. Browser использует WindowHandle, TextureHandle, ButtonHandle, EditBoxHandle,
+SetTextureWithObject, EnableTick, SetTimer, Show/Hide и штатную иконку сворачивания.
+HF XDAT: ct26; Gracia: ct24. Структуру описывает gameAddWebWithD3D9/sdk/editor/schemas.json.
+
+3. Загрузка классов Gracia
+0x101CF181: преобразование имени скрипта из FString.
+0x101CF18A: подставляется префикс Interface (строка 0x102FC520), затем %s.%s
+(строка 0x10312B3C).
+0x101CF1B8: Core StaticLoadClass через IAT 0x102E132C.
+Предшествующий поиск через 0x101CE160 также использует Interface в изученных ветках.
+Поэтому внешний пакет GameBrowser.BrowserWnd не был принят как доказанно рабочий
+путь: исследованный fallback дополнительно поставил бы Interface.
+Решение — восстановленный собственный Interface.u с BrowserWnd. NWindow не патчилась.
+Это не доказательство отсутствия любых иных путей загрузки внешних пакетов.
+
+4. Почему удалялся Interface.u и падал CompileUIScripts
+Исследован NWndUtil::CheckDependency (начало 0x101E1800): проверяются <package>.u,
+соседний ../<package>/Classes, *.uc, uclist.int; сравниваются перечень и времена.
+Ветка 0x101E1A7D..0x101E1AA1 вызывает удаление пакета через файловый менеджер,
+когда проверка зависимостей не прошла.
+Отдельная force-create ветка 0x101C5080 проверяет флаг +0x104 менеджера;
+0x101C50DB передаёт ../System/Interface.u для удаления.
+XMLUIManager::CompileUIScripts начинается с 0x101C5370.
+0x101C540A: StaticLoadClass для Editor.MakeCommandlet.
+Строка 0x1031A640: -UIScriptCompile. Это путь компилятора, не загрузка BrowserWnd.
+
+Рядом с system находилась WOTgreal-выгрузка interface/Classes.
+При запуске Interface.u исчезал, затем assertion Class->IsChildOf(T::StaticClass())
+в истории XMLUIManager::CompileUIScripts. Перенос папки исходников за пределы
+клиента и восстановление собранного Interface.u позволили открыть Browser в игре.
+Не следует приписывать это удаление integrity.dll только из-за найденной строки.
+
+5. Окна и ввод
+Gracia Browser первоначально отображался позади native-логина. В генерируемом
+ct24 BrowserWnd выставлено unk2=1 (alwaysOnTop); результат подтверждён.
+HF-поля не переносятся в ct24 по номеру без явной карты aliases.
+Прозрачный Button принимает мышь, скрытый EditBox держит клавиатурный фокус;
+RU/EN переводится Windows-раскладкой. Свёрнутое окно не должно сохранять захват ввода.
+
+6. Источники
+gameAddWebWithD3D9/reports/gracia-ui-loader.md
+gameAddWebWithD3D9/reports/inventory.json
+gameAddWebWithD3D9/gracia/prepare.py (карта XDAT и кнопка Browser)
+gameAddWebWithD3D9/gracia/manifest.py (round-trip и сохранение старого UI)
+gameAddWebWithD3D9/browserTexture/Classes/BrowserWnd.uc
+gameAddWebWithD3D9/gracia/workspace/nwindow/Classes (сгенерированные декларации)
+Scryde NWindow SHA256 73735f1fb164f23bd1f83426e5918c315aed5916b13b50ec7c084571da8af831
+есть в inventory; полноценный перенос UI/ABI на него не подтверждён.

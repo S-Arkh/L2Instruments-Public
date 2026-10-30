@@ -1,0 +1,15 @@
+{
+  "schema": 2,
+  "id": "christmas",
+  "algorithm": "christmas-candy-v3",
+  "seed": 1225,
+  "palette": {
+    "fir": "#174c36", "candy": "#c42d3b", "cream": "#fff1cf",
+    "gold": "#e4b958",
+    "stretch_shadow": "#13271e", "stretch_light": "#66876f", "plain_control_light": "#d1dfcf",
+    "lights": ["#ff575f", "#ffdf71", "#71e4ac", "#8cceff"]
+  },
+  "decoration": {"garland_spacing": 22, "bulb_radius": 2, "stripe_width": 4, "stripe_depth": 3, "ornament_radius": 3},
+  "alpha_policy": "preserve-source-exactly",
+  "description": "Candy-cane decoration on large headers; calm monochrome green sliders, scrollbars and tiled drag rails. No snow."
+}

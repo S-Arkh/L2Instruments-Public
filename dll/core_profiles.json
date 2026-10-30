@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "abi": "ue2-x86-frame-high-low-v1",
+  "native_table_size": 4096,
+  "exports": {
+    "register": "?GRegisterNative@@YAEHABQ8UObject@@AEXAAUFFrame@@QAX@Z@Z",
+    "table": "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA",
+    "step": "?Step@FFrame@@QAEXPAVUObject@@QAX@Z",
+    "undefined": "?execUndefined@UObject@@QAEXAAUFFrame@@QAX@Z"
+  },
+  "profiles": [
+    {
+      "name": "client_b3fb9af3",
+      "sha256": "b3fb9af30a4fc9429b6765e9d897acb00478e7ba0a1e6c48266d475bfadf0f3c",
+      "rvas": {"register": 382464, "table": 968408, "step": 37392, "undefined": 381456},
+      "code": {"register": "833d68fa131500751d57b900100000b8", "step": "8b410c0fb61083c00189410c8b442408", "undefined": "8b4424048b480c0fb651ff5268d43609"}
+    },
+    {
+      "name": "gracia_epilogue_0941cac5",
+      "wide_char_type": "unsigned_short",
+      "sha256": "0941cac5e71039ca0fa1c4d33675a70aab8b995bece3437936eec980f4f452f0",
+      "rvas": {"register": 373776, "table": 931472, "step": 37120, "undefined": 372768},
+      "code": {"register": "833df05d131500751d57b900100000b8", "step": "8b410c0fb61083c00189410c8b442408", "undefined": "8b4424048b480c0fb651ff52681cdc08"}
+    },
+    {
+      "name": "clear_hf_0677e909",
+      "sha256": "0677e909b10ec398543dbd04cf4d8714ed97befd23d5f928aef17b1a5d844471",
+      "rvas": {"register": 382592, "table": 960208, "step": 37376, "undefined": 381584},
+      "code": {"register": "833d58da131500751d57b900100000b8", "step": "8b410c0fb61083c00189410c8b442408", "undefined": "8b4424048b480c0fb651ff5268542109"}
+    }
+  ]
+}

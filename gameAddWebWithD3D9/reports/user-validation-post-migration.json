@@ -1,0 +1,8 @@
+{
+  "date": "2026-10-30",
+  "user_confirmation": "окей, все работает для gracia и high five",
+  "clients": ["gracia", "high-five"],
+  "working": true,
+  "exact_installed_bundle_hashes": null,
+  "note": "User confirmed both clients after migration. Exact installed files were not read back; confirmation is not assigned to a particular rebuilt package hash."
+}

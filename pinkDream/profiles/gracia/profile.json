@@ -1,0 +1,7 @@
+{
+  "id": "gracia", "status": "planned",
+  "client_root_windows": "D:/Lineage 2/Gracia(for_interlude)",
+  "client_root_linux": "/mnt/d/Lineage 2/Gracia(for_interlude)",
+  "packages": ["SysTextures/L2UI.utx", "SysTextures/L2UI_CT1.utx", "SysTextures/L2UI_CH3.utx"],
+  "mappings": [], "package_writer": null, "game_tested": false
+}

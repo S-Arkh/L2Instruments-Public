@@ -1,0 +1,19 @@
+windowscodecs.dll — Windows Imaging Component (WIC)
+Уровень: публичные интерфейсы image codec; не дизассемблирование DLL.
+
+Назначение в истории проекта
+Предыдущая ветка gameAddWeb/browserTexture использовала PNG-путь получения
+изображения браузера. WIC применялся для работы с закодированными изображениями.
+Это давало дополнительную стоимость кодирования/декодирования и копирования.
+
+Текущее состояние
+gameAddWebWithD3D9 использует WGC/D3D11 и raw BGRA readback. Наличие windowscodecs
+в списке link libraries отдельных targets не означает, что каждый кадр текущего
+браузера проходит через PNG. Нельзя оценивать текущий путь по старой зависимости.
+
+Для разработки
+Сначала определить конкретную ветку и путь кадра по web_frames.cpp/gpu_capture.cpp.
+WIC системный, не является заменой WebView2Loader, D3D11 или Engine texture adapter.
+Переносимый профиль SHA256/внутренних RVA для этой DLL не создавался.
+Источники: gameAddWeb/browserTexture, gameAddWebWithD3D9/docs/GUIDE.md,
+gameAddWebWithD3D9/gracia/CMakeLists.txt.

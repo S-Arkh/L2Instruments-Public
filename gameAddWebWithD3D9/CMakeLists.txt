@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.24)
+project(GameWebGPU LANGUAGES CXX)
+if(NOT WIN32 OR NOT CMAKE_SIZEOF_VOID_P EQUAL 4)
+  message(FATAL_ERROR "Use MSVC -A Win32 to match the HF client")
+endif()
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+add_executable(gpu_probe native/gpu_probe.cpp)
+target_include_directories(gpu_probe PRIVATE sdk/webview2/build/native/include
+  sdk/json)
+target_compile_definitions(gpu_probe PRIVATE UNICODE _UNICODE NOMINMAX WIN32_LEAN_AND_MEAN)
+target_compile_options(gpu_probe PRIVATE /W4 /EHsc /utf-8 /bigobj)
+target_link_libraries(gpu_probe PRIVATE d3d11 d3d9 dxgi dcomp windowsapp ole32 user32 winmm)

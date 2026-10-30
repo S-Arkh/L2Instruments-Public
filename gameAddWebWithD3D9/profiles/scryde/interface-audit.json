@@ -1,0 +1,303 @@
+{
+  "target": {
+    "Core.dll": {
+      "file": "/mnt/d/Lineage 2/Scryde/Scryde/Core.dll",
+      "bytes": 985080,
+      "sha256": "f0234b4a75864a77ad8dd2ee361e74ef03e954d29cb7c59eaf4f100015af9158",
+      "prefix_hex": "4d5a90000300000004000000ffff0000b80000000000000040000600000000000000000000000000"
+    },
+    "Engine.dll": {
+      "file": "/mnt/d/Lineage 2/Scryde/Scryde/Engine.dll",
+      "bytes": 10569208,
+      "sha256": "6eda5a1a14f631c6582002a368cc56956293480e69e62bb853c8a94e4b721d5d",
+      "prefix_hex": "4d5a90000300000004000000ffff0000b80000000000000040000600000000000000000000000000"
+    },
+    "NWindow.dll": {
+      "file": "/mnt/d/Lineage 2/Scryde/Scryde/NWindow.dll",
+      "bytes": 10929144,
+      "sha256": "064e07cdc984a1853508e64aacaf480beb968c22504387c82c81b708bc1b9706",
+      "prefix_hex": "4d5a90000300000004000000ffff0000b80000000000000040000000000000000000000000000000"
+    },
+    "D3DDrv.dll": {
+      "file": "/mnt/d/Lineage 2/Scryde/Scryde/D3DDrv.dll",
+      "bytes": 1454064,
+      "sha256": "8f9c0612e50b86192180ae2ba2f3751050c2ca6e7f117b19493f257264ec3ccd",
+      "prefix_hex": "4d5a90000300000004000000ffff0000b80000000000000040000000000000000000000000000000"
+    },
+    "ExtensionL2.dll": {
+      "file": "/mnt/d/Lineage 2/Scryde/Scryde/ExtensionL2.dll",
+      "bytes": 378368,
+      "sha256": "d2a072e0d26730e482efd8664f670f860ce88050565c6d03e041e2b1de0ee2b6",
+      "prefix_hex": "4d5a90000300000004000000ffff0000b80000000000000040000000000000000000000000000000"
+    },
+    "Core.u": {
+      "file": "/mnt/d/Lineage 2/Scryde/Scryde/Core.u",
+      "bytes": 72950,
+      "sha256": "16cfcc56cc5114da9dd5116482b2896ab9c2daf03f9bd1380c61a1f84930443e",
+      "prefix_hex": "470061006d0065006b006900740044006100740061003100310031006d2f8632d7ac89acadacacac",
+      "envelope": "GamekitData111",
+      "package_version": 123,
+      "licensee_version": 37,
+      "decoded_sha256": "25f3f9ed0cff458c62552387a1a5c40c7c6bfbd4cf4fe0c016db0eecb0918ead"
+    },
+    "Engine.u": {
+      "file": "/mnt/d/Lineage 2/Scryde/Scryde/Engine.u",
+      "bytes": 2943140,
+      "sha256": "d9e0fa826118299c90ff34714da36ca536b9cc40775880d44edf098ecd1d96b5",
+      "prefix_hex": "416374697665416e74696368656174437279707478229342325752c8ae2de9ea5bbe7700b562c8f3",
+      "envelope": "ActiveAnticheatCrypt (not decoded)"
+    },
+    "NWindow.u": {
+      "file": "/mnt/d/Lineage 2/Scryde/Scryde/NWindow.u",
+      "bytes": 545543,
+      "sha256": "6895b2bb36415a093b5741a7c46d2453291a52dcd05b7691b07be677f69ebf4f",
+      "prefix_hex": "416374697665416e746963686561744372797074700c61c64e938ccae6d3f3856dcb72589aff60be",
+      "envelope": "ActiveAnticheatCrypt (not decoded)"
+    },
+    "ExtensionL2.u": {
+      "file": "/mnt/d/Lineage 2/Scryde/Scryde/ExtensionL2.u",
+      "bytes": 7116,
+      "sha256": "d1ad3b8b093aa6a808413f0c577e9b01c21528c6495d1fa2ef32a09f840ed816",
+      "prefix_hex": "4c0069006e00650061006700650032005600650072003100310031006d2f8632d2acacacadacacac",
+      "envelope": "Lineage2Ver111",
+      "package_version": 126,
+      "licensee_version": 0,
+      "decoded_sha256": "9fa25ceeae51704dd129d2d710b933fafde732bef021d5ed1b467cb37aeae737"
+    },
+    "Interface.u": {
+      "file": "/mnt/d/Lineage 2/Scryde/Scryde/Interface.u",
+      "bytes": 3253567,
+      "sha256": "0eec3fc00817f8771663535745ebd810d873af1c1b9bf8df8b7ab126f1edc3de",
+      "prefix_hex": "416374697665416e74696368656174437279707428eb13980152397185dd86baa1ed08a376cb661b",
+      "envelope": "ActiveAnticheatCrypt (not decoded)"
+    },
+    "Interface.xdat": {
+      "file": "/mnt/d/Lineage 2/Scryde/Scryde/Interface.xdat",
+      "bytes": 1898530,
+      "sha256": "a1bf7b8bedc24df1a7ea8051f56dea62e97218883627cc350b5365bc7923c87a",
+      "prefix_hex": "416374697665416e74696368656174437279707434dbb3022178be4da6cc21ca446c9f70ac87261b",
+      "envelope": "ActiveAnticheatCrypt (not decoded)"
+    }
+  },
+  "donor": {
+    "Core.dll": {
+      "file": "/mnt/d/Lineage 2/clear_high_five/HF5-REVISION-268-EN/system/Core.dll",
+      "bytes": 954368,
+      "sha256": "03ed7faa0dfe0853071f6defda191b2eae76961e835c9624be25396a69dbb455",
+      "prefix_hex": "4d5a90000300000004000000ffff0000b80000000000000040000600000000000000000000000000"
+    },
+    "Engine.dll": {
+      "file": "/mnt/d/Lineage 2/clear_high_five/HF5-REVISION-268-EN/system/Engine.dll",
+      "bytes": 8242176,
+      "sha256": "944605e867b17925336dc127dd03a6076f7b5ffcc1988ab4a077a85c09904417",
+      "prefix_hex": "4d5a4600490000000400000000005200450000000000000000000000000000000000000000000000"
+    },
+    "NWindow.dll": {
+      "file": "/mnt/d/Lineage 2/clear_high_five/HF5-REVISION-268-EN/system/nwindow.dll",
+      "bytes": 14268948,
+      "sha256": "94a8975ab729f077da69e62c507feada07393359d12d0ea32498b6be8d28b5b7",
+      "prefix_hex": "4d5a90000300000004000000ffff0000b80000000000000040000000000000000000000000000000"
+    },
+    "D3DDrv.dll": {
+      "file": "/mnt/d/Lineage 2/clear_high_five/HF5-REVISION-268-EN/system/D3DDrv.dll",
+      "bytes": 1426452,
+      "sha256": "7e2929635db1d16586726a2b491db3bbbf81d65cc338ab3ba7b117aa69314276",
+      "prefix_hex": "4d5a90000300000004000000ffff0000b80000000000000040000000000000000000000000000000"
+    },
+    "ExtensionL2.dll": {
+      "file": "/mnt/d/Lineage 2/clear_high_five/HF5-REVISION-268-EN/system/ExtensionL2.dll",
+      "bytes": 447488,
+      "sha256": "547f7f770ba58fe4769620c4d43b19852f42889b74a5d495bf384b216d70503b",
+      "prefix_hex": "4d5a90000300000004000000ffff0000b80000000000000040000000000000000000000000000000"
+    },
+    "Core.u": {
+      "file": "/mnt/d/Lineage 2/clear_high_five/HF5-REVISION-268-EN/system/Core.u",
+      "bytes": 72950,
+      "sha256": "8e4261e732958fe0b7b0faa20228d284f7bd535428f02b13eea5df964d1111fc",
+      "prefix_hex": "4c0069006e00650061006700650032005600650072003100310031006d2f8632d7ac89acadacacac",
+      "envelope": "Lineage2Ver111",
+      "package_version": 123,
+      "licensee_version": 37,
+      "decoded_sha256": "723ee8040a295910b806e69559df2fb11473084ce5782d1912608a0ef635a954"
+    },
+    "Engine.u": {
+      "file": "/mnt/d/Lineage 2/clear_high_five/HF5-REVISION-268-EN/system/Engine.u",
+      "bytes": 2800954,
+      "sha256": "c3f7a848ded28789c8311af39dd9f82afed7a7ca4201d2577744bacea5892bb1",
+      "prefix_hex": "4c0069006e00650061006700650032005600650072003100310031006d2f8632d7ac89acadacacac",
+      "envelope": "Lineage2Ver111",
+      "package_version": 123,
+      "licensee_version": 37,
+      "decoded_sha256": "cb1ca3fedac8cd882abddd7d537fd5d4c7850b6f4d0e40c5c403d039ab5b4627"
+    },
+    "NWindow.u": {
+      "file": "/mnt/d/Lineage 2/clear_high_five/HF5-REVISION-268-EN/system/NWindow.u",
+      "bytes": 527052,
+      "sha256": "7068147b230c4f0f11e70afb1e48df2fa216d4e2a947bc0048151c126ae4e697",
+      "prefix_hex": "4c0069006e00650061006700650032005600650072003100310031006d2f8632d7ac89acadacacac",
+      "envelope": "Lineage2Ver111",
+      "package_version": 123,
+      "licensee_version": 37,
+      "decoded_sha256": "50117a7e1018f41b07404e69ede4fd00c3c9062becf14cc9bf9259fa5ae5d17c"
+    },
+    "ExtensionL2.u": {
+      "file": "/mnt/d/Lineage 2/clear_high_five/HF5-REVISION-268-EN/system/ExtensionL2.u",
+      "bytes": 7116,
+      "sha256": "d1ad3b8b093aa6a808413f0c577e9b01c21528c6495d1fa2ef32a09f840ed816",
+      "prefix_hex": "4c0069006e00650061006700650032005600650072003100310031006d2f8632d2acacacadacacac",
+      "envelope": "Lineage2Ver111",
+      "package_version": 126,
+      "licensee_version": 0,
+      "decoded_sha256": "9fa25ceeae51704dd129d2d710b933fafde732bef021d5ed1b467cb37aeae737"
+    },
+    "Interface.u": {
+      "file": "/mnt/d/Lineage 2/clear_high_five/HF5-REVISION-268-EN/system/interface.u",
+      "bytes": 4720147,
+      "sha256": "b27d86db04ebd73d565e64a8d59ad69d04d91dae09c901fb03d0c240fda3a308",
+      "prefix_hex": "4c0069006e00650061006700650032005600650072003100310031006d2f8632d2acacacadacacac",
+      "envelope": "Lineage2Ver111",
+      "package_version": 126,
+      "licensee_version": 0,
+      "decoded_sha256": "a6a97633d34c4f28feb0f79adad9c7f27c6ed1a12c9e189ec78b74177dd57583"
+    },
+    "Interface.xdat": {
+      "file": "/mnt/d/Lineage 2/clear_high_five/HF5-REVISION-268-EN/system/Interface.xdat",
+      "bytes": 1455350,
+      "sha256": "8e0542f099f9a258afc77438715befe886b61a9524f64cfbc28e1813560da24d",
+      "prefix_hex": "110000001e4f6c796d706961644f62736572766572537461746553686f727463757400164f6c796d",
+      "envelope": "unknown"
+    }
+  },
+  "export_comparison": {
+    "Core.dll": {
+      "donor_count": 2806,
+      "target_count": 2819,
+      "missing_from_target": [
+        "?GetCPUBrandString@L2UserHardWareInformation@@QBE?AVFString@@XZ",
+        "?GetCPUCacheLineSize@L2UserHardWareInformation@@QBEHXZ",
+        "?GetCPUCacheSize@L2UserHardWareInformation@@QBEHXZ",
+        "?GetCPUCoreCount@L2UserHardWareInformation@@QBEKXZ",
+        "?GetCPUSpeed@L2UserHardWareInformation@@QBEMXZ",
+        "?GetDXRevision@L2UserHardWareInformation@@QBEKXZ",
+        "?GetDXVersion@L2UserHardWareInformation@@QBEKXZ",
+        "?GetMachineCPU@L2UserHardWareInformation@@QBE?AVFString@@XZ",
+        "?GetPageMemory@L2UserHardWareInformation@@QBEHXZ",
+        "?GetPhysMemory@L2UserHardWareInformation@@QBEHXZ",
+        "?GetVideoMemory@L2UserHardWareInformation@@QBEKXZ",
+        "?GetVirtualMemory@L2UserHardWareInformation@@QBEHXZ",
+        "?GetWindowHeight@L2UserHardWareInformation@@QBEHXZ",
+        "?GetWindowWidth@L2UserHardWareInformation@@QBEHXZ",
+        "?GetWindowsBuildNumber@L2UserHardWareInformation@@QBEKXZ",
+        "?GetWindowsInfo@L2UserHardWareInformation@@QBE?AVFString@@XZ",
+        "?GetWindowsMajorVersion@L2UserHardWareInformation@@QBEKXZ",
+        "?GetWindowsMinorVersion@L2UserHardWareInformation@@QBEKXZ",
+        "?GetWindowsPlatformId@L2UserHardWareInformation@@QBEKXZ",
+        "?SetCPUSpeed@L2UserHardWareInformation@@QAEXM@Z",
+        "?SetVGAInfo@L2UserHardWareInformation@@QAEXVFString@@T_LARGE_INTEGER@@@Z"
+      ],
+      "target_only": [
+        "?CheckIni@L2UserHardWareInformation@@AAEHXZ",
+        "?GL2UseEMailAccount@@3HA",
+        "?GL2UseServerAddrChangeCommandLine@@3HA",
+        "?GetCDRomDriveName@L2UserHardWareInformation@@QAEPB_WXZ",
+        "?GetCPUBrandString@L2UserHardWareInformation@@QAEPB_WXZ",
+        "?GetCPUCacheLineSize@L2UserHardWareInformation@@QAEHXZ",
+        "?GetCPUCacheSize@L2UserHardWareInformation@@QAEHXZ",
+        "?GetCPUCoreCount@L2UserHardWareInformation@@QAEKXZ",
+        "?GetCPUSpeed@L2UserHardWareInformation@@QAEKXZ",
+        "?GetDXRevision@L2UserHardWareInformation@@QAEKXZ",
+        "?GetDXVersion@L2UserHardWareInformation@@QAEKXZ",
+        "?GetL2VGA_Check@L2UserHardWareInformation@@QAEABUL2VGA_Check@@XZ",
+        "?GetMacAddress@L2UserHardWareInformation@@QAEPB_WXZ",
+        "?GetMachineCPU@L2UserHardWareInformation@@QAEPB_WXZ",
+        "?GetPageMemory@L2UserHardWareInformation@@QAEHXZ",
+        "?GetPhysMemory@L2UserHardWareInformation@@QAEHXZ",
+        "?GetSendHardWare@L2UserHardWareInformation@@QAEHXZ",
+        "?GetVgaDriverVersion@L2UserHardWareInformation@@QAEPB_WXZ",
+        "?GetVgaName@L2UserHardWareInformation@@QAEPB_WXZ",
+        "?GetVideoMemory@L2UserHardWareInformation@@QAEKXZ",
+        "?GetVirtualMemory@L2UserHardWareInformation@@QAEHXZ",
+        "?GetWindowHeight@L2UserHardWareInformation@@QAEHXZ",
+        "?GetWindowWidth@L2UserHardWareInformation@@QAEHXZ",
+        "?GetWindowsBuildNumber@L2UserHardWareInformation@@QAEKXZ",
+        "?GetWindowsInfo@L2UserHardWareInformation@@QAEPB_WXZ",
+        "?GetWindowsMajorVersion@L2UserHardWareInformation@@QAEKXZ",
+        "?GetWindowsMinorVersion@L2UserHardWareInformation@@QAEKXZ",
+        "?GetWindowsPlatformId@L2UserHardWareInformation@@QAEKXZ",
+        "?INIHardWareCheck@L2UserHardWareInformation@@QAEXXZ",
+        "?ResetError@@YAXXZ",
+        "?SaveIni@L2UserHardWareInformation@@AAEXVFString@@@Z",
+        "?SendHardWareOK@L2UserHardWareInformation@@QAEXXZ",
+        "?SetCPUSpeed@L2UserHardWareInformation@@QAEXK@Z",
+        "?SetVGAInfo@L2UserHardWareInformation@@QAEXKVFString@@T_LARGE_INTEGER@@H@Z"
+      ]
+    },
+    "Engine.dll": {
+      "donor_count": 11060,
+      "target_count": 11061,
+      "missing_from_target": [
+        "?InitHardWareCheck@UGameEngine@@QAEXXZ"
+      ],
+      "target_only": [
+        "?RequestHardWareInfo@UGameEngine@@QAEXXZ",
+        "?RequestHardWareInfo@UNetworkHandler@@UAEXXZ"
+      ]
+    },
+    "NWindow.dll": {
+      "donor_count": 5147,
+      "target_count": 5149,
+      "missing_from_target": [
+        "?execGetGroupCommandList@UShortcutAPI@@QAEXAAUFFrame@@QAX@Z",
+        "?execGetGroupList@UShortcutAPI@@QAEXAAUFFrame@@QAX@Z",
+        "?execGetNumericColor@UUIScript@@QAEXAAUFFrame@@QAX@Z",
+        "?execProcessPetitionChatMessage@UUIScript@@QAEXAAUFFrame@@QAX@Z",
+        "?execSetTooltipText@UWindowHandle@@QAEXAAUFFrame@@QAX@Z",
+        "intUShortcutAPIexecGetGroupCommandList",
+        "intUShortcutAPIexecGetGroupList",
+        "intUUIScriptexecGetNumericColor",
+        "intUUIScriptexecProcessPetitionChatMessage",
+        "intUWindowHandleexecSetTooltipText"
+      ],
+      "target_only": [
+        "?execGetFormattedTimeStrMMHH@UUIScript@@QAEXAAUFFrame@@QAX@Z",
+        "?execGetNumOfSymbols@UUIScript@@QAEXAAUFFrame@@QAX@Z",
+        "?execGetShortcutSettings@UShortcutAPI@@QAEXAAUFFrame@@QAX@Z",
+        "?execLoadShortcut@UShortcutAPI@@QAEXAAUFFrame@@QAX@Z",
+        "?execRequestToServer@UUIScript@@QAEXAAUFFrame@@QAX@Z",
+        "?execSetFont@UWindowHandle@@QAEXAAUFFrame@@QAX@Z",
+        "intUShortcutAPIexecGetShortcutSettings",
+        "intUShortcutAPIexecLoadShortcut",
+        "intUUIScriptexecGetFormattedTimeStrMMHH",
+        "intUUIScriptexecGetNumOfSymbols",
+        "intUUIScriptexecRequestToServer",
+        "intUWindowHandleexecSetFont"
+      ]
+    },
+    "D3DDrv.dll": {
+      "donor_count": 66,
+      "target_count": 66,
+      "missing_from_target": [],
+      "target_only": []
+    }
+  },
+  "original_clients_modified": false,
+  "donor_classes": {
+    "count": 257,
+    "browser_related": [
+      "TextureProbeAPI",
+      "AddWebAPI",
+      "BrowserWnd"
+    ]
+  },
+  "donor_root_imports": [
+    "NWindow",
+    "Core",
+    "Engine",
+    "ExtensionL2"
+  ],
+  "limitations": [
+    "Target protected UI/Engine/NWindow packages not decoded.",
+    "Export-name overlap does not prove ABI or UI compatibility.",
+    "Requested donor contains prior browser modifications; this is not a pristine HF baseline."
+  ]
+}

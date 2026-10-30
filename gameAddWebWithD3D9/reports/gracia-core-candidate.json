@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "source": "/mnt/d/Lineage 2/Gracia(for_interlude)/system/Core.dll",
+  "approved_profile": null,
+  "candidate": {
+    "name": "UNREVIEWED",
+    "sha256": "0941cac5e71039ca0fa1c4d33675a70aab8b995bece3437936eec980f4f452f0",
+    "rvas": {
+      "register": 373776,
+      "table": 931472,
+      "step": 37120,
+      "undefined": 372768
+    },
+    "code": {
+      "register": "833df05d131500751d57b900100000b8",
+      "step": "8b410c0fb61083c00189410c8b442408",
+      "undefined": "8b4424048b480c0fb651ff52681cdc08"
+    }
+  },
+  "missing_exports": [],
+  "heuristic_checks": {
+    "export_section_permissions_and_capacity": {
+      "register": true,
+      "table": true,
+      "step": true,
+      "undefined": true
+    },
+    "step_prefix_matches_adapter": true
+  },
+  "pe": {
+    "machine": "x86",
+    "entry_rva": 124746,
+    "sections": [
+      {
+        "name": ".text",
+        "rva": 4096,
+        "size": 547328,
+        "flags": 1610612768
+      },
+      {
+        "name": ".rdata",
+        "rva": 552960,
+        "size": 346112,
+        "flags": 1073741888
+      },
+      {
+        "name": ".data",
+        "rva": 901120,
+        "size": 2487272,
+        "flags": 3221225536
+      },
+      {
+        "name": ".rsrc",
+        "rva": 3391488,
+        "size": 4600,
+        "flags": 1073741888
+      }
+    ]
+  },
+  "requires_review": [
+    "FFrame layout and calling conventions",
+    "GNatives capacity and initialization",
+    "INT64 high/low layout",
+    "original and patched loader/VM tests",
+    "full client startup"
+  ],
+  "note": "Export names/code samples are evidence, not proof of ABI compatibility. No catalog changes made."
+}

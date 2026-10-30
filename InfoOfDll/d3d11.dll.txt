@@ -1,0 +1,27 @@
+d3d11.dll — системный Direct3D 11 в пути захвата
+Уровень: использование API и graphics/frame-тесты; внутренний ABI DLL не исследован.
+
+Роль
+Windows Graphics Capture поставляет GPU-кадры служебного HWND WebView2.
+gpu_capture.cpp работает с D3D11 texture и staging/readback, затем публикует BGRA.
+Устройство D3D11 захвата не является устройством рендеринга Lineage II.
+
+Рабочие реализации
+HF: WebView2/WGC/D3D11 на выделенном STA внутри процесса клиента.
+Gracia: тот же захват в GraciaBrowserHost.exe; BGRA передаётся игре через IPC.
+Engine UTexture обновляется игровым UI-потоком. PNG-кодирование не используется
+в актуальном gameAddWebWithD3D9 пути.
+
+Проверено
+Цвета/порядок каналов, меняющаяся HTML-анимация, capture outside desktop,
+передача свежих кадров, hide/resume/close и завершение активного процесса.
+Измеренные host FPS — результат стенда, не гарантия FPS игры/видеостраницы.
+Отдельно проверялся D3D11 -> D3D9Ex sharing, см. d3d9.dll.txt.
+
+Источники
+gameAddWebWithD3D9/browserTexture/native/gpu_capture.cpp, gpu_capture.h
+gameAddWebWithD3D9/gracia/native/gpu_capture.cpp (подготавливаемая копия)
+gameAddWebWithD3D9/browserTexture/native/web_frames.cpp
+gameAddWebWithD3D9/reports/hf-wgc-motion-benchmark.json
+WGC — WinRT API; windowsapp в CMake является библиотекой линковки, её нельзя
+трактовать как собственную runtime DLL для копирования в клиент.

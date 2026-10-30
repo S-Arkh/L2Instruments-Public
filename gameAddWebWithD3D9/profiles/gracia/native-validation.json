@@ -1,0 +1,45 @@
+﻿{
+    "profile":  "gracia_epilogue_0941cac5",
+    "run":  "D:\\l2_mode\\mod_comp\\int64_UCC\\rebuild\\gameAddWebWithD3D9\\gracia\\tests\\native-20261029-024342-230",
+    "tests":  [
+                  {
+                      "name":  "options",
+                      "exit_code":  0,
+                      "finished":  true
+                  },
+                  {
+                      "name":  "vm-manual",
+                      "exit_code":  0,
+                      "finished":  true
+                  },
+                  {
+                      "name":  "texture-layout",
+                      "exit_code":  0,
+                      "finished":  true
+                  },
+                  {
+                      "name":  "vm-patched",
+                      "exit_code":  0,
+                      "finished":  true
+                  },
+                  {
+                      "name":  "frames",
+                      "exit_code":  0,
+                      "finished":  true
+                  },
+                  {
+                      "name":  "ipc-frames",
+                      "exit_code":  0,
+                      "finished":  true
+                  },
+                  {
+                      "name":  "exit",
+                      "exit_code":  0,
+                      "finished":  true
+                  }
+              ],
+    "extension_sha256":  "7bcd09efc2e2831aa00da1f5d516a6d8b81544ca6b84a8440b1975756ba01cc1",
+    "browser_host_sha256":  "6f1d38a55eabd7be1ec73541a615a1a427d4ee9e552abb9c6d671cf0fa7aea5e",
+    "patched_core_sha256":  "7723e1145a5b8053d0a99cf54a1996f83248dccd083cdaccccae2a41ad2e6295",
+    "engine_sha256":  "7c3b792c92dbf3188b34a75c746b7c86d1043e9cb5cc4901ef64d9eda28fd48c"
+}

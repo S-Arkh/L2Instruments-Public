@@ -1,0 +1,34 @@
+{
+  "implementation": "inprocess-webview2-pipe-compat",
+  "extension_sha256": "8374f758887b05ea84d0e6a63176b91c0a85d59f7e1d33f2dd3b5bdaaae5df43",
+  "integrity_sha256": "537a9d62171abbe2677425de17f815e25d990351ae12098d7fda31070cde12e0",
+  "client_exe_sha256": "e000d76e4f8cbfc886f6abd318da968b6cddd73a90e39f0491452ef63dfb8739",
+  "webview_runtime": "156.0.4314.50",
+  "cause": "integrity.dll NtReadFile/NtWriteFile detours return STATUS_ACCESS_DENIED for FILE_TYPE_PIPE, blocking WebView Mojo IPC",
+  "native_tests": {
+    "module_load_matrix": "tests/inprocess-20261029-035839/result.json",
+    "pipe_regression": "tests/pipe-compat-20261029-043938/result.json",
+    "active_process_exit": "tests/inprocess-exit-20261029-043951/result.json",
+    "ordinary_pipes_still_blocked": true,
+    "frame_input_suite": "passed"
+  },
+  "isolated_client": {
+    "directory": "tests/inprocess-client-20261029-040141",
+    "final_pid": 65852,
+    "helper_exe_present": false,
+    "controller_created": true,
+    "page_displayed_above_login": true,
+    "screenshot": "tests/inprocess-client-20261029-040141/latest.png",
+    "browser_closed": true,
+    "exited_via_game_exit_button": true,
+    "remaining_l2_helper_or_l2_webview_processes": 0
+  },
+  "full_user_game_validation": false,
+  "user_confirmation": {
+    "working": true,
+    "message": "все равботает",
+    "installed_extension_sha256_matches": true,
+    "scope": "Overall operation confirmed by user; individual extended test cases were not separately reported."
+  },
+  "installed_client_modified": false
+}

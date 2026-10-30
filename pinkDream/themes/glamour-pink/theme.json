@@ -1,0 +1,21 @@
+{
+  "id": "glamour-pink",
+  "version": 1,
+  "colors": {
+    "panel_top": "#482039", "panel_bottom": "#20101e",
+    "button_top": "#f5acce", "button_bottom": "#ad417e",
+    "hover_top": "#ffd9ed", "hover_bottom": "#e767ad",
+    "pressed_top": "#9c356e", "pressed_bottom": "#602344",
+    "border": "#f19dc8", "accent": "#ff60bb", "text": "#fff1f8"
+  },
+  "assets": [
+    {"id": "panel", "size": [256, 256], "colors": ["panel_top", "panel_bottom"], "radius": 8},
+    {"id": "titlebar", "size": [256, 32], "colors": ["pressed_top", "panel_bottom"], "radius": 5},
+    {"id": "button-normal", "size": [128, 32], "colors": ["button_top", "button_bottom"], "radius": 5},
+    {"id": "button-hover", "size": [128, 32], "colors": ["hover_top", "hover_bottom"], "radius": 5},
+    {"id": "button-pressed", "size": [128, 32], "colors": ["pressed_top", "pressed_bottom"], "radius": 5},
+    {"id": "slot", "size": [40, 40], "colors": ["panel_bottom", "panel_top"], "radius": 3},
+    {"id": "progress-fill", "size": [256, 16], "colors": ["hover_top", "accent"], "radius": 3},
+    {"id": "separator", "size": [256, 4], "colors": ["border", "pressed_top"], "radius": 1}
+  ]
+}

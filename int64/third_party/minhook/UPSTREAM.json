@@ -1,0 +1,27 @@
+{
+  "repository": "https://github.com/TsudaKageyu/minhook.git",
+  "tag": "v1.3.4",
+  "commit": "c3fcafdc10146beb5919319d0683e44e3c30d537",
+  "git_blobs": {
+    "AUTHORS.txt": "ebef1a6cdc5ec50de284e5990577864df5a235ce",
+    "CMakeLists.txt": "845e3c70ff28f1f9b4ff6bde48dc4866b2ca32e9",
+    "LICENSE.txt": "74dea27229c05b53b095aa22b9ee7ee9f549e414",
+    "README.md": "b77edb55a61edf7d0f077853ae1117c4ea3b67c2",
+    "cmake/minhook-config.cmake.in": "14e64634b57313f5000a0750d49575c7cd29b8ce",
+    "dll_resources/MinHook.def": "c6af698b5967dd50437ee7e275158a680173a696",
+    "dll_resources/MinHook.rc": "cb2655b5caca78101dc5272a765c24a26a540809",
+    "include/MinHook.h": "492d83f8d6245f576a703cd6a0bd358cd3aa2d9c",
+    "src/buffer.c": "55412b0f301ba9a5b3520343bd1313bb56592899",
+    "src/buffer.h": "204d551bffb7f11760bc1e474aa835e55f4cbb00",
+    "src/hde/hde32.c": "eb6af9b8ac8f3d83ab370f807467f2733fb4210d",
+    "src/hde/hde32.h": "1112450d87ae6772ad805f4f7fa07965c5bbbdb0",
+    "src/hde/hde64.c": "ce773b1e25f95b312a4c05f3acf053d87ec6d20c",
+    "src/hde/hde64.h": "ecbf4df958ac24646c0ba645ee4ba8340e8a74c8",
+    "src/hde/pstdint.h": "84d82a012311a72f5dfb1fc88554f7820fbdf216",
+    "src/hde/table32.h": "7b3e12e32fdb7c362ca333c992e3c2e05556edb5",
+    "src/hde/table64.h": "01d4541f97765a1fe14ad4a60f3705156abaf176",
+    "src/hook.c": "68a006a768c884372a34ee34043e20db079deba6",
+    "src/trampoline.c": "d4d6f99d9fb23d980b12eb0ba4f722e5f8377d87",
+    "src/trampoline.h": "bdffdac0a7bc838b52dd35733c943a9d5c7bc7b5"
+  }
+}

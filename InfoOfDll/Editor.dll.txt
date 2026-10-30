@@ -1,0 +1,55 @@
+Editor.dll — оригинальный компилятор UnrealScript
+Уровень: адресный профиль и дизассемблирование функций компилятора, hook ABI,
+положительные/отрицательные компиляционные тесты.
+
+Идентификация
+int64/compiler/System/Editor.dll
+SHA256 d64995c1282956c6e9d67dd70715a69b5101331aa727a2d44b03e25fd7f2cd2e
+Preferred image base 0x10200000. Ниже RVA, не абсолютные адреса.
+Это DLL инструментария UCC, не модуль, который следует копировать в клиент.
+
+Изученные точки
+0x705A0 GetConversion: cdecl int(const Property* dest, const Property* source).
+0x713C0 ConversionCost: thiscall int(Compiler*, dest, source); ret 8.
+0x74870 FindField: thiscall Field*(Compiler*, Struct*, name, Class*, error); ret 16.
+0x72760 FToken constructor from Property.
+0x72AC0 EmitConstant.
+0x74260 попытка преобразовать константу.
+0x7B590 GetToken.
+0x78430 CompileExpr.
+0x73320 MatchSymbol.
+0x71290 сохранение позиции (Retry).
+0x736E0 перенос сгенерированного кода между позициями.
+Полные восстановленные сигнатуры: int64/docs/ABI.md.
+
+Важные ABI-выводы
+Ghidra потеряла второй параметр GetConversion; фактический код читает оба.
+Перепутанные cdecl/thiscall повреждали стек даже в обычных выражениях.
+Property = 20 байтов; Token = 0x8A4, содержит Property, четыре int,
+Identifier[64] UTF-16 и объединение значений размером 2048 байтов.
+Compiler имеет FArchive по +0x1C; Serialize — virtual slot 1.
+Retry — четыре int, последний хранит размер Script в памяти.
+UClass::ClassFlags в компиляторском layout: +0x498, не переносить на клиент.
+
+Контекстно ограниченные hooks
+Возврат GetToken 0x80DE0 в class-header: nonativereplication снимает 0x800,
+localized ставит 0x20, dynamicrecompile ставит 0x400000.
+Возврат 0x784D3 в CompileExpr допускает генерацию выражения int64(...);
+lookahead/объявления не должны генерировать байткод.
+Возврат конструктора 0x7A53E после automatic cast требует восстановления Struct
+только для выбранного INT64 cast. Вложенные выражения проверялись smoke-тестами.
+
+Метаданные Vehicle
+FindField может создавать прокси IntProperty для трёх известных Vehicle-полей:
+MaxFuel, CurFuel, DriverID. Outer — Engine.Vehicle; Children/PropertiesSize
+не меняются; в Script остаётся символическая ссылка на клиентское свойство.
+Это точечная совместимость SDK, не автоматическое угадывание отсутствующих полей.
+
+Применение
+ucc64.exe загружает bridge и устанавливает перехваты после загрузки Editor.dll.
+Оригинальные DLL компилятора на диске не патчатся. Проверка хеша и ABI обязательна
+для использования адресов. Gracia-ошибка Editor.MakeCommandlet в игровом клиенте
+не означает, что нужно установить эту Editor.dll в system.
+
+Источники: int64/docs/ABI.md, int64/tools/verify_profile.py, int64/src,
+int64/docs/VALIDATION.md, int64/compiler/manifest.json.

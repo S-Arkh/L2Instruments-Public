@@ -1,0 +1,5 @@
+{
+  "schema": 2, "id": "glamour-pink", "algorithm": "glamour-standard-v1",
+  "alpha_policy": "preserve-source-exactly",
+  "palette": {"shadow": "#180816", "highlight": "#ffbee1"}
+}

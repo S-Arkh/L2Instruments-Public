@@ -1,0 +1,22 @@
+d3d9.dll — системный Direct3D 9/9Ex
+Уровень: публичный API, imports клиента, самостоятельный graphics probe.
+
+Роль
+Конечная отрисовка игрового UI. Исследованный HF renderer использует
+Direct3DCreate9. Наш код не заменяет системную DLL proxy-файлом d3d9.dll.
+
+Исследованный эксперимент
+gameAddWebWithD3D9/native/gpu_probe.cpp создаёт самостоятельное D3D9Ex-устройство
+и проверяет shared texture с D3D11, включая чтение результата.
+Отчёт: gameAddWebWithD3D9/reports/d3d9ex-shared-probe.json.
+
+Практический результат
+Shared resource работал в отдельном прототипе. Это не доказывает совместимость
+с устройством D3D9 игры. Рабочий игровой путь использует CPU BGRA и UTexture,
+которую Canvas рисует штатно. Устройство/Present/Reset игры для этого не перехватывали.
+
+Дальнейшая работа
+Прямой sharing требует отдельно подтвердить device type, форматы, adapter identity,
+синхронизацию, reset/lost-device и владение ресурсом игровым renderer.
+Системные DLL зависят от Windows; фиксированного переносимого SHA256/RVA нет.
+Не путать d3d9.dll с UE-модулем D3DDrv.dll.

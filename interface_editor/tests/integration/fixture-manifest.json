@@ -1,0 +1,137 @@
+[
+  {
+    "schema": "ct0.XDAT",
+    "file": "Interface_interlude.xdat",
+    "sha256": "a7969a86d3b676d95cfd42cfd6cd0742c07d7941250dbb63a2ba6d937961c1f4"
+  },
+  {
+    "schema": "ct1.XDAT",
+    "file": "Interface_kamael.xdat",
+    "sha256": "1504aa3da60841f9ff465c443507198f980e4a3966b5dba29b23cfdf8d3affb8"
+  },
+  {
+    "schema": "ct15.XDAT",
+    "file": "Interface_hellbound.xdat",
+    "sha256": "2bb8f5901b4e9ff1e66409819835d00b5e266e2336ea486730c5973cbc257bd8"
+  },
+  {
+    "schema": "ct22.XDAT",
+    "file": "Interface_part1.xdat",
+    "sha256": "e4200bd380d261db3713bf4c0b98e7b7dc387639c9a8625a8058f61bf9e793f1"
+  },
+  {
+    "schema": "ct22.XDAT",
+    "file": "Interface_part2.xdat",
+    "sha256": "f54b8dadb109c48ef532a19ca9a57a8126aa9a15ae19040121bc45d42b1f54e5"
+  },
+  {
+    "schema": "ct23.XDAT",
+    "file": "Interface_final.xdat",
+    "sha256": "14929b220bf2bf7ba7d95ca80e58fc060f1b53ec6294e0a076f6e89ece77d500"
+  },
+  {
+    "schema": "ct24.XDAT",
+    "file": "Interface_epilogue.xdat",
+    "sha256": "7da1bb99dc1dd6cf210180f743d481b509accdffe1dbe1fd6334ce2610e06825"
+  },
+  {
+    "schema": "ct25.XDAT",
+    "file": "Interface_freya.xdat",
+    "sha256": "14d1240d4e4834fc97b7cd46e2c2ed4bca676cdaf85d9650747611f4e067f2ae"
+  },
+  {
+    "schema": "ct26.XDAT",
+    "file": "Interface_high_five.xdat",
+    "sha256": "847ce943f56bc63cf27c3cb9f13c0a35af751624dfaed12d5cc00834e39d75cb"
+  },
+  {
+    "schema": "god25.XDAT",
+    "file": "Interface_awakening.xdat",
+    "sha256": "56a40398c582cbed16eaa6bad6c5b424685f7a768af36626b1ffe32dc921a297"
+  },
+  {
+    "schema": "god25.XDAT",
+    "file": "Interface_harmony.xdat",
+    "sha256": "08bf3ca2d9721e1774446050d960517fc263645813ec21bb93d58d08af2609b8"
+  },
+  {
+    "schema": "god25.XDAT",
+    "file": "Interface_tauti.xdat",
+    "sha256": "347c55b8c99c6ca77209831a2a50b8ce4c787bd2a06c6f4570ae2a5389d08e13"
+  },
+  {
+    "schema": "god25.XDAT",
+    "file": "Interface_glory_days.xdat",
+    "sha256": "611808b680762203f282907c0ed1d4c93e753ae8e106911cd7b1effc7f50814a"
+  },
+  {
+    "schema": "god3.XDAT",
+    "file": "Interface_lindvior.xdat",
+    "sha256": "661da705453127961be20ac6850595c33da74d2a94e933a38daf02344384d7e8"
+  },
+  {
+    "schema": "god35.XDAT",
+    "file": "Interface_epeisodion.xdat",
+    "sha256": "6a66d67cfbea540e9add99389e895e2e38aae6ace43c9971dad9436033b6ea29"
+  },
+  {
+    "schema": "etoa2.XDAT",
+    "file": "Interface_ertheia.xdat",
+    "sha256": "1799ddfff226f013c2df7d2d1d4b3feeb0a0abe8b33a0aa334fd63dbd21a34fb"
+  },
+  {
+    "schema": "etoa2.XDAT",
+    "file": "Interface_the_beginning_of_the_journey.xdat",
+    "sha256": "ae3a23618bd15495dc5db8ab391eaf18bf2960f6afce9969adfae84f757ba103"
+  },
+  {
+    "schema": "etoa2_3.XDAT",
+    "file": "Interface_new_guardian_of_astatine.xdat",
+    "sha256": "d3ea1ca448ef9383641f5791d2f6430085cad45e0c529727630a46acb1b04d72"
+  },
+  {
+    "schema": "etoa2_4.XDAT",
+    "file": "Interface_hymn_of_the_soul.xdat",
+    "sha256": "b91ae5a32459a6a9f1340bee27b695f10e1ad1723519bd4df94db93ba1d9555b"
+  },
+  {
+    "schema": "etoa2_4.XDAT",
+    "file": "Interface_will_of_the_ancients.xdat",
+    "sha256": "fddbced97059f550123441002ecf38ed9a454509f1ae7f9f819a8d576b6302c5"
+  },
+  {
+    "schema": "etoa3.XDAT",
+    "file": "Interface_helios.xdat",
+    "sha256": "c0aba9d8f58507717858d633c2ec9115ec3a15fda26bbb9a33a149eb713e46c3"
+  },
+  {
+    "schema": "etoa3_.XDAT",
+    "file": "Interface_helios+.xdat",
+    "sha256": "015f5f4c7a385182a538d24eb0906317bf9af00f5fc473be65dbe1409f4de372"
+  },
+  {
+    "schema": "etoa3__.XDAT",
+    "file": "Interface_helios++.xdat",
+    "sha256": "2210ba8aecf84c67a88865989332e6d5b6276d4e46165e7d1d6c5bd54fcc995c"
+  },
+  {
+    "schema": "etoa3_ru.XDAT",
+    "file": "Interface_helios_ru.xdat",
+    "sha256": "e10d8dcbd41f2644a748bd471c0a54c554532676f09d7fe4acb1d82f36548fdd"
+  },
+  {
+    "schema": "etoa4.XDAT",
+    "file": "Interface_grand_crusade.xdat",
+    "sha256": "6ee689eab377eef7b8df083f0a634d36eb62ee0963a6c43383613f105110d520"
+  },
+  {
+    "schema": "etoa4_p3.XDAT",
+    "file": "Interface_grand_crusade_p3.xdat",
+    "sha256": "3d600b4b4992ca999e02c627da2a72059eed2d3ea0747a348f560b9f2bcc7d4c"
+  },
+  {
+    "schema": "etoa5.XDAT",
+    "file": "Interface_salvation.xdat",
+    "sha256": "89308e102bbeb3195d468665826d73c5c85e849ee230aaf05c4d4f0e750cfa6c"
+  }
+]

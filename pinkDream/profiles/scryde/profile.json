@@ -1,0 +1,17 @@
+{
+  "id": "scryde", "status": "multi-theme-offline-validated",
+  "client_root_windows": "D:/Lineage 2/Scryde",
+  "client_root_linux": "/mnt/d/Lineage 2/Scryde",
+  "packages": ["SysTextures/L2UI.utx", "SysTextures/L2UI_CT1.utx", "SysTextures/L2UI_CH3.utx", "SysTextures/L2UI_SCRYDE.utx", "SysTextures/patch.utx"],
+  "mappings_manifest": "../../builds/scryde/christmas/v003/manifest.json",
+  "selection": "selection.json",
+  "current_bundle": "../../builds/scryde/christmas/v003",
+  "source_library": "../../assets/libraries/scryde/standard-ui-v001/manifest.json",
+  "themes": {
+    "christmas": {"bundle": "../../builds/scryde/christmas/v003", "game_tested": false},
+    "halloween": {"bundle": "../../builds/scryde/halloween/v002", "game_tested": false},
+    "glamour-pink": {"bundle": "../../builds/scryde/glamour-pink/v001", "game_tested": false}
+  },
+  "last_game_tested_revision": "trial-v001",
+  "package_writer": "same-size-image-import-v2-bgra8-dxt3-dxt5", "game_tested": false
+}

@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-29",
+  "source": "user-confirmed game test; agent read-only hash and process verification",
+  "passed": true,
+  "checks": ["browser image", "above login window", "RU/EN text", "clicks", "wheel", "drag", "minimize/restore", "audio stops", "browser closes", "client exits"],
+  "agent_checks": ["installed binaries/UI match bundle", "L2 and GraciaBrowserHost absent after exit"],
+  "files": {
+    "Core.dll": "7723e1145a5b8053d0a99cf54a1996f83248dccd083cdaccccae2a41ad2e6295",
+    "ExtensionL2.dll": "7bcd09efc2e2831aa00da1f5d516a6d8b81544ca6b84a8440b1975756ba01cc1",
+    "GraciaBrowserHost.exe": "6f1d38a55eabd7be1ec73541a615a1a427d4ee9e552abb9c6d671cf0fa7aea5e",
+    "Interface.u": "bb747860f33c73e1810a9d7805ec8b39f37a4f9e5106d816502f52373f80dade",
+    "Interface.xdat": "78dfea3e680ef5cbec1e1e0c64b0568a10f3c17f3096eb0b68f2f79edd68cbc7",
+    "WebView2Loader.dll": "1d348d3c0a5cb0d985389b68a0fd9bf966c2aed65f5e44bbc0233739b7a57f9e"
+  }
+}

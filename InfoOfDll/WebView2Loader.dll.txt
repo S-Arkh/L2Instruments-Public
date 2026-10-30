@@ -1,0 +1,43 @@
+WebView2Loader.dll — загрузчик Microsoft Edge WebView2 Runtime
+Уровень: использование документированного API и реальные browser lifecycle-тесты;
+внутренности Microsoft DLL не декомпилировались.
+
+Файл
+gameAddWebWithD3D9/sdk/webview2/build/native/x86/WebView2Loader.dll
+Подтверждённый SHA256: 1d348d3c0a5cb0d985389b68a0fd9bf966c2aed65f5e44bbc0233739b7a57f9e
+Требуется x86 loader для наших x86 host/DLL. Loader не содержит весь браузер:
+на Windows должен быть установлен WebView2 Runtime.
+
+Изученный API-путь
+LoadLibraryExW(loader path, LOAD_WITH_ALTERED_SEARCH_PATH).
+GetProcAddress("CreateCoreWebView2EnvironmentWithOptions").
+Environment -> асинхронный CreateCoreWebView2Controller(HWND) -> CoreWebView2.
+STA/message loop обязателен. Controller HWND находится вне virtual desktop;
+страница захватывается WGC, не отображается отдельным desktop-окном пользователю.
+Профиль LocalAppData/L2TextureWeb/<ключ каталога>; диагностика может переопределить
+WEBVIEW2_USER_DATA_FOLDER и включить Chromium logging.
+
+Использованные возможности
+Навигация; NavigationStarting/Completed; NewWindowRequested с перенаправлением
+HTTP(S) в текущую страницу; ProcessFailed; CDP mouse/key/text; mute on hide/close;
+отключение desktop context menu/dialogs. BrowserWnd управляет фокусом и lifecycle.
+
+Сбой Gracia
+Create controller HRESULT=0x80010108 (RPC_E_DISCONNECTED).
+Чистый профиль дал ту же ошибку. Chromium log показывал штатный Shutdown вскоре
+после запуска, но не установил инициатора отключения. Удержание Environment
+в отдельном ComPtr не решило проблему. Успешен отдельный host, включая тест
+под именем L2.exe с рабочим каталогом клиента; следовательно имя/каталог сами по
+себе сбой не объяснили. В этой исторической версии Gracia использовался helper.
+Позднее реализован in-process вариант без helper; актуальное описание:
+gameAddWebWithD3D9/docs/GRACIA_INPROCESS_BROWSER.md.
+В историческом helper-исследовании гипотезы о причине не были подтверждены.
+Последующая диагностика и исправление описаны в GRACIA_INPROCESS_BROWSER.md выше.
+
+Диагностика/источники
+gameAddWebWithD3D9/browserTexture/native/web_frames.cpp
+gameAddWebWithD3D9/gracia/webview_lifetime.py — точечный adapter удержания Environment.
+gameAddWebWithD3D9/gracia/diagnose_browser.ps1
+gracia/tests/browser-diagnostic-20261029-023238 и -023617 — журналы неуспешных
+внутрипроцессных запусков, не доказательство дефекта установленного Runtime.
+Логи и версия Runtime зависят от машины; не переносить их как ABI-профиль DLL.

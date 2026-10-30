@@ -1,0 +1,12 @@
+{
+  "sequence": [
+    "christmas/v001",
+    "christmas/v002",
+    "halloween/v001",
+    "rollback christmas/v002",
+    "rollback christmas/v001"
+  ],
+  "packages": 5,
+  "result": "passed",
+  "main_client_modified": false
+}

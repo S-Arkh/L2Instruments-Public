@@ -1,0 +1,79 @@
+Core.dll — ядро UE2, виртуальная машина и ABI расширений
+Уровень: PE/экспорты, выбранные участки машинного кода, реальные loader/VM-пробы.
+
+1. Назначение
+UObject/UClass/UStruct, FFrame, строки/массивы/аллокатор, загрузка пакетов,
+native-обработчики UnrealScript и регистрация GNatives. Через эту DLL расширение
+связывает скомпилированные native-вызовы с C++.
+
+2. Проверенные клиентские профили (оригинальные SHA256)
+client_b3fb9af3:
+b3fb9af30a4fc9429b6765e9d897acb00478e7ba0a1e6c48266d475bfadf0f3c
+clear_hf_0677e909:
+0677e909b10ec398543dbd04cf4d8714ed97befd23d5f928aef17b1a5d844471
+gracia_epilogue_0941cac5:
+0941cac5e71039ca0fa1c4d33675a70aab8b995bece3437936eec980f4f452f0
+
+RVA:                    Register   GNatives   FFrame::Step  execUndefined
+client_b3fb9af3          0x5D600    0xEC6D8    0x9210        0x5D210
+clear_hf_0677e909        0x5D680    0xEA6D0    0x9200        0x5D290
+gracia_epilogue_0941cac5 0x5B410    0xE3690    0x9100        0x5B020
+Предпочтительная база исследованных клиентских Core: 0x15000000.
+Таблица профилей задаёт размер GNatives = 4096 и образцы машинного кода.
+
+3. Важные экспорты
+?GRegisterNative@@YAEHABQ8UObject@@AEXAAUFFrame@@QAX@Z@Z
+?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA
+?Step@FFrame@@QAEXPAVUObject@@QAX@Z
+?execUndefined@UObject@@QAEXAAUFFrame@@QAX@Z
+FString assignment/destructor, appThrowf, GMalloc, StaticLoadClass,
+StaticConstructObject также используются соответствующими инструментами.
+
+4. Подтверждённый префикс FFrame (x86)
++0x00 vtable; +0x04 node; +0x08 object; +0x0C code; +0x10 locals.
+Это только исследованный префикс, не полное объявление класса.
+Native: void __thiscall(self, FramePrefix*, result).
+Step: void __thiscall(FramePrefix*, object, result).
+GRegisterNative: unsigned char __cdecl(int, Native const*).
+Аргумент регистрации — ссылка на 4-байтовый member-pointer, не произвольная
+64-битная запись. Детали: dll/src/client_abi.h.
+
+FString: указатель UTF-16, count, capacity; 12 байтов. Буфер принадлежит Core,
+освобождать его CRT расширения нельзя. Gracia экспонирует 16-битный символ как
+unsigned short (PBG), HF — wchar_t (PB_W); разница влияет на decorated names.
+
+INT64: пара high32, low32 (именно в этом порядке), 8 байтов. Cast token 0x39,
+индексы 0x5A..0x63: byte/int/bool/float/string -> INT64 и обратные преобразования.
+Операторы 400..413 исследованы в исходном клиентском INT64-профиле; не переносить
+его абсолютные адреса GCast на другие Core. Прямой constant 0x46 модуль UCC
+не генерирует. См. int64/docs/ABI.md и int64/tests/client_native_probe.cpp.
+
+5. Патч загрузки расширения
+Собственная реализация находится в ExtensionL2.dll. Для известной Core создаётся
+отдельная патченная копия с загрузочным кодом в добавленных секциях; чужую Core
+не подставляют. Проверяются экспорты, совместимость импортов клиента и исполнение VM.
+Подтверждённая патченная Gracia:
+7723e1145a5b8053d0a99cf54a1996f83248dccd083cdaccccae2a41ad2e6295
+Исторический подтверждённый патч Clear HF из dll/CLEAR_HF_FIX.md:
+03ed7faa0dfe0853071f6defda191b2eae76961e835c9624be25396a69dbb455
+Конкретный устанавливаемый вариант всегда сверять с актуальным manifest.
+
+6. Известная проблема совместимости
+Engine Clear HF ожидает GetCPUCacheLineSize с QBEHXZ, прежняя чужая Core имела
+QAEHXZ. D3DDrv также ожидал другой SetVGAInfo. Добавление одного алиаса не решает
+различие ABI; использована родная Core и повторно создан её патч.
+
+7. Core компилятора — отдельный бинарник
+SHA256: 5bff274734cae994353a8c60f4bfe1087dbdd9aa3883c7b2a7eff6ea2f51dc7e
+Расположение: int64/compiler/System/Core.dll. Не заменяет клиентскую Core.
+В исследованном компиляторе UStructProperty::ImportText читает Struct по +0x6C;
+INT64-default сериализуется high/low. Ошибка ImportText выводится через GWarn,
+не через appThrowf: прежний путь давал protection fault. NumErrors — +8.
+
+8. Повторное исследование
+Из dll: py -3 tools/core_profiles.py analyze <Core.dll> --report <report.json>
+Новый кандидат не становится одобренным автоматически. Проверить дизассемблирование,
+layout, таблицу и реальные VM-вызовы, затем добавить профиль и пересобрать.
+Источники/тесты: dll/tools/core_profiles.py, check_core_dependencies.py,
+validate_bundle.py; dll/tests/client_link_probe.cpp, extension_probe.cpp;
+dll/CORE_PROFILES.md; int64/docs/ABI.md.

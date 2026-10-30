@@ -1,0 +1,10 @@
+{
+  "revision": "trial-v004",
+  "textures": 446,
+  "mips": 492,
+  "inherited_unchanged": 247,
+  "new_textures": 199,
+  "image_and_alpha_checks": "passed",
+  "isolated_install_rollback": "passed",
+  "game_tested": false
+}

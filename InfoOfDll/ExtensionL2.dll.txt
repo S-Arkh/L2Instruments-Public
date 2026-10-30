@@ -1,0 +1,63 @@
+ExtensionL2.dll — собственное клиентское расширение
+Уровень: исходный код, Core registration/VM-пробы, браузерные fixtures и игровой тест.
+
+Роль
+Загружается подготовленной Core, выбирает проверенный ABI-профиль и регистрирует
+native-функции. UnrealScript-декларации и таблица C++ должны совпадать по индексам,
+типам параметров и результатам. В проекте существуют базовые, тестовые и браузерные
+сборки с одинаковым именем DLL, но разной функциональностью; они не взаимозаменяемы.
+
+База
+dll/src/extension_runtime.cpp, extensionL2.cpp, client_abi.h, extension_api.h.
+dll/ADDING_NATIVE_FUNCTIONS.md описывает добавление API и генерацию деклараций.
+Работа с файлами описана в dll/FILE_IO.md. Профили: dll/core_profiles.json.
+Проверки native-слотов не должны перезаписывать чужие зарегистрированные handlers.
+В браузерной ветке API занимает 4000..4030; Gracia natives 4086..4095 сохранены.
+
+HF-браузер
+gameAddWebWithD3D9/browserTexture: WebView2/WGC работает на STA внутри игры;
+Engine texture adapter пишет BGRA в игровую UTexture из UI-потока.
+При process detach с reserved!=nullptr COM/WinRT отсоединяются без Release/Close
+и без ожиданий под loader lock.
+
+Актуальный Gracia-браузер
+Сборка в Windows и все реализованные функции проверены в игре. Актуальный
+комплект gameAddWebWithD3D9/out/gracia/system работает внутри ExtensionL2.dll
+без helper EXE. Причина прежнего 0x80010108 и слой совместимости описаны в
+gameAddWebWithD3D9/docs/GRACIA_INPROCESS_BROWSER.md.
+
+История: Gracia-браузер с helper, проверенный в игре
+WebView2/WGC вынесены в GraciaBrowserHost.exe. ExtensionL2 запускает helper,
+принимает BGRA через shared memory, передаёт команды и ввод, обновляет UTexture.
+browser_transport.cpp — DLL-сторона, browser_ipc.h — протокол,
+browser_host.cpp — helper. Helper должен быть рядом с DLL и WebView2Loader.dll.
+Windows Job с KILL_ON_JOB_CLOSE завершает helper/потомков при выходе клиента.
+В DLL detach нет ожидания и COM-очистки браузера.
+512x512 BGRA; mutex/очередь; номер поколения блокирует публикацию старого кадра
+после нового открытия/закрытия. CopyFresh выдаёт свежие кадры одному texture consumer.
+
+Причина выбора helper
+Внутри Gracia CreateCoreWebView2Controller возвращал 0x80010108; чистый профиль
+и удержание Environment не помогли. Отдельные тесты проходили. На этом этапе
+первопричина ещё не была установлена; позднее выявлена блокировка pipe-дескрипторов
+в integrity.dll и подготовлен рабочий in-process вариант.
+
+Подтверждённая DLL на 29.10.2026
+SHA256: 7bcd09efc2e2831aa00da1f5d516a6d8b81544ca6b84a8440b1975756ba01cc1
+Комплект: gameAddWebWithD3D9/gracia/result/system.
+После пересборки сверять новый manifest; прежнее игровое подтверждение привязано
+к хешам в gracia/game-validation.json.
+
+Диагностика
+texture adapter: отрицательные коды layout/hash/thread/buffer; точная карта в
+prototype/native/texture_probe.cpp и сгенерированном Gracia adapter.
+WebView -22: ошибка создания controller/get_CoreWebView2; HRESULT в web-texture.log.
+IPC -30: запуск/helper/shared resources; -31: helper завершён; -32: очередь/lock.
+options.config читается при новом открытии. Ошибка конфига даёт YouTube.
+
+Проверки и сборка
+gracia/build_native.ps1: options, VM manual/patched, real Engine fixture,
+frames, ipc-frames, exit. build.ps1 добавляет recovery/compile/packaging/manifest.
+gracia/tests/test_bundle.py: установка/точный откат на временных копиях.
+Подтверждены изображение, RU/EN, клики, колесо, drag, сворачивание, прекращение
+звука и закрытие клиента. После выхода helper не остался.

@@ -1,0 +1,62 @@
+Engine.dll — игровой движок и динамическая текстура браузера
+Уровень: PE/экспорты, исследование texture layout, вызов настоящего Init,
+проверка пикселей/revision, подтверждение браузерного пути в игре.
+
+1. Идентификация
+HF SHA256: 944605e867b17925336dc127dd03a6076f7b5ffcc1988ab4a077a85c09904417
+Gracia SHA256: 7c3b792c92dbf3188b34a75c746b7c86d1043e9cb5cc4901ef64d9eda28fd48c
+Gracia preferred image base: 0x20000000. Ниже адреса функций/таблиц — RVA.
+
+2. Изученный путь
+BrowserWnd.uc создаёт transient Texture и сохраняет ссылку. C++-адаптер вызывает
+Engine::UTexture::Init только для пустой текстуры, пишет BGRA в выделенный движком
+mip, устанавливает dirty. TextureHandle/Canvas передаёт её штатному рендереру.
+Игровые объекты изменяются в UI-потоке, не в callback WebView2/WGC.
+
+Экспорты:
+?Init@UTexture@@UAEXHH@Z — void __thiscall(texture, width, height).
+??_7UTexture@@6B@ — vtable, проверяемая перед доступом к layout.
+
+                           HF           Gracia
+Init RVA                   0x1C4510     0x1B1930
+UTexture vtable RVA         0x4E358C     0x4B0C7C
+Render interface vtable RVA 0x581904     0x5436DC
+Texture mip pointer offset  +0xF8        +0xF4
+Texture mip count offset    +0xFC        +0xF8
+Texture render pointer      +0x108       +0x104
+
+Общие проверенные поля используемого адаптера:
+Texture +0x54: format byte = 5 (профильный TEXF_RGBA8, в памяти opaque BGRA x86).
+Texture +0x5C/+0x60: width/height (int).
+Texture +0xA8: dirty bit 0x80, приводит к обновлению render revision.
+Mip +0x1C: указатель пикселей; +0x20: количество байтов; +0x24: capacity.
+Render object +0x0C: обратная ссылка на UTexture.
+Браузер: 512x512x4; отдельная цветовая fixture: 256x256x4.
+
+3. Защита от неверного layout
+Адаптер проверяет SHA256 Engine на диске, RVA экспортов, vtable texture/render,
+обратную ссылку, поток, формат, размеры, число mip и размер буфера.
+Не изменяет произвольные загруженные игровые texture assets и не освобождает
+их память через собственный CRT. Это не универсальный механизм resize UTexture.
+
+4. Проверки и ограничения
+gracia/tests/texture_layout_probe.cpp вызывает реальный Init с тестовым объектом
+layout, проверяет RGB, dirty/revision и отказ HF layout. Это fixture, не полноценный
+игровой UObject/GC. Работа итогового браузера в игре подтверждена отдельно.
+Не утверждается восстановление полного Engine ABI, всех vtable или GC.
+
+5. SDK и зависимости
+Engine.u из int64/sdk/runtime2226 используется как компиляторский SDK;
+gameAddWebWithD3D9/tools/ue2/sdk_enums.py добавляет нужные enum-метаданные из клиента.
+SDK-пакет нельзя автоматически считать заменой игрового Engine.u.
+Engine.dll зависит от конкретных экспортов Core: историческая ошибка Clear HF
+описана в dll/CLEAR_HF_FIX.md.
+
+6. Для продолжения
+gameAddWebWithD3D9/client_profiles.json — таблица layout.
+gameAddWebWithD3D9/tools/client_profiles.py — проверка профиля/генерация адаптера.
+gameAddWebWithD3D9/prototype/native/texture_probe.cpp — исходный HF-адаптер.
+gameAddWebWithD3D9/gracia/stage/native/texture_probe.cpp — сгенерированный Gracia.
+gameAddWebWithD3D9/reports/inventory.json — PE-инвентаризация.
+Scryde Engine SHA256 0255e9bf75ea7f9aafbae3ca84f36cabbc57be4b465c2105c0a4d365c9955332
+есть в inventory, но texture ABI и браузерный профиль для него не подтверждены.

@@ -1,0 +1,21 @@
+{
+  "layout": "profiles/high-five, profiles/gracia, profiles/scryde",
+  "current_bundle_name": "result-browser-options",
+  "confirmed_bundle_hashes_preserved": true,
+  "confirmation_report": "browser-options-validation.json",
+  "checks": {
+    "python_syntax_files": 22,
+    "powershell_syntax_scripts": 20,
+    "preparation_roots_high_five_and_gracia": "passed",
+    "local_markdown_links": "passed",
+    "high_five_ucc_compile_only": "passed",
+    "gracia_ucc_compile_only": "passed",
+    "high_five_cmake_configure_and_extension_build": "passed",
+    "gracia_inprocess_cmake_configure_and_extension_build": "passed",
+    "high_five_install_unit_test": "passed",
+    "gracia_bundle_install_rollback_test": "passed"
+  },
+  "new_game_test_after_directory_move": false,
+  "remaining_cleanup": null,
+  "old_gracia_directory_removed": true
+}

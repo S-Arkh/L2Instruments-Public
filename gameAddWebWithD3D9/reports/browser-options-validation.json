@@ -1,0 +1,22 @@
+{
+  "feature": "BrowserWnd.OpenBrowser(optional string StartURL, optional bool HideControls)",
+  "user_confirmation": {
+    "working": true,
+    "message": "ну, сборка работает и в high five и в gracia",
+    "scope": "Overall operation confirmed for both clients; individual extended scenarios were not separately listed."
+  },
+  "profiles": {
+    "high-five": {
+      "bundle": "profiles/high-five/result-browser-options/system",
+      "interface_sha256": "d48cbcdde37fbfb76c891f0b6f3ad7a58b1da42ba9b2ce77ca6c5f4a80aa8e7a",
+      "extension_sha256": "547f7f770ba58fe4769620c4d43b19852f42889b74a5d495bf384b216d70503b"
+    },
+    "gracia": {
+      "bundle": "profiles/gracia/result-browser-options/system",
+      "interface_sha256": "f1cfec581ae7c36d24997803f0c5384282bd42d7ec9d8b0dd34f2a454922966f",
+      "extension_sha256": "8374f758887b05ea84d0e6a63176b91c0a85d59f7e1d33f2dd3b5bdaaae5df43"
+    }
+  },
+  "installed_files_reverified": false,
+  "full_extended_game_validation": false
+}

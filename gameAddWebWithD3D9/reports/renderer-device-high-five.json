@@ -1,0 +1,14 @@
+﻿{
+    "profile":  "high-five",
+    "system":  "D:\\Lineage 2\\clear_high_five\\HF5-REVISION-268-EN\\system",
+    "started":  "2026-10-30T14:55:50.8632340+03:00",
+    "processes":  [
+                      {
+                          "pid":  33484,
+                          "name":  "l2",
+                          "attach_exit":  0,
+                          "log":  "observation_armed; no game device or texture replaced\nactual_device=1 pid=33484 thread=24636 QueryInterface_IDirect3DDevice9Ex=0x80004002 parameters=0x00000000 adapter=0 behavior=0x00000142\n"
+                      }
+                  ],
+    "error":  null
+}

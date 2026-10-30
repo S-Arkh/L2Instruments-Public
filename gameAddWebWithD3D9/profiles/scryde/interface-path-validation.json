@@ -1,0 +1,120 @@
+{
+  "cases": {
+    "baseline": {
+      "source": "tests/interface-paths-20261030-000857/baseline-package-paths.csv",
+      "events_total": 171961,
+      "interface_events": [
+        {
+          "operation": "QueryOpen",
+          "path": "D:\\Lineage 2\\Scryde\\Scryde\\Interface.u",
+          "result": "SUCCESS",
+          "count": 1
+        },
+        {
+          "operation": "CreateFile",
+          "path": "D:\\Lineage 2\\Scryde\\Scryde\\Interface.xdat",
+          "result": "SUCCESS",
+          "count": 1
+        },
+        {
+          "operation": "QueryNameInformationFile",
+          "path": "D:\\Lineage 2\\Scryde\\Scryde\\Interface.xdat",
+          "result": "SUCCESS",
+          "count": 2
+        },
+        {
+          "operation": "QueryStandardInformationFile",
+          "path": "D:\\Lineage 2\\Scryde\\Scryde\\Interface.xdat",
+          "result": "SUCCESS",
+          "count": 4
+        },
+        {
+          "operation": "ReadFile",
+          "path": "D:\\Lineage 2\\Scryde\\Scryde\\Interface.xdat",
+          "result": "SUCCESS",
+          "count": 218
+        },
+        {
+          "operation": "QueryInformationVolume",
+          "path": "D:\\Lineage 2\\Scryde\\Scryde\\Interface.xdat",
+          "result": "BUFFER OVERFLOW",
+          "count": 1857
+        },
+        {
+          "operation": "QueryAllInformationFile",
+          "path": "D:\\Lineage 2\\Scryde\\Scryde\\Interface.xdat",
+          "result": "BUFFER OVERFLOW",
+          "count": 1857
+        },
+        {
+          "operation": "CloseFile",
+          "path": "D:\\Lineage 2\\Scryde\\Scryde\\Interface.xdat",
+          "result": "SUCCESS",
+          "count": 1
+        },
+        {
+          "operation": "CreateFile",
+          "path": "D:\\Lineage 2\\Scryde\\Scryde\\Interface.u",
+          "result": "SUCCESS",
+          "count": 2
+        },
+        {
+          "operation": "QueryNameInformationFile",
+          "path": "D:\\Lineage 2\\Scryde\\Scryde\\Interface.u",
+          "result": "SUCCESS",
+          "count": 3
+        },
+        {
+          "operation": "QueryStandardInformationFile",
+          "path": "D:\\Lineage 2\\Scryde\\Scryde\\Interface.u",
+          "result": "SUCCESS",
+          "count": 6
+        },
+        {
+          "operation": "ReadFile",
+          "path": "D:\\Lineage 2\\Scryde\\Scryde\\Interface.u",
+          "result": "SUCCESS",
+          "count": 370
+        },
+        {
+          "operation": "QueryInformationVolume",
+          "path": "D:\\Lineage 2\\Scryde\\Scryde\\Interface.u",
+          "result": "BUFFER OVERFLOW",
+          "count": 16058
+        },
+        {
+          "operation": "QueryAllInformationFile",
+          "path": "D:\\Lineage 2\\Scryde\\Scryde\\Interface.u",
+          "result": "BUFFER OVERFLOW",
+          "count": 16058
+        },
+        {
+          "operation": "CloseFile",
+          "path": "D:\\Lineage 2\\Scryde\\Scryde\\Interface.u",
+          "result": "SUCCESS",
+          "count": 1
+        }
+      ],
+      "test_interface_events": 0
+    },
+    "relocated": {
+      "source": "tests/interface-paths-20261030-001318/relocated-package-paths.csv",
+      "events_total": 119397,
+      "interface_events": [
+        {
+          "operation": "QueryOpen",
+          "path": "D:\\Lineage 2\\Scryde\\Scryde\\Interface.u",
+          "result": "NAME NOT FOUND",
+          "count": 1
+        }
+      ],
+      "test_interface_events": 0
+    }
+  },
+  "interpretation": "Paths is used for ordinary package lookup; relocated run still queries the canonical Interface.u path and never accesses Test/Interface.u. Exact responsible module and whether this is a precheck or loader logic are not established.",
+  "restored": {
+    "interface_sha256": "0eec3fc00817f8771663535745ebd810d873af1c1b9bf8df8b7ab126f1edc3de",
+    "normal_paths": true,
+    "packages_in_scryde": 27
+  }
+}

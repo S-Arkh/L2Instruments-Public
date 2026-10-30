@@ -1,0 +1,770 @@
+{
+  "Interface": {
+    "recovered_sources": "recovered\\build-20261029-021546-109\\Classes",
+    "files": 239
+  },
+  "NWindow": {
+    "package": "D:\\l2_mode\\mod_comp\\int64_UCC\\rebuild\\gameAddWebWithD3D9\\gracia\\inputs\\NWindow.u",
+    "package_sha256": "b0f8bb9ff1f8b5a68132df4d872a5b966a9956bbf920302747fb93b0a23fec8b",
+    "extracted": {
+      "WindowHandle": {
+        "export": 4412,
+        "encoding": "ansi-bytes",
+        "size": 5914,
+        "sha256": "dbfa62b7d5b734c37e662d74f941ae019f0a2bccaf2c060d3903c5d49a9735fd",
+        "replaced_sha256": null
+      },
+      "VideoPlayerCtrlHandle": {
+        "export": 4415,
+        "encoding": "ansi-bytes",
+        "size": 203,
+        "sha256": "6423fcb0f96a5170c9ff69d13f94a5016ca1e8046d1340ba9a1203f826392634",
+        "replaced_sha256": null
+      },
+      "VehicleAPI": {
+        "export": 4419,
+        "encoding": "ansi-bytes",
+        "size": 283,
+        "sha256": "69d84063cd3ae7feedc66fe6153cfcb5eb7d95f7e7fec13b1817d2de7ced0cc1",
+        "replaced_sha256": null
+      },
+      "UIScript": {
+        "export": 4430,
+        "encoding": "ansi-bytes",
+        "size": 33799,
+        "sha256": "90ac380953d3c124281a0bd35aa0396f450421e9c87d22e0bab693cdacd1b425",
+        "replaced_sha256": null
+      },
+      "UIEventManager": {
+        "export": 4433,
+        "encoding": "ansi-bytes",
+        "size": 43589,
+        "sha256": "fc702ddc2a099886e7be444560abc699d7dd4a2713f75f50b345100648965f8a",
+        "replaced_sha256": null
+      },
+      "UIDATA_USER": {
+        "export": 4435,
+        "encoding": "ansi-bytes",
+        "size": 177,
+        "sha256": "4ec40f724a0a22bc56f1b7e585f778965d0d18a823465e3d4831a4993985f353",
+        "replaced_sha256": null
+      },
+      "UIDATA_TUTORIALLIST": {
+        "export": 4444,
+        "encoding": "ansi-bytes",
+        "size": 126,
+        "sha256": "edb9a50d87524920882d08f5dde8b1a697060e7423e0a4fd85845be1c903398b",
+        "replaced_sha256": null
+      },
+      "UIDATA_TRANSFORM": {
+        "export": 4450,
+        "encoding": "ansi-bytes",
+        "size": 127,
+        "sha256": "46e803c11543215d97f4db03c5f564c199f9045931b085e99f808cbcac99e159",
+        "replaced_sha256": null
+      },
+      "UIDATA_TARGET": {
+        "export": 4454,
+        "encoding": "ansi-bytes",
+        "size": 840,
+        "sha256": "12d357a5a08f8f78060e8d3f93860667dd1fbaa2fecc719cdfaf5ee1dbe76eb6",
+        "replaced_sha256": null
+      },
+      "UIDATA_STATICOBJECT": {
+        "export": 4458,
+        "encoding": "ansi-bytes",
+        "size": 434,
+        "sha256": "a9afac63904967534dfe72bae7143b99d2e2075b316185225bf8fa7b2b76ac83",
+        "replaced_sha256": null
+      },
+      "UIDATA_SKILL": {
+        "export": 4463,
+        "encoding": "ansi-bytes",
+        "size": 875,
+        "sha256": "8099d7ae6c6a60227f65c9755b9827b47ab5ee6c8d3b870817e97e49c84dba95",
+        "replaced_sha256": null
+      },
+      "UIDATA_REFINERYOPTION": {
+        "export": 4469,
+        "encoding": "ansi-bytes",
+        "size": 231,
+        "sha256": "654125bf15bcbfbe018095bea5da39dc22de973fab8ce456e8355d435203c322",
+        "replaced_sha256": null
+      },
+      "UIDATA_RECIPE": {
+        "export": 4472,
+        "encoding": "ansi-bytes",
+        "size": 1074,
+        "sha256": "d97e7d0b6138224786e6a882b1e30a6a460c771a1c8786a3e9031a4a214a84ce",
+        "replaced_sha256": null
+      },
+      "UIDATA_RAID": {
+        "export": 4474,
+        "encoding": "ansi-bytes",
+        "size": 396,
+        "sha256": "6fbfe4b4b0b26d0991330ca1d089d31966de8c3fe0d3a19d48a34ea002a88148",
+        "replaced_sha256": null
+      },
+      "UIDATA_QUEST": {
+        "export": 4476,
+        "encoding": "ansi-bytes",
+        "size": 1717,
+        "sha256": "3b1769d04691635c95ac9a0e73f3cdacbedeb06ae0d78c108a9d887fe00e5796",
+        "replaced_sha256": null
+      },
+      "UIDATA_PLAYER": {
+        "export": 4482,
+        "encoding": "ansi-bytes",
+        "size": 542,
+        "sha256": "ef0ccd640b8a2ef5e8b8c911b9f593c0787da269ead93fd7fc95e0a0ecd67428",
+        "replaced_sha256": null
+      },
+      "UIDATA_PET": {
+        "export": 4487,
+        "encoding": "ansi-bytes",
+        "size": 811,
+        "sha256": "cd23ea4a73180f36074fe1131fac3b251e54c414471f2473ba1f71c46851c57e",
+        "replaced_sha256": null
+      },
+      "UIDATA_PAWNVIEWER": {
+        "export": 4490,
+        "encoding": "ansi-bytes",
+        "size": 3674,
+        "sha256": "0f70b59ebf7a16c8577604f395445fb27873949190a47167366fbc1da1d04dfe",
+        "replaced_sha256": null
+      },
+      "UIDATA_PARTY": {
+        "export": 4495,
+        "encoding": "ansi-bytes",
+        "size": 241,
+        "sha256": "4975a5cac7bdeb850b4f5576cafe0f9356a4ed3df16682fcfc5356feabc076f3",
+        "replaced_sha256": null
+      },
+      "UIDATA_NPC": {
+        "export": 4497,
+        "encoding": "ansi-bytes",
+        "size": 317,
+        "sha256": "1856b8f16dee5098aaee6dc272117131d911b983bfc6658923419a26a11a324d",
+        "replaced_sha256": null
+      },
+      "UIDATA_MACRO": {
+        "export": 4500,
+        "encoding": "ansi-bytes",
+        "size": 174,
+        "sha256": "202d874d41dd66091340f12bbb7dcb482c594e4105eb1afc13819e31b6487fa3",
+        "replaced_sha256": null
+      },
+      "UIDATA_ITEM": {
+        "export": 4503,
+        "encoding": "ansi-bytes",
+        "size": 1545,
+        "sha256": "54b21e8df1f4c2d3baed7d39c58b31df5524db519514513f0de5ef4a89aae086",
+        "replaced_sha256": null
+      },
+      "UIDATA_HUNTINGZONE": {
+        "export": 4508,
+        "encoding": "ansi-bytes",
+        "size": 495,
+        "sha256": "426eb529ea968d98f9b2ccfa803024e2b351f6e729df3d44b5ea5408a5f15c44",
+        "replaced_sha256": null
+      },
+      "UIDATA_HENNA": {
+        "export": 4512,
+        "encoding": "ansi-bytes",
+        "size": 289,
+        "sha256": "d1e0a4d22c3921901b117b841203a60c747d24b908f219b45ba6ac0c13defa4d",
+        "replaced_sha256": null
+      },
+      "UIDATA_GAMETIP": {
+        "export": 4520,
+        "encoding": "ansi-bytes",
+        "size": 192,
+        "sha256": "176d0f926b92d7e1862d3e6f67113f12892037ed379f169a1f07ca3c52c662d2",
+        "replaced_sha256": null
+      },
+      "UIDATA_CLAN": {
+        "export": 4524,
+        "encoding": "ansi-bytes",
+        "size": 837,
+        "sha256": "a639aa4856297246efe428a7ceb8eae56b3db909181e59afad89cee66b8f8901",
+        "replaced_sha256": null
+      },
+      "UIDataManager": {
+        "export": 4529,
+        "encoding": "ansi-bytes",
+        "size": 112,
+        "sha256": "202ce9e8b3c26fcbe8e7e7a876499431f1a8019865e90753ca5b04dee5deadbb",
+        "replaced_sha256": null
+      },
+      "UIAPI_WINDOW": {
+        "export": 4530,
+        "encoding": "ansi-bytes",
+        "size": 2915,
+        "sha256": "75b9e38aec8335ae08f6e3b1ba3037998ae34e5be95aaeb1b51ce74efac60ae0",
+        "replaced_sha256": null
+      },
+      "UIAPI_TREECTRL": {
+        "export": 4531,
+        "encoding": "ansi-bytes",
+        "size": 1112,
+        "sha256": "0c839c09a66be040bb4b5e719bf89e9997986cf1a081c9fe0b158e298a5411bf",
+        "replaced_sha256": null
+      },
+      "UIAPI_TEXTURECTRL": {
+        "export": 4538,
+        "encoding": "ansi-bytes",
+        "size": 525,
+        "sha256": "fd782e1e279db5431f32fb1023c440a27a7a220e91597d161d024f2b2e3c3e11",
+        "replaced_sha256": null
+      },
+      "UIAPI_TEXTLISTBOX": {
+        "export": 4543,
+        "encoding": "ansi-bytes",
+        "size": 198,
+        "sha256": "e7321e2ec591f74bf4bfeb95cd6f269fe0adfdac0db9d85b227672d9e96224a8",
+        "replaced_sha256": null
+      },
+      "UIAPI_TEXTBOX": {
+        "export": 4545,
+        "encoding": "ansi-bytes",
+        "size": 462,
+        "sha256": "6c97d04353ed3cc00d3313eea5e5cb5a6e605ea9659f9889b614c7df179b1c94",
+        "replaced_sha256": null
+      },
+      "UIAPI_STATUSICONCTRL": {
+        "export": 4549,
+        "encoding": "ansi-bytes",
+        "size": 710,
+        "sha256": "d085eee8e5a957c8d51416214ff1abebd6d0773b71aa6b2be43bddcd1053a2af",
+        "replaced_sha256": null
+      },
+      "UIAPI_STATUSBARCTRL": {
+        "export": 4555,
+        "encoding": "ansi-bytes",
+        "size": 433,
+        "sha256": "641d157180a624876d3903003b214ad387189579ff5db67cb91b59f8e88d5703",
+        "replaced_sha256": null
+      },
+      "UIAPI_SLIDERCTRL": {
+        "export": 4558,
+        "encoding": "ansi-bytes",
+        "size": 263,
+        "sha256": "4194aaffdb9720abfcf0692396729f396de48bd615a09e6755035de27a7ae89f",
+        "replaced_sha256": null
+      },
+      "UIAPI_SHORTCUTITEMWINDOW": {
+        "export": 4560,
+        "encoding": "ansi-bytes",
+        "size": 204,
+        "sha256": "afd37b4b8d55fafeb7df93badf62cbaa70be8e0a1cdbed7fa40c6eedcd28757a",
+        "replaced_sha256": null
+      },
+      "UIAPI_MULTISELLNEEDEDITEM": {
+        "export": 4563,
+        "encoding": "ansi-bytes",
+        "size": 185,
+        "sha256": "9c144d27b386741df5a8d9da6248cfdb1a16721a0d05843f4c6665df69f2af98",
+        "replaced_sha256": null
+      },
+      "UIAPI_MULTISELLITEMINFO": {
+        "export": 4569,
+        "encoding": "ansi-bytes",
+        "size": 199,
+        "sha256": "ea7896864d64d05da59ac9f8d0f6211d3f4f58f9905e0ccc3063613bbb749acf",
+        "replaced_sha256": null
+      },
+      "UIAPI_MULTIEDITBOX": {
+        "export": 4573,
+        "encoding": "ansi-bytes",
+        "size": 187,
+        "sha256": "1425263654bf81a1f0f9ce5eba6a8215d46780d8d0f1784980de2addb6c0bc94",
+        "replaced_sha256": null
+      },
+      "UIAPI_MINIMAPCTRL": {
+        "export": 4579,
+        "encoding": "ansi-bytes",
+        "size": 1222,
+        "sha256": "712eeb71e1db30e0f3bc6f29b07c22f360e67fbac095b2b6ef580da474dab604",
+        "replaced_sha256": null
+      },
+      "UIAPI_LISTCTRL": {
+        "export": 4585,
+        "encoding": "ansi-bytes",
+        "size": 692,
+        "sha256": "02421a6ac74305749be73acd88b3821fe5cd86453e57b9b735e9ec86b29a5d25",
+        "replaced_sha256": null
+      },
+      "UIAPI_ITEMWINDOW": {
+        "export": 4596,
+        "encoding": "ansi-bytes",
+        "size": 885,
+        "sha256": "8dfa0c43016068a4064e12609a80bb5bb952ec9cf2d1077dd71ab013e399a221",
+        "replaced_sha256": null
+      },
+      "UIAPI_INVENWEIGHT": {
+        "export": 4599,
+        "encoding": "ansi-bytes",
+        "size": 255,
+        "sha256": "00dffbaa1355cc734ecd2a43932dc37f9cb278a35110e570da3ad8d1964ea79d",
+        "replaced_sha256": null
+      },
+      "UIAPI_EFFECTBUTTON": {
+        "export": 4603,
+        "encoding": "ansi-bytes",
+        "size": 135,
+        "sha256": "59b11ee2d43e94add4fd14c56f0ef7e7c3af1cf87081b719dc9ac85161c1a613",
+        "replaced_sha256": null
+      },
+      "UIAPI_EDITBOX": {
+        "export": 4607,
+        "encoding": "ansi-bytes",
+        "size": 539,
+        "sha256": "0c51db875f1e336f2bacd96a3b0f88bf7dcd4f2aa9f8a2ae2fb4a9bdb7fae380",
+        "replaced_sha256": null
+      },
+      "UIAPI_COMBOBOX": {
+        "export": 4614,
+        "encoding": "ansi-bytes",
+        "size": 851,
+        "sha256": "2a9f991c2f3bacff2a62d463db61c95921e244b2f1a310ce2b92c70cb6084dae",
+        "replaced_sha256": null
+      },
+      "UIAPI_CHECKBOX": {
+        "export": 4618,
+        "encoding": "ansi-bytes",
+        "size": 436,
+        "sha256": "564b12b6dd2554c92f1679e1c8c2bcdb3be93d165d2760c5166f794b274125a0",
+        "replaced_sha256": null
+      },
+      "UIAPI_BUTTON": {
+        "export": 4624,
+        "encoding": "ansi-bytes",
+        "size": 121,
+        "sha256": "9716c16dcddf0e1d0c7bd8d4bd5fdcb5aea10491e774872a8f7d8b46ff65d4ab",
+        "replaced_sha256": null
+      },
+      "TutorialAPI": {
+        "export": 4632,
+        "encoding": "ansi-bytes",
+        "size": 113,
+        "sha256": "f8d5a17c5e5ae69ecf66c2b0054e3f373a62efebc56f7d596ff459920b31c6a9",
+        "replaced_sha256": null
+      },
+      "TreeHandle": {
+        "export": 4636,
+        "encoding": "ansi-bytes",
+        "size": 858,
+        "sha256": "73b9a1bffdc79edd0a2e23c6381fb78e574278f4af606f1fda6c1bbea433a1da",
+        "replaced_sha256": null
+      },
+      "TextureHandle": {
+        "export": 4638,
+        "encoding": "ansi-bytes",
+        "size": 705,
+        "sha256": "cf9f8d66bd986a1353c55d4633a7852cdb2f24f718cb6b30e9f73ff2df44f1b2",
+        "replaced_sha256": null
+      },
+      "TextListBoxHandle": {
+        "export": 4639,
+        "encoding": "ansi-bytes",
+        "size": 296,
+        "sha256": "6507fcfeb790e394f5667e79a2aeb516c88624218efc410ffddd7ad037eb3729",
+        "replaced_sha256": null
+      },
+      "TextBoxHandle": {
+        "export": 4643,
+        "encoding": "ansi-bytes",
+        "size": 391,
+        "sha256": "5b77c6cb01987c69251e09d273eec7a429f7f0af15b0fb56b566dd990a23a4f7",
+        "replaced_sha256": null
+      },
+      "TeamMatchAPI": {
+        "export": 4646,
+        "encoding": "ansi-bytes",
+        "size": 393,
+        "sha256": "00baaff16dce0a30d1d8ad9aaa8d0afcca2ac2573ad04592e01a007510e0322a",
+        "replaced_sha256": null
+      },
+      "TabHandle": {
+        "export": 4651,
+        "encoding": "ansi-bytes",
+        "size": 415,
+        "sha256": "15b4a0d76f143b0babe48206863d0328e053456d18607b289c858833318de232",
+        "replaced_sha256": null
+      },
+      "StatusIconHandle": {
+        "export": 4653,
+        "encoding": "ansi-bytes",
+        "size": 688,
+        "sha256": "e83b6b3b3a2381f8d4f3d5d33f297d07bdb708635f29c6141c7a540ca32ba93c",
+        "replaced_sha256": null
+      },
+      "StatusBarHandle": {
+        "export": 4655,
+        "encoding": "ansi-bytes",
+        "size": 352,
+        "sha256": "9a39f90d200a84453bd9af335429a31aaad26f902904c5346abc6aa068c5abab",
+        "replaced_sha256": null
+      },
+      "SSQAPI": {
+        "export": 4657,
+        "encoding": "ansi-bytes",
+        "size": 101,
+        "sha256": "bd5c87d1cbef61aab55b2835ec126f70e5e7045cbc71c06ae877637afe3303eb",
+        "replaced_sha256": null
+      },
+      "SliderCtrlHandle": {
+        "export": 4664,
+        "encoding": "ansi-bytes",
+        "size": 316,
+        "sha256": "e561a47a95d86e2ea9723ba6345b4dab4d11c241728ca4acfee9ad752d829e4b",
+        "replaced_sha256": null
+      },
+      "SiegeAPI": {
+        "export": 4665,
+        "encoding": "ansi-bytes",
+        "size": 458,
+        "sha256": "8787b096da74b4020a259435ee1bdd29a46947e54c3c2c9ad557f46fcc4a85ed",
+        "replaced_sha256": null
+      },
+      "ShortcutAPI": {
+        "export": 4670,
+        "encoding": "ansi-bytes",
+        "size": 1079,
+        "sha256": "dc66967048c97f020248adb8c6b6fd337737f7e1b5dee796ebd79cced649baf3",
+        "replaced_sha256": null
+      },
+      "SceneScreenCtrlHandle": {
+        "export": 4679,
+        "encoding": "ansi-bytes",
+        "size": 168,
+        "sha256": "85156a9dd50fef1873d6a21bec1ad03f92092195c37f95f79ded2be97dca0ca3",
+        "replaced_sha256": null
+      },
+      "ScenePcCtrlHandle": {
+        "export": 4682,
+        "encoding": "ansi-bytes",
+        "size": 156,
+        "sha256": "50dde5452e8126381173e95ced6b016e8057ea26a47141127f4b35c285ee60d1",
+        "replaced_sha256": null
+      },
+      "SceneNpcCtrlHandle": {
+        "export": 4685,
+        "encoding": "ansi-bytes",
+        "size": 159,
+        "sha256": "ae9adc71be281a0eaf48c05bfd5047a200cbaf3f99c86cda85948bd288a21e99",
+        "replaced_sha256": null
+      },
+      "SceneMusicCtrlHandle": {
+        "export": 4688,
+        "encoding": "ansi-bytes",
+        "size": 165,
+        "sha256": "4c4c985d79c3665570269dd435877bfe0393609d15e7232d74754556463ff96b",
+        "replaced_sha256": null
+      },
+      "SceneEditorAPI": {
+        "export": 4690,
+        "encoding": "ansi-bytes",
+        "size": 621,
+        "sha256": "7cbbd343980d8343370397129f666d547aa0e4e0e73e996c78a61d7f53bc118a",
+        "replaced_sha256": null
+      },
+      "SceneCameraCtrlHandle": {
+        "export": 4692,
+        "encoding": "ansi-bytes",
+        "size": 168,
+        "sha256": "96a6e1f3491f8be35b3fcc509f2d91ee4f87cb30d63ffc675c3a9f8ebd75278e",
+        "replaced_sha256": null
+      },
+      "RefineryAPI": {
+        "export": 4694,
+        "encoding": "ansi-bytes",
+        "size": 610,
+        "sha256": "c86e63b4cc33183d6869ee7ed9e84e89172f20db8357243fb6194b9e33ef1242",
+        "replaced_sha256": null
+      },
+      "RecipeAPI": {
+        "export": 4698,
+        "encoding": "ansi-bytes",
+        "size": 741,
+        "sha256": "1f4eae94938ee40386e6e758be7a254c6381df40c56043deb39af93fc7944c01",
+        "replaced_sha256": null
+      },
+      "RadarMapCtrlHandle": {
+        "export": 4701,
+        "encoding": "ansi-bytes",
+        "size": 562,
+        "sha256": "0a73fab60f6a606c6b9e5334ab70e7b7a3d4ac4c1c321e431358ad7fa5934137",
+        "replaced_sha256": null
+      },
+      "QuestAPI": {
+        "export": 4702,
+        "encoding": "ansi-bytes",
+        "size": 297,
+        "sha256": "bf93a87e8d2c6a3b0173e7ab3e6702b99db6af7b7e6d5a72d6d65e0dd47da632",
+        "replaced_sha256": null
+      },
+      "PropertyControllerHandle": {
+        "export": 4706,
+        "encoding": "ansi-bytes",
+        "size": 1380,
+        "sha256": "138981007640cdc2ee1182d7bb823b738d274a2b0d54cbb88f313d57474a251a",
+        "replaced_sha256": null
+      },
+      "ProgressCtrlHandle": {
+        "export": 4708,
+        "encoding": "ansi-bytes",
+        "size": 289,
+        "sha256": "014021564f56137f425f77482678d4960a025d66b6bd0f8030385663d3b7987c",
+        "replaced_sha256": null
+      },
+      "PetitionAPI": {
+        "export": 4709,
+        "encoding": "ansi-bytes",
+        "size": 257,
+        "sha256": "11f47529a06242a6375c14f304ab5f25cf02164c4e77b84102bd19647ee290c5",
+        "replaced_sha256": null
+      },
+      "PetAPI": {
+        "export": 4712,
+        "encoding": "ansi-bytes",
+        "size": 316,
+        "sha256": "a7850e9d37580157dc74d51b80ca6ef4422684ff0bd3420a197ab80d632190ad",
+        "replaced_sha256": null
+      },
+      "PartyMatchAPI": {
+        "export": 4714,
+        "encoding": "ansi-bytes",
+        "size": 1527,
+        "sha256": "6b9a231a78ed16897d1a6e0b10f08bfd11cf01fd2e625412971b0a7adb1c189e",
+        "replaced_sha256": null
+      },
+      "OlympiadAPI": {
+        "export": 4716,
+        "encoding": "ansi-bytes",
+        "size": 152,
+        "sha256": "8eaaab4236939cee56e84a0c17d62ec097411d1802c0a744e74fa060868ac51d",
+        "replaced_sha256": null
+      },
+      "NameCtrlHandle": {
+        "export": 4719,
+        "encoding": "ansi-bytes",
+        "size": 284,
+        "sha256": "4670c2c4c8900e917ff4c48616ee6b7d90ba734467d0cf7a306c169c8394f63f",
+        "replaced_sha256": null
+      },
+      "MultiEditBoxHandle": {
+        "export": 4720,
+        "encoding": "ansi-bytes",
+        "size": 150,
+        "sha256": "70d52671631c482ed5f19c9e4bc210b361968582256d4fe3eaae2ff46e04208b",
+        "replaced_sha256": null
+      },
+      "MinimapCtrlHandle": {
+        "export": 4722,
+        "encoding": "ansi-bytes",
+        "size": 1178,
+        "sha256": "55089fc2c7dd9fdb04bb2d341451663abc4d58e8a0de9c8f81b6ad729cd89df1",
+        "replaced_sha256": null
+      },
+      "MiniMapAPI": {
+        "export": 4728,
+        "encoding": "ansi-bytes",
+        "size": 230,
+        "sha256": "dc537c0d48a9ff5cbc913600ca6329658e96d7b2fbbb0b3acce22ff272990c89",
+        "replaced_sha256": null
+      },
+      "MacroAPI": {
+        "export": 4732,
+        "encoding": "ansi-bytes",
+        "size": 425,
+        "sha256": "466e094d6ab09149999244b52a61e41fa2fd87322ce3b9e86ddd969e7e626e05",
+        "replaced_sha256": null
+      },
+      "ListCtrlHandle": {
+        "export": 4737,
+        "encoding": "ansi-bytes",
+        "size": 621,
+        "sha256": "45c2e399affe18c694413ede0a832d07092b4794c73df463108d826bb985569c",
+        "replaced_sha256": null
+      },
+      "ListBoxHandle": {
+        "export": 4738,
+        "encoding": "ansi-bytes",
+        "size": 318,
+        "sha256": "c1ad8cf9b625960f533d71d740831c13ece9d52a3dfcc03116c7455bd54f2cf4",
+        "replaced_sha256": null
+      },
+      "ItemWindowHandle": {
+        "export": 4739,
+        "encoding": "ansi-bytes",
+        "size": 1416,
+        "sha256": "59870113cd5b04c75d3c3b539aa72edbf63a603b516e95e93ee2dee7d3420a28",
+        "replaced_sha256": null
+      },
+      "InputAPI": {
+        "export": 4740,
+        "encoding": "ansi-bytes",
+        "size": 335,
+        "sha256": "5a23a2a4ce3e6ec0f4994da14fafca10aee64f25ad411d8a668a08177e05b5dd",
+        "replaced_sha256": null
+      },
+      "HtmlHandle": {
+        "export": 4742,
+        "encoding": "ansi-bytes",
+        "size": 491,
+        "sha256": "b0e3510857dd8195f2080d7c385edf60e0319713f9ff228f79b0e0bd090c4570",
+        "replaced_sha256": null
+      },
+      "HeroTowerAPI": {
+        "export": 4745,
+        "encoding": "ansi-bytes",
+        "size": 176,
+        "sha256": "d8e7604b7cdd78103d75f2b04b2ec56ec25062d49ad5e430530a5779052b39fb",
+        "replaced_sha256": null
+      },
+      "HennaAPI": {
+        "export": 4748,
+        "encoding": "ansi-bytes",
+        "size": 189,
+        "sha256": "02977fb79be3d879b96f752c6d0188bd3c3a81893a3f54794c00021af03cddac",
+        "replaced_sha256": null
+      },
+      "GraphicAPI": {
+        "export": 4752,
+        "encoding": "ansi-bytes",
+        "size": 513,
+        "sha256": "8632d649855502dfed2b6139c081c901bc88cfc8d9afab1eeee702d59ea22a04",
+        "replaced_sha256": null
+      },
+      "GMAPI": {
+        "export": 4755,
+        "encoding": "ansi-bytes",
+        "size": 382,
+        "sha256": "e7f25cf80dd1b0b62d99056bf24647872942f3cd888dfe12354622c700649277",
+        "replaced_sha256": null
+      },
+      "FlashCtrlHandle": {
+        "export": 4758,
+        "encoding": "ansi-bytes",
+        "size": 430,
+        "sha256": "27ee2c61f8a8232f4481423dd2e5cd71eee17818095f230846331efd28ca3069",
+        "replaced_sha256": null
+      },
+      "EventMatchAPI": {
+        "export": 4760,
+        "encoding": "ansi-bytes",
+        "size": 589,
+        "sha256": "eb9404adf0932d5f781f0e99f763b96eae65ba614a1686815354f932855109d0",
+        "replaced_sha256": null
+      },
+      "EnchantAPI": {
+        "export": 4762,
+        "encoding": "ansi-bytes",
+        "size": 539,
+        "sha256": "7cff10f4246c51ff14c12abe27925436d215dc1fe19218628f5ece1ee84f38a9",
+        "replaced_sha256": null
+      },
+      "EditBoxHandle": {
+        "export": 4765,
+        "encoding": "ansi-bytes",
+        "size": 530,
+        "sha256": "23da786ed65f9c581c75a8133552b96617f3982d0797d1323a76295206a276ee",
+        "replaced_sha256": null
+      },
+      "DrawPanelHandle": {
+        "export": 4766,
+        "encoding": "ansi-bytes",
+        "size": 227,
+        "sha256": "104c434ce2bad4c60a83aebcdaf6e6bf740485f2a70b1ffee714b7e646fbe3a4",
+        "replaced_sha256": null
+      },
+      "CommandChannelAPI": {
+        "export": 4768,
+        "encoding": "ansi-bytes",
+        "size": 318,
+        "sha256": "28bda787b0678a285d67c2eeff840e2a608b93b1e56b0506179c69c671dc7a31",
+        "replaced_sha256": null
+      },
+      "ComboBoxHandle": {
+        "export": 4772,
+        "encoding": "ansi-bytes",
+        "size": 633,
+        "sha256": "a70801e7d34a66b86d67aac195fce7b18e5e10ab10e5e005fe52b286215515f7",
+        "replaced_sha256": null
+      },
+      "CheckBoxHandle": {
+        "export": 4773,
+        "encoding": "ansi-bytes",
+        "size": 320,
+        "sha256": "7c33921b123c537ed053a56d33b0dbcee9a8059b844a93fc2c93befb556f5a46",
+        "replaced_sha256": null
+      },
+      "ChatWindowHandle": {
+        "export": 4774,
+        "encoding": "ansi-bytes",
+        "size": 113,
+        "sha256": "2437a308a10ddacd497606f125a596a9ec5d3de01e0114f39909156a9a5f6eb3",
+        "replaced_sha256": null
+      },
+      "CharacterViewportWindowHandle": {
+        "export": 4776,
+        "encoding": "ansi-bytes",
+        "size": 613,
+        "sha256": "b17c0f33a013d154ff60ee129ae829bb054bf68779153d4b9545f50f97b38dbf",
+        "replaced_sha256": null
+      },
+      "ButtonHandle": {
+        "export": 4777,
+        "encoding": "ansi-bytes",
+        "size": 314,
+        "sha256": "c4c3c3a742dbbe969e413e05562917daa46755c2bc0f644317c4f99e4d8b4a80",
+        "replaced_sha256": null
+      },
+      "BookMarkAPI": {
+        "export": 4778,
+        "encoding": "ansi-bytes",
+        "size": 694,
+        "sha256": "ff00ec2fc2fbd04961e159d5d270654f9c3787c323043d297a0850e3e214ae11",
+        "replaced_sha256": null
+      },
+      "BarHandle": {
+        "export": 4781,
+        "encoding": "ansi-bytes",
+        "size": 224,
+        "sha256": "e236648ba6b1aa21ee51569667b81433cf07b64a3ac914a5af918e58b6925eca",
+        "replaced_sha256": null
+      },
+      "AudioAPI": {
+        "export": 4783,
+        "encoding": "ansi-bytes",
+        "size": 234,
+        "sha256": "d4eb634a1e89c5f199db29f91558858e7b881f5e0f3247b9912e98f67d3a42a3",
+        "replaced_sha256": null
+      },
+      "AuctionAPI": {
+        "export": 4787,
+        "encoding": "ansi-bytes",
+        "size": 187,
+        "sha256": "eda18f71606d08abebef33c7d80a754722021bb402091fc76b23273fcc42a1c9",
+        "replaced_sha256": null
+      },
+      "AnimTextureHandle": {
+        "export": 4791,
+        "encoding": "ansi-bytes",
+        "size": 258,
+        "sha256": "e0fb06a3d243feca2e2b82abdd1ccdf65fc1e56a07ac519cfa002ee5c93a3c86",
+        "replaced_sha256": null
+      },
+      "ActionAPI": {
+        "export": 4792,
+        "encoding": "ansi-bytes",
+        "size": 190,
+        "sha256": "4ed5343beb2da3672f3875422fe08e3577a4a941b98ff521a6b5dda760aec96f",
+        "replaced_sha256": null
+      }
+    },
+    "rejected": {},
+    "missing": []
+  }
+}

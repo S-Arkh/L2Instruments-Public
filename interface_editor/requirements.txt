@@ -1,0 +1,6 @@
+PySide6-Essentials>=6.10,<7
+pybind11>=2.13,<4
+nlohmann_json>=3.11,<4
+cmake>=3.20
+ninja>=1.11
+pytest>=8,<10
