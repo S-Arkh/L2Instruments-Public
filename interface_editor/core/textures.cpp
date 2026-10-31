@@ -15,7 +15,7 @@
 namespace interface_editor {
 namespace {
 using Bytes=std::vector<std::uint8_t>;
-constexpr std::size_t MaxPackage=256*1024*1024,PackageBudget=128*1024*1024;
+constexpr std::size_t MaxPackage=512*1024*1024,PackageBudget=512*1024*1024;
 void check(bool b,const std::string& message){if(!b)throw std::runtime_error(message);}
 std::string lower(std::string s){for(char& c:s)if(c>='A'&&c<='Z')c+=32;return s;}
 struct Reader {
@@ -52,7 +52,7 @@ struct Package {
             data.erase(data.begin(),data.begin()+28);for(auto& b:data)b^=static_cast<std::uint8_t>(key);
         }
         Reader r(data);check(r.u32()==0x9e2a83c1,"Not an Unreal texture package");auto versions=r.u32();version=versions&0xffff;license=versions>>16;
-        check(version>=100&&version<=129,"Unsupported Unreal texture package version");r.u32();
+        check((version>=100&&version<=129)||(version==133&&license==40),"Unsupported Unreal texture package version");r.u32();
         auto nc=r.u32(),no=r.u32(),ec=r.u32(),eo=r.u32(),ic=r.u32(),io=r.u32();
         for(auto pair:{std::make_pair(nc,no),std::make_pair(ec,eo),std::make_pair(ic,io)})check(pair.first<=1000000&&pair.second<data.size(),"Invalid package table");
         r.pos=no;for(unsigned i=0;i<nc;++i){names.push_back(r.string());r.u32();}

@@ -1,0 +1,1580 @@
+{
+  "format": 1,
+  "packages": [
+    {
+      "profile": "Essence",
+      "file": "Core.u",
+      "sha256": "61d2056d41dc72326cbfdf0ef87d78bcf15bb25fc849c2963dbab55a604d28eb",
+      "decoded_sha256": "9e5122308440c5406f23969db37605879981d0c8a323d73f313722b9dbbe447a",
+      "wrapper": 111,
+      "oracle_match_without_footer": true,
+      "audit": {
+        "version": 133,
+        "licensee": 40,
+        "counts": {
+          "Struct": {
+            "total": 19,
+            "checked": 19,
+            "failed": 0
+          },
+          "Class": {
+            "total": 8,
+            "checked": 8,
+            "failed": 0
+          },
+          "IntProperty": {
+            "total": 118,
+            "checked": 118,
+            "failed": 0
+          },
+          "StrProperty": {
+            "total": 75,
+            "checked": 75,
+            "failed": 0
+          },
+          "FloatProperty": {
+            "total": 131,
+            "checked": 131,
+            "failed": 0
+          },
+          "Function": {
+            "total": 208,
+            "checked": 208,
+            "failed": 0
+          },
+          "StructProperty": {
+            "total": 183,
+            "checked": 183,
+            "failed": 0
+          },
+          "Enum": {
+            "total": 4,
+            "checked": 4,
+            "failed": 0
+          },
+          "BoolProperty": {
+            "total": 71,
+            "checked": 71,
+            "failed": 0
+          },
+          "ByteProperty": {
+            "total": 26,
+            "checked": 26,
+            "failed": 0
+          },
+          "ClassProperty": {
+            "total": 5,
+            "checked": 5,
+            "failed": 0
+          },
+          "ObjectProperty": {
+            "total": 8,
+            "checked": 8,
+            "failed": 0
+          },
+          "NameProperty": {
+            "total": 14,
+            "checked": 14,
+            "failed": 0
+          },
+          "ArrayProperty": {
+            "total": 1,
+            "checked": 1,
+            "failed": 0
+          },
+          "Const": {
+            "total": 8,
+            "checked": 8,
+            "failed": 0
+          },
+          "TextBuffer": {
+            "total": 8,
+            "checked": 0,
+            "failed": 0
+          }
+        },
+        "failures": 0,
+        "issues": [],
+        "issues_truncated": false
+      }
+    },
+    {
+      "profile": "Essence",
+      "file": "Engine.u",
+      "sha256": "71ab5f741250c6998b7821f4efae98e5be6c4a48d553144a035e47d4c8a6ee13",
+      "decoded_sha256": "2997337717e00ab7556db4baafb439c97b48e3e32ae928eabba4046f76debcde",
+      "wrapper": 111,
+      "oracle_match_without_footer": true,
+      "audit": {
+        "version": 133,
+        "licensee": 40,
+        "counts": {
+          "Class": {
+            "total": 363,
+            "checked": 363,
+            "failed": 0
+          },
+          "ObjectProperty": {
+            "total": 1603,
+            "checked": 1603,
+            "failed": 0
+          },
+          "StructProperty": {
+            "total": 1319,
+            "checked": 1319,
+            "failed": 0
+          },
+          "StrProperty": {
+            "total": 578,
+            "checked": 578,
+            "failed": 0
+          },
+          "ByteProperty": {
+            "total": 387,
+            "checked": 387,
+            "failed": 0
+          },
+          "FloatProperty": {
+            "total": 1616,
+            "checked": 1616,
+            "failed": 0
+          },
+          "Function": {
+            "total": 1952,
+            "checked": 1952,
+            "failed": 0
+          },
+          "BoolProperty": {
+            "total": 1579,
+            "checked": 1579,
+            "failed": 0
+          },
+          "IntProperty": {
+            "total": 1162,
+            "checked": 1162,
+            "failed": 0
+          },
+          "ArrayProperty": {
+            "total": 305,
+            "checked": 305,
+            "failed": 0
+          },
+          "NameProperty": {
+            "total": 229,
+            "checked": 229,
+            "failed": 0
+          },
+          "Enum": {
+            "total": 166,
+            "checked": 166,
+            "failed": 0
+          },
+          "ClassProperty": {
+            "total": 186,
+            "checked": 186,
+            "failed": 0
+          },
+          "Palette": {
+            "total": 39,
+            "checked": 0,
+            "failed": 0
+          },
+          "Struct": {
+            "total": 119,
+            "checked": 119,
+            "failed": 0
+          },
+          "Texture": {
+            "total": 94,
+            "checked": 0,
+            "failed": 0
+          },
+          "Font": {
+            "total": 4,
+            "checked": 0,
+            "failed": 0
+          },
+          "State": {
+            "total": 66,
+            "checked": 66,
+            "failed": 0
+          },
+          "TextBuffer": {
+            "total": 462,
+            "checked": 0,
+            "failed": 0
+          },
+          "PtrProperty": {
+            "total": 2,
+            "checked": 2,
+            "failed": 0
+          },
+          "Const": {
+            "total": 17,
+            "checked": 17,
+            "failed": 0
+          },
+          "DelegateProperty": {
+            "total": 1,
+            "checked": 1,
+            "failed": 0
+          }
+        },
+        "failures": 0,
+        "issues": [],
+        "issues_truncated": false
+      }
+    },
+    {
+      "profile": "Essence",
+      "file": "NWindow.u",
+      "sha256": "9f15a21cba96bc07a4770f6658c525015b306e879dfed1b70d3398588e9a967f",
+      "decoded_sha256": "5131c4b6af8b7df1f3a0a91ed38f996559950b7c43db8fe139463845f9b37c92",
+      "wrapper": 111,
+      "oracle_match_without_footer": true,
+      "audit": {
+        "version": 133,
+        "licensee": 40,
+        "counts": {
+          "Struct": {
+            "total": 236,
+            "checked": 236,
+            "failed": 0
+          },
+          "Class": {
+            "total": 140,
+            "checked": 140,
+            "failed": 0
+          },
+          "Enum": {
+            "total": 136,
+            "checked": 136,
+            "failed": 0
+          },
+          "Function": {
+            "total": 2699,
+            "checked": 2699,
+            "failed": 0
+          },
+          "StructProperty": {
+            "total": 795,
+            "checked": 795,
+            "failed": 0
+          },
+          "FloatProperty": {
+            "total": 251,
+            "checked": 251,
+            "failed": 0
+          },
+          "IntProperty": {
+            "total": 3039,
+            "checked": 3039,
+            "failed": 0
+          },
+          "StrProperty": {
+            "total": 1271,
+            "checked": 1271,
+            "failed": 0
+          },
+          "ObjectProperty": {
+            "total": 119,
+            "checked": 119,
+            "failed": 0
+          },
+          "ArrayProperty": {
+            "total": 353,
+            "checked": 353,
+            "failed": 0
+          },
+          "BoolProperty": {
+            "total": 819,
+            "checked": 819,
+            "failed": 0
+          },
+          "ByteProperty": {
+            "total": 261,
+            "checked": 261,
+            "failed": 0
+          },
+          "Const": {
+            "total": 1465,
+            "checked": 1465,
+            "failed": 0
+          },
+          "TextBuffer": {
+            "total": 144,
+            "checked": 0,
+            "failed": 0
+          },
+          "NameProperty": {
+            "total": 2,
+            "checked": 2,
+            "failed": 0
+          },
+          "PtrProperty": {
+            "total": 1,
+            "checked": 1,
+            "failed": 0
+          }
+        },
+        "failures": 0,
+        "issues": [],
+        "issues_truncated": false
+      }
+    },
+    {
+      "profile": "Essence",
+      "file": "Interface.u",
+      "sha256": "86bdb02c945e4504efb2d912ae8f76ba9d0053ce5ef1e335ff54c0439d2c28f4",
+      "decoded_sha256": "ceb198fdb8a636f48ce1445a3701ad6abcd60c944664a950a4933545a9fc63be",
+      "wrapper": 111,
+      "oracle_match_without_footer": true,
+      "audit": {
+        "version": 133,
+        "licensee": 40,
+        "counts": {
+          "Class": {
+            "total": 794,
+            "checked": 794,
+            "failed": 0
+          },
+          "StructProperty": {
+            "total": 10856,
+            "checked": 10856,
+            "failed": 0
+          },
+          "ArrayProperty": {
+            "total": 3008,
+            "checked": 3008,
+            "failed": 0
+          },
+          "StrProperty": {
+            "total": 9572,
+            "checked": 9572,
+            "failed": 0
+          },
+          "ObjectProperty": {
+            "total": 10820,
+            "checked": 10820,
+            "failed": 0
+          },
+          "IntProperty": {
+            "total": 21267,
+            "checked": 21267,
+            "failed": 0
+          },
+          "ByteProperty": {
+            "total": 1625,
+            "checked": 1625,
+            "failed": 0
+          },
+          "FloatProperty": {
+            "total": 673,
+            "checked": 673,
+            "failed": 0
+          },
+          "DelegateProperty": {
+            "total": 193,
+            "checked": 193,
+            "failed": 0
+          },
+          "Enum": {
+            "total": 181,
+            "checked": 181,
+            "failed": 0
+          },
+          "Struct": {
+            "total": 1296,
+            "checked": 1296,
+            "failed": 0
+          },
+          "BoolProperty": {
+            "total": 4214,
+            "checked": 4214,
+            "failed": 0
+          },
+          "Function": {
+            "total": 19707,
+            "checked": 19707,
+            "failed": 0
+          },
+          "NameProperty": {
+            "total": 67,
+            "checked": 67,
+            "failed": 0
+          },
+          "State": {
+            "total": 62,
+            "checked": 62,
+            "failed": 0
+          },
+          "Const": {
+            "total": 4247,
+            "checked": 4247,
+            "failed": 0
+          },
+          "TextBuffer": {
+            "total": 794,
+            "checked": 0,
+            "failed": 0
+          }
+        },
+        "failures": 0,
+        "issues": [],
+        "issues_truncated": false
+      }
+    },
+    {
+      "profile": "Essence",
+      "file": "InterfaceClassic.u",
+      "sha256": "3bc1522ab3c2ef380ceb46761aa8bde3657caf07cd980bb13239f9a4e61ec330",
+      "decoded_sha256": "cc80811604ad4a27ea149543ec78a4a2a552e3762c079521e4ad2652bcd98c3b",
+      "wrapper": 111,
+      "oracle_match_without_footer": true,
+      "audit": {
+        "version": 133,
+        "licensee": 40,
+        "counts": {
+          "Class": {
+            "total": 824,
+            "checked": 824,
+            "failed": 0
+          },
+          "StructProperty": {
+            "total": 11258,
+            "checked": 11258,
+            "failed": 0
+          },
+          "ArrayProperty": {
+            "total": 3161,
+            "checked": 3161,
+            "failed": 0
+          },
+          "StrProperty": {
+            "total": 9848,
+            "checked": 9848,
+            "failed": 0
+          },
+          "IntProperty": {
+            "total": 22225,
+            "checked": 22225,
+            "failed": 0
+          },
+          "ObjectProperty": {
+            "total": 11338,
+            "checked": 11338,
+            "failed": 0
+          },
+          "ByteProperty": {
+            "total": 1658,
+            "checked": 1658,
+            "failed": 0
+          },
+          "FloatProperty": {
+            "total": 689,
+            "checked": 689,
+            "failed": 0
+          },
+          "DelegateProperty": {
+            "total": 194,
+            "checked": 194,
+            "failed": 0
+          },
+          "Enum": {
+            "total": 184,
+            "checked": 184,
+            "failed": 0
+          },
+          "Struct": {
+            "total": 1310,
+            "checked": 1310,
+            "failed": 0
+          },
+          "Function": {
+            "total": 20774,
+            "checked": 20774,
+            "failed": 0
+          },
+          "BoolProperty": {
+            "total": 4344,
+            "checked": 4344,
+            "failed": 0
+          },
+          "NameProperty": {
+            "total": 67,
+            "checked": 67,
+            "failed": 0
+          },
+          "State": {
+            "total": 62,
+            "checked": 62,
+            "failed": 0
+          },
+          "Const": {
+            "total": 4345,
+            "checked": 4345,
+            "failed": 0
+          },
+          "TextBuffer": {
+            "total": 824,
+            "checked": 0,
+            "failed": 0
+          }
+        },
+        "failures": 0,
+        "issues": [],
+        "issues_truncated": false
+      }
+    },
+    {
+      "profile": "Korea",
+      "file": "Core.u",
+      "sha256": "b865a2a383c5a2569f8338cab3a8f0d2ed6acb48af3925d60f4ebb5ceb6ff056",
+      "decoded_sha256": "2c19552628957fae8a401e4ece091fd402e3f66f636ab66a65abdf00feac130c",
+      "wrapper": 111,
+      "oracle_match_without_footer": true,
+      "audit": {
+        "version": 133,
+        "licensee": 40,
+        "counts": {
+          "Struct": {
+            "total": 19,
+            "checked": 19,
+            "failed": 0
+          },
+          "Class": {
+            "total": 8,
+            "checked": 8,
+            "failed": 0
+          },
+          "IntProperty": {
+            "total": 118,
+            "checked": 118,
+            "failed": 0
+          },
+          "StrProperty": {
+            "total": 75,
+            "checked": 75,
+            "failed": 0
+          },
+          "FloatProperty": {
+            "total": 131,
+            "checked": 131,
+            "failed": 0
+          },
+          "Function": {
+            "total": 208,
+            "checked": 208,
+            "failed": 0
+          },
+          "StructProperty": {
+            "total": 183,
+            "checked": 183,
+            "failed": 0
+          },
+          "Enum": {
+            "total": 4,
+            "checked": 4,
+            "failed": 0
+          },
+          "BoolProperty": {
+            "total": 71,
+            "checked": 71,
+            "failed": 0
+          },
+          "ByteProperty": {
+            "total": 26,
+            "checked": 26,
+            "failed": 0
+          },
+          "ClassProperty": {
+            "total": 5,
+            "checked": 5,
+            "failed": 0
+          },
+          "ObjectProperty": {
+            "total": 8,
+            "checked": 8,
+            "failed": 0
+          },
+          "NameProperty": {
+            "total": 14,
+            "checked": 14,
+            "failed": 0
+          },
+          "ArrayProperty": {
+            "total": 1,
+            "checked": 1,
+            "failed": 0
+          },
+          "Const": {
+            "total": 8,
+            "checked": 8,
+            "failed": 0
+          },
+          "TextBuffer": {
+            "total": 8,
+            "checked": 0,
+            "failed": 0
+          }
+        },
+        "failures": 0,
+        "issues": [],
+        "issues_truncated": false
+      }
+    },
+    {
+      "profile": "Korea",
+      "file": "Engine.u",
+      "sha256": "d6ac0e1819ab9518f300ec092eac42e873df4e2b507b26ae79b93e888d75b6bc",
+      "decoded_sha256": "973371f0669821154e44edb1dce547ab1c9f423dfcf1475bfc62006efc33d985",
+      "wrapper": 111,
+      "oracle_match_without_footer": true,
+      "audit": {
+        "version": 133,
+        "licensee": 40,
+        "counts": {
+          "Class": {
+            "total": 364,
+            "checked": 364,
+            "failed": 0
+          },
+          "ObjectProperty": {
+            "total": 1601,
+            "checked": 1601,
+            "failed": 0
+          },
+          "StructProperty": {
+            "total": 1321,
+            "checked": 1321,
+            "failed": 0
+          },
+          "StrProperty": {
+            "total": 578,
+            "checked": 578,
+            "failed": 0
+          },
+          "ByteProperty": {
+            "total": 387,
+            "checked": 387,
+            "failed": 0
+          },
+          "FloatProperty": {
+            "total": 1621,
+            "checked": 1621,
+            "failed": 0
+          },
+          "Function": {
+            "total": 1952,
+            "checked": 1952,
+            "failed": 0
+          },
+          "BoolProperty": {
+            "total": 1585,
+            "checked": 1585,
+            "failed": 0
+          },
+          "IntProperty": {
+            "total": 1161,
+            "checked": 1161,
+            "failed": 0
+          },
+          "ArrayProperty": {
+            "total": 305,
+            "checked": 305,
+            "failed": 0
+          },
+          "NameProperty": {
+            "total": 228,
+            "checked": 228,
+            "failed": 0
+          },
+          "Enum": {
+            "total": 166,
+            "checked": 166,
+            "failed": 0
+          },
+          "ClassProperty": {
+            "total": 184,
+            "checked": 184,
+            "failed": 0
+          },
+          "Palette": {
+            "total": 39,
+            "checked": 0,
+            "failed": 0
+          },
+          "Struct": {
+            "total": 120,
+            "checked": 120,
+            "failed": 0
+          },
+          "Texture": {
+            "total": 94,
+            "checked": 0,
+            "failed": 0
+          },
+          "State": {
+            "total": 66,
+            "checked": 66,
+            "failed": 0
+          },
+          "Font": {
+            "total": 4,
+            "checked": 0,
+            "failed": 0
+          },
+          "TextBuffer": {
+            "total": 464,
+            "checked": 0,
+            "failed": 0
+          },
+          "PtrProperty": {
+            "total": 2,
+            "checked": 2,
+            "failed": 0
+          },
+          "Const": {
+            "total": 17,
+            "checked": 17,
+            "failed": 0
+          },
+          "DelegateProperty": {
+            "total": 1,
+            "checked": 1,
+            "failed": 0
+          }
+        },
+        "failures": 0,
+        "issues": [],
+        "issues_truncated": false
+      }
+    },
+    {
+      "profile": "Korea",
+      "file": "NWindow.u",
+      "sha256": "ee3ccf273339421642b5e600557bef328116252377441c1f6f18f99c03b12062",
+      "decoded_sha256": "c659d7a78ace8cb1b818fb80af1957b60f0a28929867a1d2139f9d577710d0b3",
+      "wrapper": 111,
+      "oracle_match_without_footer": true,
+      "audit": {
+        "version": 133,
+        "licensee": 40,
+        "counts": {
+          "Struct": {
+            "total": 240,
+            "checked": 240,
+            "failed": 0
+          },
+          "Class": {
+            "total": 140,
+            "checked": 140,
+            "failed": 0
+          },
+          "Enum": {
+            "total": 135,
+            "checked": 135,
+            "failed": 0
+          },
+          "Function": {
+            "total": 2658,
+            "checked": 2658,
+            "failed": 0
+          },
+          "IntProperty": {
+            "total": 3003,
+            "checked": 3003,
+            "failed": 0
+          },
+          "ObjectProperty": {
+            "total": 120,
+            "checked": 120,
+            "failed": 0
+          },
+          "StructProperty": {
+            "total": 793,
+            "checked": 793,
+            "failed": 0
+          },
+          "FloatProperty": {
+            "total": 249,
+            "checked": 249,
+            "failed": 0
+          },
+          "StrProperty": {
+            "total": 1269,
+            "checked": 1269,
+            "failed": 0
+          },
+          "ArrayProperty": {
+            "total": 352,
+            "checked": 352,
+            "failed": 0
+          },
+          "BoolProperty": {
+            "total": 804,
+            "checked": 804,
+            "failed": 0
+          },
+          "ByteProperty": {
+            "total": 267,
+            "checked": 267,
+            "failed": 0
+          },
+          "Const": {
+            "total": 1443,
+            "checked": 1443,
+            "failed": 0
+          },
+          "TextBuffer": {
+            "total": 144,
+            "checked": 0,
+            "failed": 0
+          },
+          "NameProperty": {
+            "total": 2,
+            "checked": 2,
+            "failed": 0
+          },
+          "PtrProperty": {
+            "total": 1,
+            "checked": 1,
+            "failed": 0
+          }
+        },
+        "failures": 0,
+        "issues": [],
+        "issues_truncated": false
+      }
+    },
+    {
+      "profile": "Korea",
+      "file": "Interface.u",
+      "sha256": "b3c2401b4c3302e7dddd917110b881255ced0ae2e51b2a2c6bbc3eb95f5687e2",
+      "decoded_sha256": "1bbca4669c425f30463d1ea84a8537de66693bd1de6dc1234c3569b43163ca34",
+      "wrapper": 111,
+      "oracle_match_without_footer": true,
+      "audit": {
+        "version": 133,
+        "licensee": 40,
+        "counts": {
+          "Class": {
+            "total": 782,
+            "checked": 782,
+            "failed": 0
+          },
+          "StructProperty": {
+            "total": 10564,
+            "checked": 10564,
+            "failed": 0
+          },
+          "ArrayProperty": {
+            "total": 2999,
+            "checked": 2999,
+            "failed": 0
+          },
+          "StrProperty": {
+            "total": 9771,
+            "checked": 9771,
+            "failed": 0
+          },
+          "ObjectProperty": {
+            "total": 10969,
+            "checked": 10969,
+            "failed": 0
+          },
+          "IntProperty": {
+            "total": 21702,
+            "checked": 21702,
+            "failed": 0
+          },
+          "ByteProperty": {
+            "total": 1533,
+            "checked": 1533,
+            "failed": 0
+          },
+          "FloatProperty": {
+            "total": 787,
+            "checked": 787,
+            "failed": 0
+          },
+          "DelegateProperty": {
+            "total": 223,
+            "checked": 223,
+            "failed": 0
+          },
+          "Enum": {
+            "total": 170,
+            "checked": 170,
+            "failed": 0
+          },
+          "Struct": {
+            "total": 1208,
+            "checked": 1208,
+            "failed": 0
+          },
+          "Function": {
+            "total": 19902,
+            "checked": 19902,
+            "failed": 0
+          },
+          "BoolProperty": {
+            "total": 4390,
+            "checked": 4390,
+            "failed": 0
+          },
+          "NameProperty": {
+            "total": 68,
+            "checked": 68,
+            "failed": 0
+          },
+          "State": {
+            "total": 62,
+            "checked": 62,
+            "failed": 0
+          },
+          "Const": {
+            "total": 4263,
+            "checked": 4263,
+            "failed": 0
+          },
+          "TextBuffer": {
+            "total": 782,
+            "checked": 0,
+            "failed": 0
+          }
+        },
+        "failures": 0,
+        "issues": [],
+        "issues_truncated": false
+      }
+    },
+    {
+      "profile": "Korea",
+      "file": "InterfaceClassic.u",
+      "sha256": "8b32ec85bce193972fc01b53d4e1cdff5a4c33ebf81fe535e86bde78651f4b30",
+      "decoded_sha256": "233a3de1f7c3f7eb46a2f44e7ba975fed7338a6e539b285f83e5b4fae64e7192",
+      "wrapper": 111,
+      "oracle_match_without_footer": true,
+      "audit": {
+        "version": 133,
+        "licensee": 40,
+        "counts": {
+          "Class": {
+            "total": 817,
+            "checked": 817,
+            "failed": 0
+          },
+          "StructProperty": {
+            "total": 11043,
+            "checked": 11043,
+            "failed": 0
+          },
+          "ArrayProperty": {
+            "total": 3190,
+            "checked": 3190,
+            "failed": 0
+          },
+          "StrProperty": {
+            "total": 10113,
+            "checked": 10113,
+            "failed": 0
+          },
+          "IntProperty": {
+            "total": 22910,
+            "checked": 22910,
+            "failed": 0
+          },
+          "ObjectProperty": {
+            "total": 11594,
+            "checked": 11594,
+            "failed": 0
+          },
+          "ByteProperty": {
+            "total": 1580,
+            "checked": 1580,
+            "failed": 0
+          },
+          "FloatProperty": {
+            "total": 803,
+            "checked": 803,
+            "failed": 0
+          },
+          "DelegateProperty": {
+            "total": 224,
+            "checked": 224,
+            "failed": 0
+          },
+          "Enum": {
+            "total": 173,
+            "checked": 173,
+            "failed": 0
+          },
+          "Struct": {
+            "total": 1222,
+            "checked": 1222,
+            "failed": 0
+          },
+          "Function": {
+            "total": 21153,
+            "checked": 21153,
+            "failed": 0
+          },
+          "BoolProperty": {
+            "total": 4561,
+            "checked": 4561,
+            "failed": 0
+          },
+          "NameProperty": {
+            "total": 68,
+            "checked": 68,
+            "failed": 0
+          },
+          "State": {
+            "total": 62,
+            "checked": 62,
+            "failed": 0
+          },
+          "Const": {
+            "total": 4380,
+            "checked": 4380,
+            "failed": 0
+          },
+          "TextBuffer": {
+            "total": 817,
+            "checked": 0,
+            "failed": 0
+          }
+        },
+        "failures": 0,
+        "issues": [],
+        "issues_truncated": false
+      }
+    },
+    {
+      "profile": "Japan",
+      "file": "Core.u",
+      "sha256": "8b7b125c91a32a37fd0242b8d3c2a683e486d3aacb00e5fcc30b4f6ca9d8a677",
+      "decoded_sha256": "f25edcd00086bf9cd6afbf2d11935cbb2939be1c48237427022e817e4ecc06fe",
+      "wrapper": 111,
+      "oracle_match_without_footer": true,
+      "audit": {
+        "version": 133,
+        "licensee": 40,
+        "counts": {
+          "Struct": {
+            "total": 19,
+            "checked": 19,
+            "failed": 0
+          },
+          "Class": {
+            "total": 8,
+            "checked": 8,
+            "failed": 0
+          },
+          "IntProperty": {
+            "total": 118,
+            "checked": 118,
+            "failed": 0
+          },
+          "StrProperty": {
+            "total": 75,
+            "checked": 75,
+            "failed": 0
+          },
+          "FloatProperty": {
+            "total": 131,
+            "checked": 131,
+            "failed": 0
+          },
+          "Function": {
+            "total": 208,
+            "checked": 208,
+            "failed": 0
+          },
+          "StructProperty": {
+            "total": 183,
+            "checked": 183,
+            "failed": 0
+          },
+          "Enum": {
+            "total": 4,
+            "checked": 4,
+            "failed": 0
+          },
+          "BoolProperty": {
+            "total": 71,
+            "checked": 71,
+            "failed": 0
+          },
+          "ByteProperty": {
+            "total": 26,
+            "checked": 26,
+            "failed": 0
+          },
+          "ClassProperty": {
+            "total": 5,
+            "checked": 5,
+            "failed": 0
+          },
+          "ObjectProperty": {
+            "total": 8,
+            "checked": 8,
+            "failed": 0
+          },
+          "NameProperty": {
+            "total": 14,
+            "checked": 14,
+            "failed": 0
+          },
+          "ArrayProperty": {
+            "total": 1,
+            "checked": 1,
+            "failed": 0
+          },
+          "Const": {
+            "total": 8,
+            "checked": 8,
+            "failed": 0
+          },
+          "TextBuffer": {
+            "total": 8,
+            "checked": 0,
+            "failed": 0
+          }
+        },
+        "failures": 0,
+        "issues": [],
+        "issues_truncated": false
+      }
+    },
+    {
+      "profile": "Japan",
+      "file": "Engine.u",
+      "sha256": "1ed0f912b8ba65ef248ada793ac46b4297160aa9ea21874c6ea284d4b833273b",
+      "decoded_sha256": "387fe5f7de5a508f34b5a80d4b56cd14d5baafb6d3795f723edab21f69b51929",
+      "wrapper": 111,
+      "oracle_match_without_footer": true,
+      "audit": {
+        "version": 133,
+        "licensee": 40,
+        "counts": {
+          "Class": {
+            "total": 363,
+            "checked": 363,
+            "failed": 0
+          },
+          "ObjectProperty": {
+            "total": 1603,
+            "checked": 1603,
+            "failed": 0
+          },
+          "StructProperty": {
+            "total": 1319,
+            "checked": 1319,
+            "failed": 0
+          },
+          "StrProperty": {
+            "total": 578,
+            "checked": 578,
+            "failed": 0
+          },
+          "ByteProperty": {
+            "total": 387,
+            "checked": 387,
+            "failed": 0
+          },
+          "FloatProperty": {
+            "total": 1616,
+            "checked": 1616,
+            "failed": 0
+          },
+          "Function": {
+            "total": 1952,
+            "checked": 1952,
+            "failed": 0
+          },
+          "BoolProperty": {
+            "total": 1580,
+            "checked": 1580,
+            "failed": 0
+          },
+          "IntProperty": {
+            "total": 1162,
+            "checked": 1162,
+            "failed": 0
+          },
+          "ArrayProperty": {
+            "total": 305,
+            "checked": 305,
+            "failed": 0
+          },
+          "NameProperty": {
+            "total": 229,
+            "checked": 229,
+            "failed": 0
+          },
+          "Enum": {
+            "total": 166,
+            "checked": 166,
+            "failed": 0
+          },
+          "ClassProperty": {
+            "total": 186,
+            "checked": 186,
+            "failed": 0
+          },
+          "Palette": {
+            "total": 39,
+            "checked": 0,
+            "failed": 0
+          },
+          "Struct": {
+            "total": 119,
+            "checked": 119,
+            "failed": 0
+          },
+          "Texture": {
+            "total": 94,
+            "checked": 0,
+            "failed": 0
+          },
+          "State": {
+            "total": 66,
+            "checked": 66,
+            "failed": 0
+          },
+          "Font": {
+            "total": 4,
+            "checked": 0,
+            "failed": 0
+          },
+          "TextBuffer": {
+            "total": 462,
+            "checked": 0,
+            "failed": 0
+          },
+          "PtrProperty": {
+            "total": 2,
+            "checked": 2,
+            "failed": 0
+          },
+          "Const": {
+            "total": 17,
+            "checked": 17,
+            "failed": 0
+          },
+          "DelegateProperty": {
+            "total": 1,
+            "checked": 1,
+            "failed": 0
+          }
+        },
+        "failures": 0,
+        "issues": [],
+        "issues_truncated": false
+      }
+    },
+    {
+      "profile": "Japan",
+      "file": "NWindow.u",
+      "sha256": "f69a693eec01da375d2408df11cef3de9ba5e61a111e632b34b478bd054c8acf",
+      "decoded_sha256": "22d6536c61737e9dda8804d2994a067ab7e5c261a994555f746b44d904babe63",
+      "wrapper": 111,
+      "oracle_match_without_footer": true,
+      "audit": {
+        "version": 133,
+        "licensee": 40,
+        "counts": {
+          "Struct": {
+            "total": 236,
+            "checked": 236,
+            "failed": 0
+          },
+          "Class": {
+            "total": 140,
+            "checked": 140,
+            "failed": 0
+          },
+          "Enum": {
+            "total": 136,
+            "checked": 136,
+            "failed": 0
+          },
+          "Function": {
+            "total": 2701,
+            "checked": 2701,
+            "failed": 0
+          },
+          "StructProperty": {
+            "total": 797,
+            "checked": 797,
+            "failed": 0
+          },
+          "FloatProperty": {
+            "total": 251,
+            "checked": 251,
+            "failed": 0
+          },
+          "IntProperty": {
+            "total": 3040,
+            "checked": 3040,
+            "failed": 0
+          },
+          "StrProperty": {
+            "total": 1271,
+            "checked": 1271,
+            "failed": 0
+          },
+          "ObjectProperty": {
+            "total": 119,
+            "checked": 119,
+            "failed": 0
+          },
+          "ArrayProperty": {
+            "total": 353,
+            "checked": 353,
+            "failed": 0
+          },
+          "BoolProperty": {
+            "total": 820,
+            "checked": 820,
+            "failed": 0
+          },
+          "ByteProperty": {
+            "total": 261,
+            "checked": 261,
+            "failed": 0
+          },
+          "Const": {
+            "total": 1465,
+            "checked": 1465,
+            "failed": 0
+          },
+          "TextBuffer": {
+            "total": 144,
+            "checked": 0,
+            "failed": 0
+          },
+          "NameProperty": {
+            "total": 2,
+            "checked": 2,
+            "failed": 0
+          },
+          "PtrProperty": {
+            "total": 1,
+            "checked": 1,
+            "failed": 0
+          }
+        },
+        "failures": 0,
+        "issues": [],
+        "issues_truncated": false
+      }
+    },
+    {
+      "profile": "Japan",
+      "file": "Interface.u",
+      "sha256": "5da4ce5bdf3a9f7d23ba2a4d62d7bb1ea56896d90abcb761dca5f4fa7b9b9f95",
+      "decoded_sha256": "3810d8bd955d29c9c3453b30ac03b1843f6d74ffb16c10e3ee3de95b53af22f0",
+      "wrapper": 111,
+      "oracle_match_without_footer": true,
+      "audit": {
+        "version": 133,
+        "licensee": 40,
+        "counts": {
+          "Class": {
+            "total": 794,
+            "checked": 794,
+            "failed": 0
+          },
+          "StructProperty": {
+            "total": 10859,
+            "checked": 10859,
+            "failed": 0
+          },
+          "ArrayProperty": {
+            "total": 3009,
+            "checked": 3009,
+            "failed": 0
+          },
+          "StrProperty": {
+            "total": 9575,
+            "checked": 9575,
+            "failed": 0
+          },
+          "ObjectProperty": {
+            "total": 10820,
+            "checked": 10820,
+            "failed": 0
+          },
+          "IntProperty": {
+            "total": 21271,
+            "checked": 21271,
+            "failed": 0
+          },
+          "ByteProperty": {
+            "total": 1625,
+            "checked": 1625,
+            "failed": 0
+          },
+          "FloatProperty": {
+            "total": 673,
+            "checked": 673,
+            "failed": 0
+          },
+          "DelegateProperty": {
+            "total": 193,
+            "checked": 193,
+            "failed": 0
+          },
+          "Enum": {
+            "total": 181,
+            "checked": 181,
+            "failed": 0
+          },
+          "Struct": {
+            "total": 1296,
+            "checked": 1296,
+            "failed": 0
+          },
+          "BoolProperty": {
+            "total": 4215,
+            "checked": 4215,
+            "failed": 0
+          },
+          "Function": {
+            "total": 19710,
+            "checked": 19710,
+            "failed": 0
+          },
+          "NameProperty": {
+            "total": 67,
+            "checked": 67,
+            "failed": 0
+          },
+          "State": {
+            "total": 62,
+            "checked": 62,
+            "failed": 0
+          },
+          "Const": {
+            "total": 4247,
+            "checked": 4247,
+            "failed": 0
+          },
+          "TextBuffer": {
+            "total": 794,
+            "checked": 0,
+            "failed": 0
+          }
+        },
+        "failures": 0,
+        "issues": [],
+        "issues_truncated": false
+      }
+    },
+    {
+      "profile": "Japan",
+      "file": "InterfaceClassic.u",
+      "sha256": "71655ff9c820fd47c07cd81989b84956cd41f1f6c44ce8d6f08ef49e1618d66e",
+      "decoded_sha256": "28070f9bcfd128f938d232d37a0221c1ae07e2fe8e29628bbb76e9faff71d180",
+      "wrapper": 111,
+      "oracle_match_without_footer": true,
+      "audit": {
+        "version": 133,
+        "licensee": 40,
+        "counts": {
+          "Class": {
+            "total": 824,
+            "checked": 824,
+            "failed": 0
+          },
+          "StructProperty": {
+            "total": 11260,
+            "checked": 11260,
+            "failed": 0
+          },
+          "ArrayProperty": {
+            "total": 3161,
+            "checked": 3161,
+            "failed": 0
+          },
+          "StrProperty": {
+            "total": 9851,
+            "checked": 9851,
+            "failed": 0
+          },
+          "IntProperty": {
+            "total": 22228,
+            "checked": 22228,
+            "failed": 0
+          },
+          "ObjectProperty": {
+            "total": 11338,
+            "checked": 11338,
+            "failed": 0
+          },
+          "ByteProperty": {
+            "total": 1658,
+            "checked": 1658,
+            "failed": 0
+          },
+          "FloatProperty": {
+            "total": 689,
+            "checked": 689,
+            "failed": 0
+          },
+          "DelegateProperty": {
+            "total": 194,
+            "checked": 194,
+            "failed": 0
+          },
+          "Enum": {
+            "total": 184,
+            "checked": 184,
+            "failed": 0
+          },
+          "Struct": {
+            "total": 1310,
+            "checked": 1310,
+            "failed": 0
+          },
+          "Function": {
+            "total": 20776,
+            "checked": 20776,
+            "failed": 0
+          },
+          "BoolProperty": {
+            "total": 4345,
+            "checked": 4345,
+            "failed": 0
+          },
+          "NameProperty": {
+            "total": 67,
+            "checked": 67,
+            "failed": 0
+          },
+          "State": {
+            "total": 62,
+            "checked": 62,
+            "failed": 0
+          },
+          "Const": {
+            "total": 4345,
+            "checked": 4345,
+            "failed": 0
+          },
+          "TextBuffer": {
+            "total": 824,
+            "checked": 0,
+            "failed": 0
+          }
+        },
+        "failures": 0,
+        "issues": [],
+        "issues_truncated": false
+      }
+    }
+  ]
+}

@@ -91,6 +91,21 @@ def test_invalid_json_keeps_existing_document():
     assert doc.serialize() == original and not doc.summary()['dirty']
 
 
+@pytest.mark.parametrize('json_input,limit', [(False, 256 * 1024 * 1024), (True, 512 * 1024 * 1024)])
+def test_file_size_limits_reject_before_read_and_preserve_document(tmp_path, json_input, limit):
+    doc = hf()
+    original = doc.serialize()
+    oversized = tmp_path / 'oversized'
+    with oversized.open('wb') as stream:
+        stream.truncate(limit + 1)
+    with pytest.raises(RuntimeError, match='File too large'):
+        if json_input:
+            doc.open_json(str(oversized))
+        else:
+            doc.load(str(oversized), 'ct26.XDAT')
+    assert doc.serialize() == original and not doc.summary()['dirty']
+
+
 def test_json_nan_tail_and_inactive_fields():
     doc = hf()
     doc.load_bytes(doc.serialize() + b'extra-opaque-tail', 'ct26.XDAT')

@@ -41,6 +41,7 @@ struct Function {
 struct Property {
     int id=0, next=0, dim=0, ref=0, meta=0;
     uint32_t flags=0; std::string kind, category;
+    size_t tail=0;
 };
 struct StructInfo {
     int fields[4]{}, size=0, labelOffset=0;
@@ -74,6 +75,7 @@ public:
     std::string constant(int id) const;
     Json scriptText(int id) const;
     Json summary() const;
+    Json audit() const;
     const std::vector<int>& members(int id) const;
 };
 struct Decoder {

@@ -59,7 +59,9 @@ def test_file_and_options_menus_and_shortcuts(ui, monkeypatch):
     app, window, wait, _ = ui
     file_actions = [a for a in window.file_menu.actions() if not a.isSeparator()]
     assert file_actions == [window.open_action, window.save_action, window.save_as_action,
-                            window.open_json_action, window.export_json_action]
+                            window.open_json_action, window.export_json_action,
+                            window.schema_research_action, window.schema_import_action,
+                            window.schema_export_action]
     assert window.file_button.text() == 'Файл'
     assert all(action not in window.bar.actions() for action in file_actions)
     assert window.sync_scroll in window.options_menu.actions()

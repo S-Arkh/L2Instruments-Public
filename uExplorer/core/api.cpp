@@ -10,6 +10,8 @@ Json request(const Json& in){
     auto op=in.value("operation",std::string("inspect"));
     if(op=="reset"){context.reset();key.clear();return {{"ok",true}};}
     auto path=std::filesystem::u8path(in.at("path").get<std::string>());
+    // Structural auditing does not need dependencies or source-code export.
+    if(op=="audit"){Package package(path);return {{"ok",true},{"result",package.audit()}};}
     std::vector<std::filesystem::path> dirs;for(auto& dir:in.value("dependencies",Json::array()))dirs.push_back(std::filesystem::u8path(dir.get<std::string>()));
     auto currentKey=path.u8string()+in.value("dependencies",Json::array()).dump();
     if(in.value("reload",false)||!context||key!=currentKey){auto candidate=std::make_unique<Context>(path,dirs);context=std::move(candidate);key=currentKey;}

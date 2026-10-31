@@ -69,6 +69,7 @@ PYBIND11_MODULE(_interface_core,m){
         .def("create",&Document::create,py::call_guard<py::gil_scoped_release>())
         .def("load",&Document::load,py::call_guard<py::gil_scoped_release>())
         .def("probe",[](Document& d,py::bytes b,const std::string& s){std::string raw=b;Bytes bytes(raw.begin(),raw.end());return result([&]{return d.probe(bytes,s);});})
+        .def("diagnose",[](Document& d,py::bytes b,const std::string& s,std::size_t limit){std::string raw=b;Bytes bytes(raw.begin(),raw.end());return result([&]{return d.diagnose(bytes,s,limit);});},py::arg("data"),py::arg("schema"),py::arg("limit")=2000)
         .def("load_bytes",[](Document& d,py::bytes b,const std::string& s){std::string raw=b;Bytes bytes(raw.begin(),raw.end());py::gil_scoped_release release;d.load_bytes(bytes,s);})
         .def("serialize",[](Document& d){Bytes b;{py::gil_scoped_release release;b=d.serialize();}return py::bytes(reinterpret_cast<const char*>(b.data()),b.size());})
         .def("save",&Document::save,py::call_guard<py::gil_scoped_release>())

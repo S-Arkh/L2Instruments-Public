@@ -23,9 +23,13 @@
 namespace interface_editor {
 namespace {
 constexpr std::size_t MaxFile = 256 * 1024 * 1024, MaxNodes = 1000000;
+constexpr std::size_t MaxJsonFile = 512 * 1024 * 1024;
 std::filesystem::path path(const std::string& s) { return std::filesystem::u8path(s); }
 std::string lower(std::string s) { for (char& c:s) if (c>='A'&&c<='Z') c+=32; return s; }
 void require(bool value, const std::string& text) { if (!value) throw std::runtime_error(text); }
+std::uint8_t u8(const Bytes& b, std::size_t& p) {
+    require(p<b.size(),"Unexpected EOF at offset " + std::to_string(p));return b[p++];
+}
 std::uint32_t u32(const Bytes& b, std::size_t& p) {
     require(p<=b.size() && b.size()-p>=4,"Unexpected EOF at offset " + std::to_string(p));
     std::uint32_t v=0; for(unsigned i=0;i<4;++i) v|=std::uint32_t(b[p++])<<(i*8); return v;
@@ -72,9 +76,9 @@ void putString(Bytes& b,const std::string& text) {
         putCompact(b,-static_cast<std::int32_t>(t.size()+1));for(auto c:t){b.push_back(c&255);b.push_back(c>>8);}b.push_back(0);b.push_back(0);
     }
 }
-Bytes readFile(const std::string& filename) {
+Bytes readFile(const std::string& filename,std::size_t limit=MaxFile) {
     std::ifstream f(path(filename),std::ios::binary|std::ios::ate);require(bool(f),"Cannot open: "+filename);
-    auto size=f.tellg(); require(size>=0 && static_cast<std::uint64_t>(size)<=MaxFile,"File too large");
+    auto size=f.tellg(); require(size>=0 && static_cast<std::uint64_t>(size)<=limit,"File too large");
     Bytes data(static_cast<std::size_t>(size));f.seekg(0);f.read(reinterpret_cast<char*>(data.data()),size);require(bool(f),"Cannot read: "+filename);return data;
 }
 void writeFile(const std::filesystem::path& filename,const Bytes& data) {
@@ -122,6 +126,7 @@ Json readScalar(const std::string& kind,const Bytes& raw) {
     std::size_t pos=0;Json value;
     if(kind=="string")value=readString(raw,pos);
     else if(kind=="compact")value=compact(raw,pos);
+    else if(kind=="byte")value=u8(raw,pos);
     else {auto bits=u32(raw,pos);if(kind=="float"){float v;std::memcpy(&v,&bits,4);value=double(v);}else if(kind=="color"||kind=="rgba")value=bits;else value=static_cast<std::int32_t>(bits);}
     require(pos==raw.size(),"Extra bytes in raw scalar");return value;
 }
@@ -157,9 +162,22 @@ Json checkedScalar(const Json& value,const std::string& kind) {
     require(value.is_number_integer(),"Expected integer value");
     if(value.is_number_unsigned())require(value.get<std::uint64_t>()<=UINT32_MAX,"Integer overflow");
     auto v=value.get<std::int64_t>();
-    auto minimum=(kind=="color"||kind=="rgba")?std::int64_t(0):(kind=="compact"?-std::int64_t(INT32_MAX):std::int64_t(INT32_MIN));
-    auto maximum=(kind=="color"||kind=="rgba")?std::int64_t(UINT32_MAX):std::int64_t(INT32_MAX);
+    auto minimum=(kind=="color"||kind=="rgba"||kind=="byte")?std::int64_t(0):(kind=="compact"?-std::int64_t(INT32_MAX):std::int64_t(INT32_MIN));
+    auto maximum=kind=="byte"?std::int64_t(UINT8_MAX):(kind=="color"||kind=="rgba")?std::int64_t(UINT32_MAX):std::int64_t(INT32_MAX);
     require(v>=minimum&&v<=maximum,"Integer out of range");return value;
+}
+Json legacyTailWords(const Bytes& raw) {
+    // An optional envelope, not required XDAT payload. Other tails remain opaque.
+    if(raw.size()!=20)return nullptr;
+    std::size_t p=0;Json words=Json::array();
+    while(p<raw.size())words.push_back(u32(raw,p));
+    if(words[0]!=0||words[4]!=0)return nullptr;
+    return words;
+}
+std::uint32_t payloadCrc32(const Bytes& bytes,std::size_t length) {
+    std::uint32_t crc=0xffffffffu;
+    for(std::size_t i=0;i<length;++i){crc^=bytes[i];for(unsigned bit=0;bit<8;++bit)crc=(crc>>1)^(0xedb88320u & (0u-(crc&1u)));}
+    return crc^0xffffffffu;
 }
 }
 
@@ -217,15 +235,18 @@ void Document::parseNode(const std::shared_ptr<Node>& n,const Bytes& data,std::s
 }
 void Document::parseOps(const Json& ops,const std::shared_ptr<Node>& n,const Bytes& b,std::size_t& p,unsigned depth) {
     for(const auto& op:ops){
-        if(op.at("op")=="if"){parseOps(op.at(condition(*n,op.at("condition"))?"yes":"no"),n,b,p,depth);continue;}
-        if(op.at("op")=="tail"){getField(*n,"_tail").raw=Bytes(b.begin()+p,b.end());p=b.size();continue;}
+        if(op.at("op")=="if"){auto yes=condition(*n,op.at("condition"));if(tracing_)trace({{"path",tracePath_},{"type",n->type},{"offset",p},{"size",0},{"kind","condition"},{"condition",op.at("condition")},{"value",yes}});parseOps(op.at(yes?"yes":"no"),n,b,p,depth);continue;}
+        if(op.at("op")=="tail"){if(tracing_)trace({{"path",tracePath_+"._tail"},{"type",n->type},{"field","_tail"},{"kind","opaque"},{"offset",p},{"size",b.size()-p}});getField(*n,"_tail").raw=Bytes(b.begin()+p,b.end());p=b.size();continue;}
         const std::string name=op.at("name"),kind=op.at("kind");auto& f=getField(*n,name);auto start=p;
+        const auto parentPath=tracePath_;
+        if(tracing_)tracePath_ += "."+name;
         try {
             if(kind=="list") {
                 auto list=f.child;auto count=list->compact?compact(b,p):static_cast<std::int32_t>(u32(b,p));
                 require(count>=0 && static_cast<std::size_t>(count)<=MaxNodes && static_cast<std::size_t>(count)<=b.size()-p,"Invalid list count");
                 list->prefix=Bytes(b.begin()+start,b.begin()+p);list->oldCount=count;
                 for(int i=0;i<count;++i){
+                    if(tracing_)tracePath_=parentPath+"."+name+"["+std::to_string(i)+"]";
                     auto item=std::make_shared<Node>();item->parent=list->id;auto tagStart=p;
                     auto type=list->poly?n->type.substr(0,n->type.find('.'))+'.'+readString(b,p):list->itemType;
                     require(schemas_["records"].contains(type),"Unknown control type "+type);
@@ -237,10 +258,12 @@ void Document::parseOps(const Json& ops,const std::shared_ptr<Node>& n,const Byt
             } else {
                 if(kind=="string")f.value=readString(b,p);
                 else if(kind=="compact")f.value=compact(b,p);
+                else if(kind=="byte")f.value=u8(b,p);
                 else {auto raw=u32(b,p);if(kind=="float"){float v;std::memcpy(&v,&raw,4);f.value=static_cast<double>(v);}else if(kind=="color"||kind=="rgba")f.value=raw;else f.value=static_cast<std::int32_t>(raw);}
                 f.raw=Bytes(b.begin()+start,b.begin()+p);
             }
-        } catch(const std::exception& e){throw std::runtime_error(n->type+'.'+name+" @"+std::to_string(start)+": "+e.what());}
+            if(tracing_){Json event={{"path",parentPath+"."+name},{"type",n->type},{"field",name},{"kind",kind},{"offset",start},{"size",p-start}};if(!f.child)event["value"]=jsonScalar(f.value);trace(std::move(event));tracePath_=parentPath;}
+        } catch(const std::exception& e){if(tracing_ && traceError_.is_null())traceError_={{"path",tracePath_},{"type",n->type},{"field",name},{"kind",kind},{"offset",start},{"cursor",p},{"message",e.what()}};tracePath_=parentPath;throw std::runtime_error(n->type+'.'+name+" @"+std::to_string(start)+": "+e.what());}
     }
 }
 void Document::writeNode(const std::shared_ptr<Node>& n,Bytes& out,unsigned depth) const {
@@ -262,6 +285,7 @@ void Document::writeOps(const Json& ops,const std::shared_ptr<Node>& n,Bytes& ou
         } else if(!f.raw.empty())out.insert(out.end(),f.raw.begin(),f.raw.end());
         else if(kind=="string")putString(out,f.value.get<std::string>());
         else if(kind=="compact")putCompact(out,f.value.get<std::int32_t>());
+        else if(kind=="byte")out.push_back(checkedScalar(f.value,kind).get<std::uint8_t>());
         else if(kind=="float"){float value=f.value.get<float>();std::uint32_t raw;std::memcpy(&raw,&value,4);put32(out,raw);}
         else put32(out,static_cast<std::uint32_t>(f.value.get<std::int64_t>()));
         require(out.size()<=MaxFile,"Output too large");
@@ -287,6 +311,57 @@ Json Document::probe(const Bytes& bytes,const std::string& schema) const {
                 if(field.second.spec && field.second.spec->value("op","")=="tail")tail+=field.second.raw.size();
         result["compatible"]=true;result["tail_bytes"]=tail;
     } catch(const std::exception& e) {result["error"]=e.what();}
+    return result;
+}
+void Document::trace(Json event){
+    ++traceCount_;
+    if(event.contains("value")){
+        const auto kind=event.value("kind","");bool suspicious=false;
+        if(kind=="bool"){
+            auto v=event["value"].get<std::int64_t>();suspicious=v!=0 && v!=1 && v!=-1;
+        } else if(kind=="string"){
+            auto& text=event["value"].get_ref<std::string&>();
+            suspicious=std::any_of(text.begin(),text.end(),[](unsigned char c){return c<32 && c!='\n' && c!='\r' && c!='\t';});
+            if(text.size()>512){std::size_t end=512;while(end && (static_cast<unsigned char>(text[end])&0xc0)==0x80)--end;text.resize(end);event["value_truncated"]=true;}
+        } else if(kind=="float"){
+            suspicious=!event["value"].is_number() || std::abs(event["value"].get<double>())>1e12;
+        }
+        if(suspicious && traceAnomaly_.is_null())traceAnomaly_=event;
+    }
+    if(trace_.size()==traceLimit_)trace_.pop_front();
+    trace_.push_back(std::move(event));
+}
+Json Document::diagnose(const Bytes& bytes,const std::string& schema,std::size_t limit) const {
+    std::lock_guard<std::recursive_mutex> lock(mutex_);
+    require(limit>0 && limit<=100000,"Trace limit must be 1..100000");
+    require(bytes.size()<=MaxFile,"File too large");
+    Document candidate(schemas_.dump());candidate.tracing_=true;candidate.traceLimit_=limit;candidate.tracePath_="$";
+    Json result={{"schema",schema},{"compatible",false},{"tail_bytes",0}};
+    std::size_t p=0;
+    try {
+        candidate.root_=std::make_shared<Node>();candidate.initialize(candidate.root_,schema,0);
+        candidate.parseNode(candidate.root_,bytes,p,0);
+        require(p==bytes.size(),"Unparsed bytes at offset "+std::to_string(p));
+        require(candidate.serialize()==bytes,"Binary roundtrip mismatch");
+        candidate.rebuildIndex();
+        for(const auto& entry:candidate.nodes_)for(const auto& field:entry.second->fields)
+            if(field.second.spec && field.second.spec->value("op","")=="tail"){
+                const auto& f=field.second;result["tail_bytes"]=result["tail_bytes"].get<std::size_t>()+f.raw.size();
+                if(entry.second==candidate.root_ && f.spec->value("layout","")=="legacy-crc32"){
+                    auto words=legacyTailWords(f.raw);
+                    if(!words.is_null()){
+                        auto offset=bytes.size()-f.raw.size(),crc=std::size_t(payloadCrc32(bytes,offset));
+                        result["legacy_tail"]={{"words_le",words},{"offset",offset},{"payload_crc32",crc},
+                            {"checksum_matches",words[3]==crc},{"preservation","verbatim"}};
+                    }
+                }
+            }
+        result["compatible"]=true;
+    } catch(const std::exception& e){result["error"]=e.what();}
+    result["failure"]=candidate.traceError_;result["cursor"]=p;
+    result["first_anomaly"]=candidate.traceAnomaly_;
+    result["trace"]=Json::array();for(auto& event:candidate.trace_)result["trace"].push_back(std::move(event));
+    result["trace_count"]=candidate.traceCount_;result["trace_truncated"]=candidate.traceCount_>limit;
     return result;
 }
 void Document::load(const std::string& file,const std::string& schema){auto data=readFile(file);load_bytes(data,schema);std::lock_guard<std::recursive_mutex> lock(mutex_);filename_=file;}
@@ -340,7 +415,18 @@ Json Document::properties(std::uint64_t id,bool includeInactive)const{
     std::lock_guard<std::recursive_mutex> lock(mutex_);auto n=get(id);Json result=Json::array();if(n->list)return result;
     std::vector<std::string> active;activeOps(allOps(n->type),*n,active);
     for(const auto& pair:n->fields){const auto& name=pair.first;const auto& f=pair.second;const auto& s=*f.spec;
-        if(s.at("op")=="tail"||s.at("kind")=="list"||s.at("kind")=="object")continue;
+        if(s.at("op")=="tail"){
+            if(s.value("layout","")=="legacy-crc32"){
+                auto words=legacyTailWords(f.raw);
+                if(!words.is_null()){
+                    const char* names[]={"_tail_word0","_tail_word1","_tail_word2","_tail_crc32","_tail_word4"};
+                    for(std::size_t i=0;i<5;++i)result.push_back(Json{{"name",names[i]},{"kind","int"},{"type","uint32"},
+                        {"value",words[i]},{"enum",Json::array()},{"readonly",true},{"active",true}});
+                }
+            }
+            continue;
+        }
+        if(s.at("kind")=="list"||s.at("kind")=="object")continue;
         bool enabled=std::find(active.begin(),active.end(),name)!=active.end();
         if(!enabled&&!includeInactive)continue;
         result.push_back(Json{{"name",name},{"kind",s.at("kind")},{"type",s.value("type",s.at("kind"))},{"value",f.value},{"enum",s.value("enum",Json::array())},{"readonly",name.rfind("_reserved_",0)==0||!enabled},{"active",enabled}});
@@ -391,7 +477,24 @@ Json Document::preview_snapshot(std::uint64_t id)const {
         }
         return Json{{"id",n->id},{"type",n->type.substr(n->type.find('.')+1)},{"properties",std::move(props)},{"children",std::move(children)}};
     };
-    return Json{{"schema",schema_},{"revision",revision_},{"selected",selected->id},{"context",context->id},{"root",snapshot(root,0)}};
+    Json result{{"schema",schema_},{"revision",revision_},{"selected",selected->id},{"context",context->id},{"root",snapshot(root,0)}};
+    // Copy preview metadata under the same lock/revision as the UI subtree.
+    // No raw bytes or unrelated document sections enter the worker snapshot.
+    if(schema_=="essence_native.XDAT"||schema_=="korea_native.XDAT"){
+        std::size_t metadataCount=0;
+        std::function<Json(const std::shared_ptr<Node>&,unsigned)> metadata=[&](const std::shared_ptr<Node>& n,unsigned depth){
+            require(++metadataCount<=10000&&depth<16,"Preview metadata is too large");
+            if(n->list){Json out=Json::array();for(const auto& c:n->items)out.push_back(metadata(c,depth+1));return out;}
+            Json out=Json::object();std::vector<std::string> active;activeOps(allOps(n->type),*n,active);
+            for(const auto& name:active){const auto& f=getField(*n,name);out[name]=f.child?metadata(f.child,depth+1):jsonScalar(f.value);}
+            return out;
+        };
+        std::vector<std::string> active;activeOps(allOps(root_->type),*root_,active);
+        for(const auto& name:active)if(name=="scalableData"||name=="fontDefinition"||name=="styles"){
+            const auto& f=getField(*root_,name);if(f.child)result[name]=metadata(f.child,0);
+        }
+    }
+    return result;
 }
 void Document::commit(Change c){c.beforeState=state_;c.afterState=++nextState_;apply(c,true);undo_.push_back(std::move(c));redo_.clear();++revision_;}
 void Document::apply(const Change& c,bool forward){
@@ -410,7 +513,7 @@ void Document::validateValue(const Node& node,const std::string& name,const Json
     const auto& f=getField(const_cast<Node&>(node),name);require(!f.child&&name.rfind('_',0)!=0,"Field is read-only");std::string kind=f.spec->at("kind");
     if(kind=="string"){require(value.is_string(),"Expected string");require(value.get<std::string>().find('\0')==std::string::npos,"Embedded NUL");if(name=="name"||name=="wnd"||name=="windowName")checkName(node,value.get<std::string>());}
     else if(kind=="float")require(value.is_number()&&std::isfinite(value.get<double>())&&std::abs(value.get<double>())<=std::numeric_limits<float>::max(),"Expected finite float32");
-    else {require(value.is_number_integer(),"Expected integer");auto v=value.get<std::int64_t>();require(v>=INT32_MIN&&v<=((kind=="color"||kind=="rgba")?std::int64_t(UINT32_MAX):INT32_MAX),"Integer out of range");if(kind=="bool")require(v>=-1&&v<=1,"Boolean must be -1, 0 or 1");}
+    else {require(value.is_number_integer(),"Expected integer");auto v=value.get<std::int64_t>();require(v>=INT32_MIN&&v<=((kind=="color"||kind=="rgba")?std::int64_t(UINT32_MAX):INT32_MAX),"Integer out of range");if(kind=="byte")require(v>=0&&v<=UINT8_MAX,"Byte must be between 0 and 255");if(kind=="bool")require(v>=-1&&v<=1,"Boolean must be -1, 0 or 1");}
 }
 void Document::set_many(std::uint64_t id,const Json& values){
     std::lock_guard<std::recursive_mutex> lock(mutex_);require(values.is_object(),"Expected property map");auto n=get(id);
@@ -535,12 +638,14 @@ void Document::importNode(const Json& data,const std::shared_ptr<Node>& node,uns
 
 std::string Document::to_json()const {
     std::lock_guard<std::recursive_mutex> lock(mutex_);require(bool(root_),"No document");
-    return Json{{"format","interface-editor-document"},{"version",1},{"schema",schema_},{"tree",jsonNode(root_,0)}}.dump(2);
+    // Indentation multiplies deeply nested real XDAT trees to hundreds of MiB.
+    auto text=Json{{"format","interface-editor-document"},{"version",1},{"schema",schema_},{"tree",jsonNode(root_,0)}}.dump();
+    require(text.size()<=MaxJsonFile,"JSON file too large");return text;
 }
 
 void Document::from_json(const std::string& text) {
     std::lock_guard<std::recursive_mutex> lock(mutex_);
-    require(text.size()<=MaxFile,"JSON file too large");
+    require(text.size()<=MaxJsonFile,"JSON file too large");
     auto data=Json::parse(text,[](int depth,Json::parse_event_t,Json&){require(depth<=512,"JSON nesting limit exceeded");return true;});
     require((data.at("format")=="interface-editor-document"||data.at("format")=="xdat-editor-document")&&data.at("version")==1,"Unsupported JSON document format/version");
     auto schema=data.at("schema").get<std::string>();
@@ -556,7 +661,7 @@ void Document::from_json(const std::string& text) {
 }
 
 void Document::open_json(const std::string& file) {
-    auto bytes=readFile(file);from_json(std::string(bytes.begin(),bytes.end()));
+    auto bytes=readFile(file,MaxJsonFile);from_json(std::string(bytes.begin(),bytes.end()));
 }
 
 void Document::export_json(const std::string& file)const {
@@ -564,7 +669,7 @@ void Document::export_json(const std::string& file)const {
     auto target=path(file),temp=target;temp+=".tmp-json-"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count());
     auto backupTemp=temp;backupTemp+=".bak";
     try {
-        writeFile(temp,bytes);require(readFile(temp.u8string())==bytes,"Written JSON differs from snapshot");
+        writeFile(temp,bytes);require(readFile(temp.u8string(),MaxJsonFile)==bytes,"Written JSON differs from snapshot");
         if(std::filesystem::exists(target)){auto backup=target;backup+=".bak";copyBackup(target,backupTemp);replaceFile(backupTemp,backup);}
         replaceFile(temp,target);
     }catch(...){std::error_code ec;std::filesystem::remove(temp,ec);std::filesystem::remove(backupTemp,ec);throw;}

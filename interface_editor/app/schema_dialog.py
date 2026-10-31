@@ -113,6 +113,13 @@ def show_results(window, filename, selected, data, results, original_error):
     layout.addWidget(save)
     retry = QPushButton(t('Повторить анализ после правки схем'))
     layout.addWidget(retry)
+    investigate = QPushButton(t('Исследование схем XDAT'))
+    layout.addWidget(investigate)
+    def open_research():
+        from schema_workbench import research
+        dialog.accept()
+        research(window, filename, combo.currentData())
+    investigate.clicked.connect(open_research)
     close = QPushButton(t('Отмена'))
     close.clicked.connect(dialog.reject)
     layout.addWidget(close)

@@ -1,0 +1,38 @@
+{
+  "format": 1,
+  "scope": "isolated-native-serializer",
+  "full_client_ui_validated": false,
+  "module_sha256": "14b838bbc6b6517ddc8294f0ab2fafdbe73daa5e4a39da224fdfd252c4545e06",
+  "constructor_rva": "0x1cfb20",
+  "serializer_rva": "0x1cfc90",
+  "stack_constructor": true,
+  "cases": [
+    {
+      "sha256": "f04e3e1ecbe9163e029718e4aed0e3ea70ae26760542dc6bcf70ecef763502cc",
+      "bytes": 1304241,
+      "returncode": 0,
+      "cursor": 1304221,
+      "archive_calls": 869207,
+      "native_success": true,
+      "unconsumed_bytes": 20
+    },
+    {
+      "sha256": "9767dee1b60aa22bc33de1c71cc54d5a8a8bcc6fa0bb82ef24c66c00f78d62d7",
+      "bytes": 1304241,
+      "returncode": 0,
+      "cursor": 1304221,
+      "archive_calls": 869207,
+      "native_success": true,
+      "unconsumed_bytes": 20
+    },
+    {
+      "sha256": "bd49e28adc2460f97b694c2950b1b39fbb8693f20f6b03cbc251989a8934e1d5",
+      "bytes": 1304221,
+      "returncode": 0,
+      "cursor": 1304221,
+      "archive_calls": 869207,
+      "native_success": true,
+      "unconsumed_bytes": 0
+    }
+  ]
+}
