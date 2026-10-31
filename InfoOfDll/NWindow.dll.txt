@@ -58,3 +58,22 @@ gameAddWebWithD3D9/browserTexture/Classes/BrowserWnd.uc
 gameAddWebWithD3D9/gracia/workspace/nwindow/Classes (сгенерированные декларации)
 Scryde NWindow SHA256 73735f1fb164f23bd1f83426e5918c315aed5916b13b50ec7c084571da8af831
 есть в inventory; полноценный перенос UI/ABI на него не подтверждён.
+
+7. Дополнение: rotationAngle и ScalableData (Корея/Япония, 31.10.2026)
+Для interface_editor выполнен статический разбор сохранённого загруженного
+образа корейской NWindow.dll и аудит четырёх японских/корейских normal/Classic XDAT.
+Korea SHA256: 4ed1266cc4266d7612ac52f5cd12e587b8bd0a795e6c4972d31304e5aa7981a7
+Japan SHA256: 4edbe29c627ad839850f3319a46fa87c0e74a887e33b8fdb548b7ee59d846e26
+Японская DLL в этом дополнении идентифицирована, но её код отдельно не разбирался.
+
+Адреса этого дополнения — RVA КОРЕЙСКОЙ сборки, не VA Gracia из разделов выше:
+0x974D08..0x974DD3: пропуск rotationAngle=-9999/0, подготовка оси и native setters.
+0x928E10: XMLScalableGlobalData::Create, 101 пара int / 100.0 -> float.
+0xA46F70: execChangeScalableSize, индекс 0..100, вызов изменения размера.
+0x8B1880: NCScalableUIManager::ScalingFontID, таблица шрифтов выбранного уровня.
+0x97C950: XMLWindowData::GetScalable, fallback -1 и итоговое значение 0.
+0xB4E5B0: изменение масштаба NCWnd; требует созданного NCScalableUI.
+
+Технический разбор, ограничения, методика повторения и разделение нативных
+фактов/приближений редактора: InfoOfDll/NWindow_UI_TRANSFORMS.md.
+Полная визуальная эквивалентность игровому рендереру не заявляется.

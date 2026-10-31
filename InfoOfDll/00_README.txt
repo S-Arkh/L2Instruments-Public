@@ -8,6 +8,8 @@
 Core.dll.txt             — VM, native-таблица, строки, INT64, профили и загрузка расширения.
 Engine.dll.txt           — UTexture, mip, Init, dirty/revision, различия HF/Gracia.
 NWindow.dll.txt          — игровой UI, загрузчик Interface, удаление/перекомпиляция пакета.
+NWindow_UI_TRANSFORMS.md — дополнение 31.10.2026: rotationAngle, ScalableData,
+                          native RVA корейской сборки и ограничения статического preview.
 D3DDrv.dll.txt           — штатный D3D9-renderer и совместимость с Core.
 Editor.dll.txt           — исследованный ABI компилятора UnrealScript.
 Ucc64Bridge.dll.txt      — собственное расширение компилятора для INT64.

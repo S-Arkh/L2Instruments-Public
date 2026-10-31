@@ -27,6 +27,7 @@ from strings_dialog import StringsDialog
 from _interface_core import register_dat_profile
 from schema_tools import load_schemas
 from schema_dialog import analyze
+from schema_workbench import research, import_schema, export_schema
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -447,6 +448,10 @@ class Editor(QMainWindow):
         self.file_menu.addSeparator()
         self.open_json_action = self.action(self.file_menu, 'Открыть JSON', self.open_json_dialog)
         self.export_json_action = self.action(self.file_menu, 'Экспорт JSON', self.export_json_dialog)
+        self.file_menu.addSeparator()
+        self.schema_research_action = self.action(self.file_menu, 'Исследование схем XDAT', lambda: research(self))
+        self.schema_import_action = self.action(self.file_menu, 'Импорт схемы…', lambda: import_schema(self))
+        self.schema_export_action = self.action(self.file_menu, 'Экспорт схемы…', lambda: export_schema(self))
         self.options_menu = QMenu(self)
         self.options_button = self.menu_button(bar, self.options_menu)
         self.texture_menu = QMenu(self)
@@ -861,6 +866,9 @@ class Editor(QMainWindow):
         self.version.setEnabled(not busy)
         self.open_action.setEnabled(not busy)
         self.open_json_action.setEnabled(not busy)
+        self.schema_research_action.setEnabled(not busy)
+        self.schema_import_action.setEnabled(not busy)
+        self.schema_export_action.setEnabled(not busy)
         self.view_bar.setEnabled(not busy)
         self.options_button.setEnabled(not busy)
         self.texture_button.setEnabled(not busy)

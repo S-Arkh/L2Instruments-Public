@@ -1,0 +1,33 @@
+{
+  "format": 1,
+  "status": "research",
+  "schema": "korea_native.XDAT",
+  "samples": [
+    {
+      "sha256": "eebecdd548383d700221f2eb659d2f7fc046ffca52898a5c3350fd84ef312b01",
+      "bytes": 7286706,
+      "compatible": true,
+      "cursor": 7286706,
+      "tail_bytes": 0,
+      "anomaly_present": true,
+      "roundtrip_identical": true,
+      "edit_reload": true,
+      "undo_identical": true,
+      "json_roundtrip_identical": true
+    },
+    {
+      "sha256": "107d7381e9e0f8dda1ac4bb7c3b90c21a50dd7d40ffa27e3585cc76658e28e6f",
+      "bytes": 8102780,
+      "compatible": true,
+      "cursor": 8102780,
+      "tail_bytes": 0,
+      "anomaly_present": true,
+      "roundtrip_identical": true,
+      "edit_reload": true,
+      "undo_identical": true,
+      "json_roundtrip_identical": true
+    }
+  ],
+  "schema_sha256": "002c90111e342562c7b495363d0f0421c1a66297ac8ba713d2eb9d2b0df27fd8",
+  "client_loading_validated": false
+}

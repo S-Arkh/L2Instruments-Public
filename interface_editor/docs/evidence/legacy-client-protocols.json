@@ -1,0 +1,25 @@
+{
+  "format": 1,
+  "cases": [
+    {
+      "profile": "gracia",
+      "module_sha256": "e000d76e4f8cbfc886f6abd318da968b6cddd73a90e39f0491452ef63dfb8739",
+      "reported_protocol": 152,
+      "evidence": "static -L2ProtocolVersion handler parses embedded Revision string",
+      "format_string_rva": "0x32eb4",
+      "revision_string_rva": "0x32ec8",
+      "parse_call_rva": "0x27480",
+      "network_handshake_tested": false
+    },
+    {
+      "profile": "high-five",
+      "module_sha256": "161115f9c82879db0651dd2986a8ce8046bd19048b92a8b8bc72e184b0fbe6dd",
+      "reported_protocol": 268,
+      "evidence": "static -L2ProtocolVersion handler parses embedded Revision string",
+      "format_string_rva": "0x32e8c",
+      "revision_string_rva": "0x32ea0",
+      "parse_call_rva": "0x2741c",
+      "network_handshake_tested": false
+    }
+  ]
+}

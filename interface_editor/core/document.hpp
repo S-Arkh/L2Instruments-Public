@@ -1,6 +1,7 @@
 #pragma once
 #include <nlohmann/json.hpp>
 #include <cstdint>
+#include <deque>
 #include <memory>
 #include <mutex>
 #include <string>
@@ -33,6 +34,7 @@ public:
     void load(const std::string& file, const std::string& schema);
     void load_bytes(const Bytes& bytes, const std::string& schema);
     Json probe(const Bytes& bytes, const std::string& schema) const;
+    Json diagnose(const Bytes& bytes, const std::string& schema, std::size_t limit = 2000) const;
     Bytes serialize() const;
     void save(const std::string& file);
     std::string to_json() const;
@@ -66,6 +68,13 @@ private:
     std::uint64_t next_ = 1, revision_ = 0;
     std::uint64_t state_ = 0, savedState_ = 0, nextState_ = 0;
     Bytes saved_;
+    bool tracing_ = false;
+    std::size_t traceLimit_ = 2000, traceCount_ = 0;
+    std::deque<Json> trace_;
+    std::string tracePath_;
+    Json traceError_;
+    Json traceAnomaly_;
+    void trace(Json event);
     mutable std::recursive_mutex mutex_;
     struct Change { std::shared_ptr<Node> node; std::string field; Field before, after;
                     std::shared_ptr<Node> parent; std::size_t position = 0; int action = 0;

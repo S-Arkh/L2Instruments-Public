@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'app'))
 from _interface_core import Document, TextureStore, decode_texture
 from texture_project import TextureProject, image_rgba
-from preview_render import ResourceCache, render_preview, Layout
+from preview_render import ResourceCache, render_preview, Layout, preview_root
 from main import Editor
 
 
@@ -35,6 +35,45 @@ def hf():
     d.load(str(ROOT / 'tests/fixtures/Interface_high_five.xdat'), 'ct26.XDAT')
     credit = next(n for n in d.search('btnCredit')['matches'] if d.info(n)['type'] == 'Button')
     return d, credit
+
+
+def gracia():
+    return synthetic_preview('ct24')
+
+
+def japan():
+    return synthetic_preview('essence_native')
+
+
+def korea():
+    return synthetic_preview('korea_native')
+
+
+def synthetic_preview(profile):
+    doc = Document((ROOT / 'schemas/schemas.json').read_text())
+    doc.create(profile + '.XDAT')
+    windows = next(n['id'] for n in doc.children() if n['name'] == 'windows')
+    parent = doc.add_configured(windows, profile + '.Window', dict(name='PreviewWindow', size=1,
+        size_absolute_values=1, size_absolute_width=300, size_absolute_height=240))
+    if profile != 'ct24':
+        doc.set(parent, 'scalable', 1)
+        scalable = next(n['id'] for n in doc.children() if n['name'] == 'scalableData')
+        for n in doc.children(scalable):
+            if n['name'].startswith('scale'):
+                rate = 100 + int(n['name'][5:])
+                doc.set_many(n['id'], dict(widthRate=rate, heightRate=rate))
+    children = next(n['id'] for n in doc.children(parent) if n['name'] == 'children')
+    position = dict(anchor=1, anchor_parent=1, anchor_this=1) if profile == 'ct24' else dict(
+        usePosition=1, relativePoint=1, anchorPoint=1)
+    credit = doc.add_configured(children, profile + '.Button', dict(name='btnCredit', size=1,
+        size_absolute_values=1, size_absolute_width=98, size_absolute_height=30,
+        anchor_x=10.0, anchor_y=20.0,
+        normalTex='Preview.Missing', buttonNameText='Test', **position))
+    # Reload to establish a clean baseline, including serialization of the conditional fields.
+    payload = doc.serialize()
+    doc.load_bytes(payload, profile + '.XDAT')
+    credit = next(n for n in doc.search('btnCredit')['matches'] if doc.info(n)['type'] == 'Button')
+    return doc, credit
 
 
 def test_pixel_decoders():
@@ -109,9 +148,10 @@ def test_atomic_texture_assignment_and_button_wizard_core():
     doc.redo(); assert doc.info(new)['name'] == 'btnNativeTest'
 
 
-def test_layout_and_static_preview_do_not_change_document(tmp_path):
+@pytest.mark.parametrize('factory', [hf, gracia, japan, korea], ids=['hf', 'gracia', 'japan', 'korea'])
+def test_layout_and_static_preview_do_not_change_document(tmp_path, factory):
     application = app()
-    doc, credit = hf(); original = doc.serialize()
+    doc, credit = factory(); original = doc.serialize()
     snapshot = doc.preview_snapshot(credit)
     result = render_preview(snapshot, ResourceCache(), context=True)
     assert result.rectangles[credit] == (10.0, 20.0, 98.0, 30.0)
@@ -126,6 +166,72 @@ def test_layout_and_static_preview_do_not_change_document(tmp_path):
     layout = Layout(node)
     rect = layout.rect(2)
     assert (rect.x(), rect.y(), rect.width(), rect.height()) == (15, 48, 180, 50)
+
+
+@pytest.mark.parametrize('profile,factory', [('ct24', gracia), ('essence_native', japan),
+                                           ('korea_native', korea)], ids=['gracia', 'japan', 'korea'])
+def test_controls_anchors_states_and_snapshot_isolation(tmp_path, profile, factory):
+    application = app()
+    doc, credit = factory()
+    siblings = doc.info(credit)['parent']
+    position = dict(anchor=1, anchor_parent=9, anchor_this=1, anchor_ctrl='btnCredit') if profile == 'ct24' else dict(
+        usePosition=1, relativePoint=9, anchorPoint=1, relativeTo='btnCredit')
+    common = dict(size=1, size_absolute_values=1, size_absolute_width=40, size_absolute_height=20,
+                  anchor_x=2.0, anchor_y=3.0, **position)
+    font = {'text_color' if profile == 'ct24' else 'fontColor': 0xff12ab34}
+    ids = {}
+    for kind, extra in [('Texture', dict(file='Preview.Texture', alpha=255, type=0, colorModify=0xffffffff)),
+                        ('TextBox', dict(text='日本語', useFont=1, **font)),
+                        ('ScrollArea', {})]:
+        ids[kind] = doc.add_configured(siblings, profile + '.' + kind, dict(common, name=kind, **extra))
+    doc.set_many(credit, dict(normalTex='Preview.Normal', pushedTex='Preview.Pressed',
+                              highlightTex='Preview.Hover', buttonNameText=''))
+    doc.set_many(ids['ScrollArea'], dict(size_absolute_values=0, size_percent_width=.5,
+                                       size_percent_height=.5, size_absolute_width=-10,
+                                       size_absolute_height=0))
+    original = doc.serialize()
+    snapshot = doc.preview_snapshot(credit)
+    before = json.dumps(snapshot, sort_keys=True)
+
+    class Resources:
+        def image(self, name):
+            image = QImage(8, 8, QImage.Format.Format_RGBA8888)
+            image.fill(QColor({'Preview.Normal': 'red', 'Preview.Pressed': 'green',
+                              'Preview.Hover': 'blue'}.get(name, 'white')))
+            return image, None
+
+    images = []
+    for state, texture in [('normal', 'Normal'), ('pressed', 'Pressed'), ('hover', 'Hover')]:
+        result = render_preview(snapshot, Resources(), context=True, state=state)
+        assert 'Preview.' + texture in result.textures
+        assert 'Preview.Texture' in result.textures
+        assert [g['reason'] for g in result.warning_groups] == ([] if profile == 'ct24' else [
+            'Шрифт отображается приближённо'])
+        assert result.rectangles[ids['Texture']] == (110, 53, 40, 20)
+        assert result.rectangles[ids['ScrollArea']] == (110, 53, 140, 120)
+        images.append(result.image)
+    assert images[0] != images[1] and images[1] != images[2]
+    normalized = Layout(preview_root(snapshot))
+    assert normalized.nodes[ids['TextBox']]['properties']['fontColor'] == 0xff12ab34
+    assert json.dumps(snapshot, sort_keys=True) == before
+    assert doc.serialize() == original
+
+
+@pytest.mark.parametrize('factory', [japan, korea], ids=['japan', 'korea'])
+def test_modern_parent_size_and_rotation_notice(factory):
+    application = app()
+    doc, credit = factory()
+    doc.set_many(credit, dict(equalToParentSize=1, rotationAngle=15.0, buttonNameText='', buttonName=42))
+    result = render_preview(doc.preview_snapshot(credit), ResourceCache(), strings={42: '日本語'})
+    assert result.rectangles[credit] == (10, 20, 300, 240)
+    assert any(g['reason'] == 'Неподдерживаемая ось/угол поворота' for g in result.warning_groups)
+    assert not any('SysString' in warning for warning in result.warnings)
+
+
+@pytest.mark.parametrize('schema', ['ct23.XDAT', 'ct25.XDAT', 'etoa5.XDAT'])
+def test_other_preview_profiles_remain_unsupported(schema):
+    with pytest.raises(ValueError, match='Gracia Epilogue'):
+        render_preview({'schema': schema}, ResourceCache())
 
 
 @pytest.mark.skipif(not os.environ.get('INTERFACE_CLIENT_RESOURCES'), reason='Set INTERFACE_CLIENT_RESOURCES for real UTX validation')
@@ -143,7 +249,8 @@ def test_actual_client_textures():
     assert 'L2UI_CT1.Button.Button_DF' in result.textures
 
 
-def test_preview_tabs_refresh_stale_result_and_png(tmp_path):
+@pytest.mark.parametrize('factory', [hf, gracia, japan, korea], ids=['hf', 'gracia', 'japan', 'korea'])
+def test_preview_tabs_refresh_stale_result_and_png(tmp_path, factory):
     application = app()
     project = TextureProject.create(tmp_path / 'project')
     source = image_file(tmp_path / 'button.png', 32, 32)
@@ -157,7 +264,10 @@ def test_preview_tabs_refresh_stale_result_and_png(tmp_path):
             application.processEvents(); time.sleep(.01)
             assert time.monotonic() < deadline, errors
         application.processEvents(); assert not errors
-    window.load_file(str(ROOT / 'tests/fixtures/Interface_high_five.xdat'), 'ct26.XDAT')
+    source_doc, _ = factory()
+    source_path = tmp_path / 'source.xdat'
+    source_doc.save(str(source_path))
+    window.load_file(str(source_path), source_doc.summary()['schema'])
     wait(lambda: not window.busy)
     doc = window.document
     credit = next(n for n in doc.search('btnCredit')['matches'] if doc.info(n)['type'] == 'Button')
@@ -181,6 +291,15 @@ def test_preview_tabs_refresh_stale_result_and_png(tmp_path):
     output = tmp_path / 'preview.png'; left.preview.export_png(output)
     wait(lambda: output.exists() and not window.tasks)
     assert not QImage(str(output)).isNull()
+    if factory in (japan, korea):
+        assert left.preview.ui_scale.isEnabled()
+        before_scale = doc.serialize()
+        left.preview.ui_scale.setValue(50)
+        wait(lambda: left.preview.result is not None)
+        assert left.preview.result.rectangles[credit][2] == 147
+        assert doc.serialize() == before_scale
+        left.preview.ui_scale.setValue(0)
+        wait(lambda: left.preview.result is not None)
     window.edit(credit, 'size_absolute_width', 120)
     wait(lambda: not window.busy and left.preview.result is not None)
     assert left.preview.result.rectangles[credit][2] == 120
