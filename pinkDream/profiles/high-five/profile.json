@@ -1,7 +1,7 @@
 {
   "id": "high-five", "status": "planned",
-  "client_root_windows": "D:/Lineage 2/clear_high_five/HF5-REVISION-268-EN",
-  "client_root_linux": "/mnt/d/Lineage 2/clear_high_five/HF5-REVISION-268-EN",
+  "client_root_windows": "local/clients/high-five",
+  "client_root_linux": "local/clients/high-five",
   "packages": ["SysTextures/L2UI.utx", "SysTextures/L2UI_CT1.utx", "SysTextures/L2UI_CH3.utx"],
   "mappings": [], "package_writer": null, "game_tested": false
 }

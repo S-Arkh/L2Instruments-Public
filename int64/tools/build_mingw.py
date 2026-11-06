@@ -56,6 +56,7 @@ def main():
               '-static', '-I', str(ROOT / 'src')]
     targets = {
         'Ucc64Bridge.dll': ['-shared', '-I', str(minhook / 'include'), str(ROOT / 'src/editor_bridge.cpp'),
+                             str(ROOT / 'src/ptr_property.cpp'),
                             *compiled, '-Wl,--kill-at'],
         'ucc64.exe': ['-municode', str(ROOT / 'src/launcher.cpp'), '-lbcrypt', '-lpsapi'],
         'int64_semantics_test.exe': [str(ROOT / 'tests/int64_semantics_test.cpp')],

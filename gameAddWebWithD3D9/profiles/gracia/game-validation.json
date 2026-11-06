@@ -1,5 +1,4 @@
 {
-  "date": "2026-10-29",
   "source": "user-confirmed game test; agent read-only hash and process verification",
   "passed": true,
   "checks": ["browser image", "above login window", "RU/EN text", "clicks", "wheel", "drag", "minimize/restore", "audio stops", "browser closes", "client exits"],

@@ -33,13 +33,21 @@ class LauncherTests(unittest.TestCase):
         return subprocess.run(['powershell.exe', '-NoProfile', '-ExecutionPolicy', 'Bypass',
             '-File', str(self.app / 'run.ps1'), *args], cwd=self.root, capture_output=True, text=True, timeout=45)
 
+    def assert_selected_python(self, result, expected):
+        reported = [line.removeprefix('Python: ').strip() for line in result.stdout.splitlines()
+                    if line.startswith('Python: ')]
+        self.assertEqual(len(reported), 1, result.stdout + result.stderr)
+        # Windows can expand an 8.3 path or a junction in sys.executable.
+        # Compare file identity, while still rejecting a different interpreter.
+        self.assertTrue(Path(reported[0]).samefile(expected), result.stdout + result.stderr)
+
     def test_broken_local_python_falls_back_to_editor_environment(self):
         broken = self.app / '.venv/Scripts/python.exe'
         broken.parent.mkdir(parents=True)
         broken.write_bytes(b'not an executable')
         result = self.run_launcher('-CheckRuntime')
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-        self.assertIn(str(self.python), result.stdout)
+        self.assert_selected_python(result, self.python)
         self.assertIn('test-qt', result.stdout)
 
     def test_local_environment_is_preferred(self):
@@ -47,7 +55,7 @@ class LauncherTests(unittest.TestCase):
         shutil.copytree(self.python.parents[1], local)
         result = self.run_launcher('-CheckRuntime')
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-        self.assertIn(str(local / 'Scripts/python.exe'), result.stdout)
+        self.assert_selected_python(result, local / 'Scripts/python.exe')
 
     def test_explicit_python_without_qt_does_not_silently_fall_back(self):
         shim = self.root / 'no qt.cmd'
@@ -57,6 +65,18 @@ class LauncherTests(unittest.TestCase):
         self.assertIn('requirements.txt', result.stdout)
         self.assertNotIn('Traceback', result.stdout + result.stderr)
         self.assertNotIn('test-qt', result.stdout)
+
+    def test_own_runtime_is_preferred(self):
+        runtime = self.app / 'runtime'
+        runtime.mkdir()
+        shim = runtime / 'python.exe'
+        # A real Python executable plus its venv config, using the test Qt modules.
+        shutil.copy2(self.python, shim)
+        shutil.copy2(self.python.parents[1] / 'pyvenv.cfg', self.app / 'pyvenv.cfg')
+        shutil.copytree(self.python.parents[1] / 'Lib', self.app / 'Lib')
+        result = self.run_launcher('-CheckRuntime')
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assert_selected_python(result, shim)
 
     def test_cmd_forwards_arguments_and_exit_status(self):
         result = subprocess.run([os.environ.get('COMSPEC', 'cmd.exe'), '/c', 'call',

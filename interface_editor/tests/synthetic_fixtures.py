@@ -11,12 +11,13 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'app'))
 from _interface_core import Document, encode_dat
+from schema_catalog import catalog_text
 
 
 def generate():
     folder = ROOT / 'tests/fixtures'
     folder.mkdir(exist_ok=True)
-    schema = (ROOT / 'schemas/schemas.json').read_text(encoding='utf-8')
+    schema = catalog_text()
     records = json.loads(schema)['records']
     manifest = []
     for name in records:

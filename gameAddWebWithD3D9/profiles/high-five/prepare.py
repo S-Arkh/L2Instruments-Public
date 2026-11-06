@@ -73,7 +73,8 @@ def main(native_only=False):
         if path.name.lower() == 'interface.u': path.unlink()
     sys.path.insert(0, str(ROOT.parents[2] / 'interface_editor/app'))
     from _interface_core import Document
-    schema = (ROOT.parents[2] / 'interface_editor/schemas/schemas.json').read_text(encoding='utf-8')
+    from schema_catalog import profile_text
+    schema = profile_text('ct26.XDAT')
     doc = Document(schema)
     doc.load(str(BASE / 'result/system/Interface.xdat'), 'ct26.XDAT')
     def find(name, kind):

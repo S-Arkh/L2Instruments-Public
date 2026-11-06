@@ -6,18 +6,25 @@ import json
 from pathlib import Path
 
 from inspect_xdat_tail import ROOT, inspect
+from schema_catalog import BUILTIN_INDEX, SchemaRepository
 
 
 def audit(samples, catalog_text):
     rows = []
     groups = defaultdict(set)
+    profile_hashes = {}
+    lazy = isinstance(catalog_text, SchemaRepository)
     for schema, data in samples:
-        row = inspect(data, catalog_text, schema)
+        text = catalog_text.text(schema) if lazy else catalog_text
+        profile_hashes[schema] = hashlib.sha256(text.encode()).hexdigest()
+        row = inspect(data, text, schema)
         if row['compatible'] and row['tail_bytes'] == 20:
             row['payload_sha256'] = hashlib.sha256(data[:-20]).hexdigest()
             groups[row['tail_sha256']].add(row['payload_sha256'])
         rows.append(row)
-    return {'format': 1, 'schema_sha256': hashlib.sha256(catalog_text.encode()).hexdigest(),
+    hash_data = json.dumps(profile_hashes, sort_keys=True) if lazy else catalog_text
+    return {'format': 1, 'schema_sha256': hashlib.sha256(hash_data.encode()).hexdigest(),
+            'schema_hash_scope': 'selected-profiles' if lazy else 'catalog',
             'samples': rows,
             'crc32_matches': sum(row.get('checksum_status') == 'match' for row in rows),
             'crc32_mismatches': sum(row.get('checksum_status') == 'mismatch' for row in rows),
@@ -27,7 +34,7 @@ def audit(samples, catalog_text):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--catalog', type=Path, default=ROOT / 'schemas/schemas.json')
+    parser.add_argument('--catalog', type=Path, default=BUILTIN_INDEX)
     parser.add_argument('--fixtures', type=Path, help='External directory for the bundled legacy fixture manifest')
     parser.add_argument('--sample', action='append', default=[], metavar='SCHEMA=FILE')
     parser.add_argument('--output', type=Path, required=True)
@@ -49,7 +56,7 @@ def main():
         samples.append((schema, Path(filename).read_bytes()))
     if not samples:
         parser.error('Provide --fixtures or --sample')
-    report = audit(samples, args.catalog.read_text(encoding='utf-8'))
+    report = audit(samples, SchemaRepository(args.catalog))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
     return int(not all(row['compatible'] for row in report['samples']))

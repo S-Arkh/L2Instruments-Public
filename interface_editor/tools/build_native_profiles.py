@@ -7,8 +7,11 @@ import argparse
 import copy
 import json
 from pathlib import Path
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'app'))
+from schema_catalog import BUILTIN_INDEX, load_catalog, save_catalog
 
 
 def build(catalog, korean=False):
@@ -134,19 +137,19 @@ def build(catalog, korean=False):
     record('DefaultPositionGroup', [array('positions', 'WndDefPos')])
     rec('XDAT')['ops'][2:5] = [array('defaultPositionGroups', 'DefaultPositionGroup'), field('hasFontDefinition', 'bool'),
                              {'op': 'if', 'condition': 'hasFontDefinition != 0', 'yes': [obj('fontDefinition', 'Font')], 'no': []}]
-    label = ('Korea (protocol 290, user-reported; native-reader verified)' if korean else
-             'Essence (protocol 591) / Japan (protocol 230, user-reported) — native-reader verified')
+    label = ('Korea (protocol 606) — native-reader verified' if korean else
+             'Essence / Japan (protocol 591) — native-reader verified')
     return {'format': 1, 'versions': [[label, prefix + '.XDAT']], 'records': records}
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--catalog', type=Path, default=ROOT / 'schemas/schemas.json')
+    parser.add_argument('--catalog', type=Path, default=BUILTIN_INDEX)
     parser.add_argument('--output', type=Path)
     parser.add_argument('--korean', action='store_true')
     parser.add_argument('--update-builtin', action='store_true', help='Regenerate both native profiles in the selected catalog')
     args = parser.parse_args()
-    catalog = json.loads(args.catalog.read_text(encoding='utf-8'))
+    catalog = load_catalog(args.catalog)
     if args.update_builtin:
         if args.output or args.korean:
             parser.error('--update-builtin cannot be combined with --output or --korean')
@@ -156,7 +159,7 @@ def main():
         for package in packages:
             catalog['records'].update(package['records'])
             catalog['versions'].extend(package['versions'])
-        args.catalog.write_text(json.dumps(catalog, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
+        save_catalog(args.catalog, catalog)
         return
     if not args.output:
         parser.error('--output is required unless using --update-builtin')

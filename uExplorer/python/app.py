@@ -40,7 +40,13 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('uExplorer — Unreal package explorer'); self.resize(1450, 850)
-        self.settings = QSettings('L2Tools', 'uExplorer')
+        root = Path(__file__).resolve().parents[1]
+        if (root/'portable.json').is_file():
+            (root/'data').mkdir(exist_ok=True)
+            self.settings = QSettings(str(root/'data/settings.ini'), QSettings.Format.IniFormat)
+            self.settings.setFallbacksEnabled(False)
+        else:
+            self.settings = QSettings('L2Tools', 'uExplorer')
         self.core = Core(); self.worker = None; self.package = None; self.classes = []; self.result = None
         self.dependencies = []; self.output = self.settings.value('output', '')
         self.setStyleSheet('QPlainTextEdit { background: #ffffff; color: #202020; selection-background-color: #cce4ff; selection-color: #202020; }')

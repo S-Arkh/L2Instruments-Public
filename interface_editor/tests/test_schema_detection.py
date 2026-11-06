@@ -12,11 +12,12 @@ from PySide6.QtWidgets import QApplication, QDialog, QComboBox, QPushButton, QPr
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'app'))
 from _interface_core import Document
+from schema_catalog import BUILTIN_INDEX, SchemaRepository, catalog_text
 from schema_tools import draft_package, load_schemas, probe
 from main import Editor
 import schema_dialog
 
-SCHEMA = (ROOT / 'schemas/schemas.json').read_text(encoding='utf-8')
+SCHEMA = catalog_text()
 FIXTURES = json.loads((ROOT / 'tests/fixtures/manifest.json').read_text())
 
 
@@ -45,14 +46,14 @@ def test_draft_isolated_and_reloadable(tmp_path):
     assert not (set(package['records']) & set(original['records']))
     path = tmp_path / 'custom.json'
     path.write_text(json.dumps(package), encoding='utf-8')
-    text, errors = load_schemas(ROOT / 'schemas/schemas.json', tmp_path)
+    text, errors = load_schemas(BUILTIN_INDEX, tmp_path)
     assert not errors
     data = (ROOT / 'tests/fixtures/Interface_high_five.xdat').read_bytes()
     assert Document(text).probe(data, package['versions'][0][1])['compatible']
     # Editing the draft cannot change the built-in record definitions.
     assert json.loads(text)['records']['ct26.Window'] == original['records']['ct26.Window']
     path.write_text('{bad json', encoding='utf-8')
-    text, errors = load_schemas(ROOT / 'schemas/schemas.json', tmp_path)
+    text, errors = load_schemas(BUILTIN_INDEX, tmp_path)
     assert len(errors) == 1
     assert json.loads(text) == original
 
@@ -80,7 +81,9 @@ def ui(tmp_path):
     app = QApplication.instance() or QApplication([])
     window = Editor(QSettings(str(tmp_path / 'settings.ini'), QSettings.Format.IniFormat))
     window.user_schema_directory = tmp_path / 'schemas'
-    window.schema_text = tiny_catalog()
+    builtin = tmp_path / 'builtin.json'
+    builtin.write_text(tiny_catalog(), encoding='utf-8')
+    window.schemas = SchemaRepository(builtin)
     window.reload_schemas = lambda: None
     errors = []
     window.error = errors.append
@@ -121,7 +124,7 @@ def test_native_profile_gui_open_edit_save(ui, tmp_path, monkeypatch, schema):
     sys.path.insert(0, str(ROOT / 'tools'))
     from create_native_fixture import fixture
     window, wait = ui
-    window.schema_text = SCHEMA
+    window.schemas = SchemaRepository()
     assert window.version.findData(schema) >= 0
     source = tmp_path / 'native.xdat'
     original = fixture(SCHEMA, schema).serialize()
@@ -174,6 +177,24 @@ def test_cancel_analysis(ui, tmp_path, monkeypatch):
     progress.canceled.emit()
     wait()
     assert not shown and window.document is None
+
+
+def test_invalid_json_profile_keeps_unsaved_document(ui, tmp_path):
+    window, wait = ui
+    window.discard_confirmed = lambda **kwargs: True
+    old = Document(tiny_catalog())
+    old.create('a.XDAT')
+    window.document = old
+    before = old.serialize()
+    errors = []
+    window.error = errors.append
+    path = tmp_path / 'unknown.json'
+    path.write_text(json.dumps({'format': 'interface-editor-document', 'version': 1,
+                                'schema': 'unknown.XDAT', 'tree': {}}))
+    window.load_file(str(path), None)
+    wait()
+    assert errors and window.document is old
+    assert old.summary()['dirty'] and old.serialize() == before
 
 
 def test_create_draft_and_recheck_edited_layout(ui, tmp_path, monkeypatch):

@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pytest
 from _interface_core import Document
+from schema_catalog import profile_text
 
 ROOT = Path(__file__).resolve().parents[2]
 MANIFEST = json.loads((Path(__file__).parent / 'fixture-manifest.json').read_text())
@@ -17,9 +18,10 @@ MANIFEST = json.loads((Path(__file__).parent / 'fixture-manifest.json').read_tex
 def test_external_roundtrip(fixture):
     data = (Path(os.environ['INTERFACE_XDAT_FIXTURES']) / fixture['file']).read_bytes()
     assert hashlib.sha256(data).hexdigest() == fixture['sha256']
-    doc = Document((ROOT / 'schemas/schemas.json').read_text(encoding='utf-8'))
+    text = profile_text(fixture['schema'])
+    doc = Document(text)
     doc.load_bytes(data, fixture['schema'])
     assert doc.serialize() == data
-    imported = Document((ROOT / 'schemas/schemas.json').read_text(encoding='utf-8'))
+    imported = Document(text)
     imported.from_json(doc.to_json())
     assert imported.serialize() == data

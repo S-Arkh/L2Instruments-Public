@@ -5,6 +5,7 @@ if ($Python) {
     $candidates=@($Python)
 } else {
     $candidates=@(
+        (Join-Path $PSScriptRoot 'runtime\python.exe'),
         (Join-Path $PSScriptRoot '.venv\Scripts\python.exe'),
         (Join-Path $PSScriptRoot '..\interface_editor\.venv\Scripts\python.exe'),
         (Join-Path $PSScriptRoot '..\interface_editor\dist\windows\runtime\python.exe'),

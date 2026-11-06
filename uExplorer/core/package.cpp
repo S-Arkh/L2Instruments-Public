@@ -52,7 +52,7 @@ Package::Package(const std::filesystem::path& file):path(file){
         if(data.size()>=prefix.size()&&std::equal(prefix.begin(),prefix.end(),data.begin())){data.erase(data.begin(),data.begin()+prefix.size());for(auto& c:data)c^=0xac;envelope=marker;break;}
     }
     Reader r(data);if(r.u32()!=0x9e2a83c1)bad("Unsupported envelope or invalid Unreal signature");
-    version=r.u16();licensee=r.u16();if(!((version==123&&(licensee==0||licensee==37))||(version==126&&licensee==0)||(version==133&&licensee==40)))bad("Unsupported package version "+std::to_string(version)+"/"+std::to_string(licensee));
+    version=r.u16();licensee=r.u16();if(!((version==123&&(licensee==0||licensee==37))||(version==126&&licensee==0)||((version==131||version==133)&&licensee==40)))bad("Unsupported package version "+std::to_string(version)+"/"+std::to_string(licensee));
     r.u32();int nc=r.i32(),no=r.i32(),ec=r.i32(),eo=r.i32(),ic=r.i32(),io=r.i32();
     for(auto pair:{std::pair<int,int>{nc,no},{ec,eo},{ic,io}})if(pair.first<0||pair.first>2000000||size_t(pair.first)>data.size()||pair.second<0||size_t(pair.second)>=data.size())bad("Invalid table bounds");
     r.pos=size_t(no);for(int i=0;i<nc;++i){names.push_back(r.string());r.u32();}
@@ -108,12 +108,12 @@ Node Decoder::expression(int depth){
         n.kind="int64_constant";n.value=value;break;
     }
     case 0x47:
-        if(p.version!=133 || p.licensee!=40)bad("Array sort requires package profile 133/40");
+        if((p.version!=133 || p.licensee!=40)&&!p.sdkClientSort)bad("Array sort requires package profile 133/40 or explicit sdk-client-sort profile");
         n.kind="array_sort";child();child();break;
     case 0x1f:case 0x34:n.kind="string";for(;;){uint32_t c=op==0x34?word():byte();if(!c)break;if(op==0x34&&c>=0xd800&&c<=0xdbff){auto lo=word();if(lo<0xdc00||lo>0xdfff)bad("Invalid bytecode surrogate");c=0x10000+((c-0xd800)<<10)+(lo-0xdc00);}n.text+=utf8(c);}break;
     case 0x20:case 0x21:n.kind=op==0x20?"object":"name";n.ref=reference();n.text=op==0x20?p.ref(n.ref):p.name(n.ref);break;
     case 0x22:case 0x23:case 0x35:n.kind=op==0x22?"rotation":op==0x23?"vector":"range";n.value=Json::array();for(int i=0;i<(op==0x35?2:3);++i){if(op==0x22)n.value.push_back(integer());else{pc+=4;n.value.push_back(r.f32());}}break;
-    case 0x43:n.kind="delegate_property";n.ref=reference();n.text=p.ref(n.ref);n.value=p.name(reference(true));break;
+    case 0x43:n.kind="delegate_property";n.ref=reference();n.text=p.ref(n.ref);n.value=p.name(reference(true));args();break;
     case 0x44:n.kind="delegate_name";n.text=p.name(reference(true));break;
     case 0x42:n.kind="debug";integer();integer();integer();while(byte()!=0){}break;
     case 8:n.kind="stop";break;case 11:n.kind="nothing";break;case 22:n.kind="end_parameters";break;case 23:n.kind="self";break;
@@ -131,10 +131,10 @@ StructInfo Package::structure(int id,bool isClass,bool isState) const {
 }
 Function Package::function(int id) const {
     if(kind(id)!="Function")bad("Not a function");auto s=structure(id);Function f;f.id=id;std::copy(std::begin(s.fields),std::end(s.fields),f.fields);f.size=s.size;f.friendly=s.friendly;f.nodes=std::move(s.nodes);
-    auto r=reader(id);r.pos=s.tail;f.native=r.u16();f.precedence=r.byte();f.flags=r.u32();if(f.flags&0x40)r.u16();if(r.pos!=r.end)bad("Trailing function data: "+ref(id));return f;
+    auto r=reader(id);r.pos=s.tail;f.native=r.u16();f.precedence=r.byte();f.flags=r.u32();if(f.flags&0x40)f.replicationOffset=r.u16();if(r.pos!=r.end)bad("Trailing function data: "+ref(id));return f;
 }
 Property Package::property(int id) const {
-    auto r=reader(id);if(name(r.index())!="None")bad("Tagged property metadata unsupported");r.index();Property v;v.id=id;v.next=r.index();v.kind=kind(id);v.dim=r.i32();v.flags=r.u32();v.category=name(r.index());if(v.flags&0x20)r.u16();
+    auto r=reader(id);if(name(r.index())!="None")bad("Tagged property metadata unsupported");r.index();Property v;v.id=id;v.next=r.index();v.kind=kind(id);v.dim=r.i32();v.flags=r.u32();v.category=name(r.index());if(v.flags&0x20)v.replicationOffset=r.u16();
     if(v.kind=="ByteProperty"||v.kind=="ObjectProperty"||v.kind=="ClassProperty"||v.kind=="StructProperty"||v.kind=="ArrayProperty"||v.kind=="DelegateProperty")v.ref=r.index();
     if(v.kind=="ClassProperty")v.meta=r.index();if(v.dim<0||v.dim>1000000)bad("Invalid property dimension");v.tail=r.pos;return v;
 }
@@ -147,9 +147,14 @@ Json Package::scriptText(int id) const {
     if(text.find_first_not_of(" \r\n\t")==text.npos)return nullptr;
     return Json{{"text",text},{"raw_hex",hex(raw)},{"encoding",count<0?"utf-16":"latin1"}};
 }
+void Package::setBytecodeProfile(const std::string& profile){
+    if(profile!="auto"&&profile!="sdk-client-sort")bad("Unknown bytecode profile: "+profile);
+    if(profile=="sdk-client-sort"&&(version!=126||licensee!=0))bad("sdk-client-sort requires package header 126/0");
+    sdkClientSort=profile=="sdk-client-sort";
+}
 Json Package::summary() const {
     Json classes=Json::array();for(size_t i=0;i<exports.size();++i)if(exports[i].cls==0)classes.push_back({{"id",i+1},{"name",exports[i].name},{"path",ref(int(i)+1)},{"super",ref(exports[i].super)}});
-    return {{"file",path.u8string()},{"version",version},{"licensee",licensee},{"envelope",envelope},{"names",names.size()},{"imports",imports.size()},{"exports",exports.size()},{"classes",classes}};
+    return {{"file",path.u8string()},{"version",version},{"licensee",licensee},{"bytecode_profile",sdkClientSort?"sdk-client-sort":"auto"},{"envelope",envelope},{"names",names.size()},{"imports",imports.size()},{"exports",exports.size()},{"classes",classes}};
 }
 Json Package::audit() const {
     Json counts=Json::object(),issues=Json::array();size_t failures=0;

@@ -1,6 +1,6 @@
 # Scryde: перенос Interface.u через Paths
 
-Проверка 2026-10-30 на установленном клиенте. Исполняемые файлы не изменялись.
+Проверка local-validation на установленном клиенте. Исполняемые файлы не изменялись.
 
 ## Исходный эксперимент
 
@@ -15,12 +15,12 @@ Class->IsChildOf(T::StaticClass()) в XMLUIManager::CompileUIScripts.
 Скрипт: trace_interface_paths.ps1. Каждая длительная запись — 80 секунд,
 с автоматическим возвратом интерфейса/конфига после эксперимента.
 
-- Первая короткая запись (tests/interface-paths-20261030-000431) не достигла
+- Первая короткая запись (tests/interface-paths-local-validation-000431) не достигла
   обращения к Interface даже в baseline; для вывода не использовалась.
-- Baseline: tests/interface-paths-20261030-000857. Окно Scryde Game присутствовало.
+- Baseline: tests/interface-paths-local-validation-000857. Окно Scryde Game присутствовало.
   Scryde/Interface.u: QueryOpen SUCCESS, CreateFile SUCCESS (2), ReadFile SUCCESS (370).
   Scryde/Interface.xdat также открыт и прочитан.
-- Перенос: tests/interface-paths-20261030-001318. В записи есть поиск обычных
+- Перенос: tests/interface-paths-local-validation-001318. В записи есть поиск обычных
   пакетов через Test (Engine.u, Core.u, NWindow.u и другие), затем штатный каталог.
   Для Interface.u зафиксирован только QueryOpen по Scryde/Interface.u с
   результатом NAME NOT FOUND. Обращений к Test/Interface.u нет.
@@ -38,8 +38,8 @@ Interface.u по штатному пути проверяется отдельн
 
 Итоговые счётчики и проверка восстановления: interface-path-validation.json.
 Рабочее состояние восстановлено: 27 .u в Scryde, Interface.u исходный,
-единственный путь .u — ../Scryde/*.u. При очистке 2026-10-30 полные PML и сырые
+единственный путь .u — ../Scryde/*.u. При очистке local-validation полные PML и сырые
 CSV удалены; отфильтрованные CSV, result.json и копии конфигов сохранены.
 Поля capture в старых result.json описывают исторические пути удалённых PML.
-Список удаления: ../../reports/cleanup-20261030.json.
+Список удаления: ../../reports/cleanup-local-validation.json.
 Содержимое ScrydeAuth.ini не читалось.

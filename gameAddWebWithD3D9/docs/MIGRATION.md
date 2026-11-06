@@ -1,4 +1,4 @@
-# Объединение addWeb и gameAddWeb — 2026-10-30
+# Объединение addWeb и gameAddWeb — local-validation
 
 После переноса подтверждена работа HF/Gracia. Выполнена
 [очистка кешей и промежуточных объектов](CLEANUP_POST_VALIDATION.md);

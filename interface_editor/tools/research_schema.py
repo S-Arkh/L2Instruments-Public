@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'app'))
 from schema_tools import export_package, report, validate_package, validation_info
 from schema_research import inspect_samples, suggest, apply_change
+from schema_catalog import profile_text
 
 
 def main():
@@ -29,7 +30,7 @@ def main():
             parser.error('Schema package too large')
         package = validate_package(json.loads(args.package.read_text(encoding='utf-8')))
     else:
-        package = export_package((ROOT / 'schemas/schemas.json').read_text(encoding='utf-8'), args.schema)
+        package = export_package(profile_text(args.schema), args.schema)
     samples = []
     for path in args.sample:
         with path.open('rb') as source:

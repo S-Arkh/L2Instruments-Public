@@ -10,6 +10,7 @@ os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'app'))
 import pytest
 from _interface_core import Document
+from schema_catalog import SchemaRepository, catalog_text
 from schema_tools import validate_package, export_package, import_package, report
 from schema_research import suggest, apply_change, inspect_samples, scan_anchors
 
@@ -125,7 +126,7 @@ def test_reject_invalid_schema_before_native_recursion(damage):
 
 def test_every_builtin_can_export_as_standalone():
     root = Path(__file__).resolve().parents[1]
-    text = (root / 'schemas/schemas.json').read_text()
+    text = catalog_text()
     for _, schema in json.loads(text)['versions']:
         validate_package(export_package(text, schema))
 
@@ -137,8 +138,10 @@ def test_workbench_accept_undo_export_and_background(tmp_path, monkeypatch):
     from schema_workbench import SchemaWorkbench
     app = QApplication.instance() or QApplication([])
     editor = Editor(QSettings(str(tmp_path / 'settings.ini'), QSettings.Format.IniFormat))
-    editor.schema_text = json.dumps(catalog())
-    editor.document = Document(editor.schema_text)
+    builtin = tmp_path / 'builtin.json'
+    builtin.write_text(json.dumps(catalog()), encoding='utf-8')
+    editor.schemas = SchemaRepository(builtin)
+    editor.document = Document(json.dumps(catalog()))
     editor.document.load_bytes(sample(False), 'test.XDAT')
     original = editor.document.serialize()
     errors = []

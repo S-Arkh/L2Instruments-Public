@@ -5,7 +5,7 @@
 
 ## Успешная трассировка Process Monitor
 
-Запись `tests/startup-trace-20261029-113919` завершена успешно:
+Запись `tests/startup-trace-local-validation-113919` завершена успешно:
 `startup.pml`, полный экспорт `startup.csv`, выборка `scryde.csv`, `result.json`.
 В выборке 232821 событий: 212366 от ScrydeGame.bin и 20455 от загрузчика.
 Зафиксирован 231 Load Image (включая повторные события и оба процесса).

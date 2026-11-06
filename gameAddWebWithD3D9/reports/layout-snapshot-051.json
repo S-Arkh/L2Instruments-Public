@@ -42,8 +42,8 @@
       "verified": true
     },
     {
-      "old": "gameAddWebWithD3D9/profiles/gracia/tests/open-api-20261029-143611",
-      "new": "gameAddWebWithD3D9/work/gracia/20261029-143611",
+      "old": "gameAddWebWithD3D9/profiles/gracia/tests/open-api-snapshot-048",
+      "new": "gameAddWebWithD3D9/work/gracia/snapshot-048",
       "files_sha256": {
         "workspace/compile.log": "097507821c5b74b5a5e290b51351f21d1d0596b4612908e044ead999c6fafcf0",
         "workspace/System/Core.dll": "5bff274734cae994353a8c60f4bfe1087dbdd9aa3883c7b2a7eff6ea2f51dc7e",
@@ -435,8 +435,8 @@
       "verified": true
     },
     {
-      "old": "gameAddWebWithD3D9/profiles/gracia/tests/open-api-20261029-145031",
-      "new": "gameAddWebWithD3D9/work/gracia/20261029-145031",
+      "old": "gameAddWebWithD3D9/profiles/gracia/tests/open-api-snapshot-050",
+      "new": "gameAddWebWithD3D9/work/gracia/snapshot-050",
       "files_sha256": {
         "workspace/compile.log": "3278ceda171350b4969a9d5d620cd2b0df0ad37229d505ded509d54356f82ccb",
         "workspace/System/Core.dll": "5bff274734cae994353a8c60f4bfe1087dbdd9aa3883c7b2a7eff6ea2f51dc7e",
@@ -828,8 +828,8 @@
       "verified": true
     },
     {
-      "old": "gameAddWebWithD3D9/profiles/high-five/tests/open-api-20261029-143457",
-      "new": "gameAddWebWithD3D9/work/high-five/20261029-143457",
+      "old": "gameAddWebWithD3D9/profiles/high-five/tests/open-api-snapshot-045",
+      "new": "gameAddWebWithD3D9/work/high-five/snapshot-045",
       "files_sha256": {
         "workspace/compile.log": "6837d2ef86d3ea50a1592e08535c09252ef4e8547dfea48495ca571191a2b4aa",
         "workspace/System/Core.dll": "5bff274734cae994353a8c60f4bfe1087dbdd9aa3883c7b2a7eff6ea2f51dc7e",
@@ -1239,8 +1239,8 @@
       "verified": true
     },
     {
-      "old": "gameAddWebWithD3D9/profiles/high-five/tests/open-api-20261029-143528",
-      "new": "gameAddWebWithD3D9/work/high-five/20261029-143528",
+      "old": "gameAddWebWithD3D9/profiles/high-five/tests/open-api-snapshot-046",
+      "new": "gameAddWebWithD3D9/work/high-five/snapshot-046",
       "files_sha256": {
         "workspace/compile.log": "8991f6cb3a3add40d057c11068a44b3c02af841138b9a60efaae6eaa273d95c5",
         "workspace/System/Core.dll": "5bff274734cae994353a8c60f4bfe1087dbdd9aa3883c7b2a7eff6ea2f51dc7e",
@@ -1650,8 +1650,8 @@
       "verified": true
     },
     {
-      "old": "gameAddWebWithD3D9/profiles/high-five/tests/open-api-20261029-143601",
-      "new": "gameAddWebWithD3D9/work/high-five/20261029-143601",
+      "old": "gameAddWebWithD3D9/profiles/high-five/tests/open-api-snapshot-047",
+      "new": "gameAddWebWithD3D9/work/high-five/snapshot-047",
       "files_sha256": {
         "workspace/compile.log": "1bdd02d528c44ef230053a7be6f8a1fca7e88143382f0d20d80845282a2fefc6",
         "workspace/System/Core.dll": "5bff274734cae994353a8c60f4bfe1087dbdd9aa3883c7b2a7eff6ea2f51dc7e",
@@ -2061,8 +2061,8 @@
       "verified": true
     },
     {
-      "old": "gameAddWebWithD3D9/profiles/high-five/tests/open-api-20261029-145025",
-      "new": "gameAddWebWithD3D9/work/high-five/20261029-145025",
+      "old": "gameAddWebWithD3D9/profiles/high-five/tests/open-api-snapshot-049",
+      "new": "gameAddWebWithD3D9/work/high-five/snapshot-049",
       "files_sha256": {
         "workspace/compile.log": "d1c5861afb79555dbc99ed9a4f0bb3c1f4cb1528f540671f6d71f39d1c080cfc",
         "workspace/System/Core.dll": "5bff274734cae994353a8c60f4bfe1087dbdd9aa3883c7b2a7eff6ea2f51dc7e",

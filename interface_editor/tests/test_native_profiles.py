@@ -4,6 +4,7 @@ import sys
 import pytest
 from synthetic_fixtures import ROOT
 from _interface_core import Document
+from schema_catalog import catalog_text
 
 sys.path.insert(0, str(ROOT / 'tools'))
 from create_native_fixture import fixture
@@ -11,7 +12,7 @@ from create_native_fixture import fixture
 
 @pytest.mark.parametrize('schema', ['essence_native.XDAT', 'korea_native.XDAT'])
 def test_native_profile_branches_lists_json_and_undo(schema):
-    catalog = (ROOT / 'schemas/schemas.json').read_text(encoding='utf-8')
+    catalog = catalog_text()
     doc = fixture(catalog, schema)
     data = doc.serialize()
     parsed = Document(catalog)
