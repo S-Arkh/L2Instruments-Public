@@ -42,7 +42,7 @@ Windows Job с KILL_ON_JOB_CLOSE завершает helper/потомков пр
 первопричина ещё не была установлена; позднее выявлена блокировка pipe-дескрипторов
 в integrity.dll и подготовлен рабочий in-process вариант.
 
-Подтверждённая DLL на 29.10.2026
+Подтверждённая DLL
 SHA256: 7bcd09efc2e2831aa00da1f5d516a6d8b81544ca6b84a8440b1975756ba01cc1
 Комплект: gameAddWebWithD3D9/gracia/result/system.
 После пересборки сверять новый manifest; прежнее игровое подтверждение привязано

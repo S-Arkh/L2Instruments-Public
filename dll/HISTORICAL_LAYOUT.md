@@ -13,6 +13,6 @@
 | `work/gracia/v2/` | Workspace, bindings и тестовый bytecode прежней подготовки Gracia |
 | `archive/gracia/v1/` | Предыдущая подготовка Gracia: client и workspace |
 
-При переносе local-validation проверялось побайтовое сохранение 101 файла.
+При переносе проверялось побайтовое сохранение 101 файла.
 Исторические абсолютные пути в bundle.json и логах отражают прежние запуски.
-Журнал: `reports/layout-local-validation.json`; результаты: [VALIDATION](VALIDATION.md).
+Журнал: `reports/layout-snapshot-051.json`; результаты: [VALIDATION](VALIDATION.md).

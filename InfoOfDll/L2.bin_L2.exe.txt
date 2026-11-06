@@ -1,0 +1,23 @@
+L2.bin / L2.exe — ПРОВЕРКА ВЕРСИИ ПРОТОКОЛА
+
+Параметр запуска: -L2ProtocolVersion
+Клиент показывает версию сетевого протокола в диалоге L2ProtocolVersion.
+Поддержка параметра зависит от сборки клиента.
+
+Запуск из Windows PowerShell
+Подставить свой путь к L2.bin или L2.exe. Рабочая папка — каталог system.
+
+  $path = 'C:\Games\Lineage2\system\L2.bin'
+  $si = New-Object System.Diagnostics.ProcessStartInfo
+  $si.FileName = $path
+  $si.Arguments = '-L2ProtocolVersion'
+  $si.WorkingDirectory = Split-Path $path
+  $si.UseShellExecute = $false
+  $si.EnvironmentVariables['__COMPAT_LAYER'] = 'RunAsInvoker'
+  [System.Diagnostics.Process]::Start($si)
+
+RunAsInvoker позволяет попробовать запуск с текущими правами при ошибке 740
+(требуется повышение прав). Настройка применяется только к запускаемому
+процессу и его потомкам.
+
+Прочитать версию в появившемся диалоге и закрыть его кнопкой ОК.

@@ -70,6 +70,7 @@ python uExplorer/launch.py
 Дальнейшие инструкции:
 
 - [Сборка всех компонентов и внешние входные данные](docs/BUILD.md).
+- [Итоговый аудит script tools, snapshot-регрессия и комплекты поставки](docs/ROUNDTRIP_RELEASE.md).
 - [UCC и ExtensionL2: настройка путей](docs/SCRIPT_TOOLS.md).
 - [Clear HF: полный пример от чистого клона до установки ExtensionL2](docs/CLEAR_HF_WALKTHROUGH.md).
 - [Браузер: подготовка чистой копии](gameAddWebWithD3D9/docs/PUBLICATION_BUILD.md).

@@ -1,0 +1,4 @@
+# Precompiled script dependencies, in load order. Names without .u.
+Core
+Engine
+NWindow

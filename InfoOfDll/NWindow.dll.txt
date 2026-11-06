@@ -59,7 +59,7 @@ gameAddWebWithD3D9/gracia/workspace/nwindow/Classes (сгенерированн�
 Scryde NWindow SHA256 73735f1fb164f23bd1f83426e5918c315aed5916b13b50ec7c084571da8af831
 есть в inventory; полноценный перенос UI/ABI на него не подтверждён.
 
-7. Дополнение: rotationAngle и ScalableData (Корея/Япония, 31.10.2026)
+7. Дополнение: rotationAngle и ScalableData (Корея/Япония)
 Для interface_editor выполнен статический разбор сохранённого загруженного
 образа корейской NWindow.dll и аудит четырёх японских/корейских normal/Classic XDAT.
 Korea SHA256: 4ed1266cc4266d7612ac52f5cd12e587b8bd0a795e6c4972d31304e5aa7981a7

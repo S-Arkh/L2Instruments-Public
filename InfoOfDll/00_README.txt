@@ -1,14 +1,15 @@
 СПРАВОЧНИК DLL, ИССЛЕДОВАННЫХ ПРИ РАЗРАБОТКЕ
-Дата: 29.10.2026. Кодировка: UTF-8.
+Кодировка: UTF-8.
 Корень проекта: каталог репозитория с папками dll, int64, interface_editor и другими проектами.
 Все относительные пути ниже и в карточках отсчитываются от этого корня.
 <GRACIA_CLIENT> обозначает корень установленного клиента Gracia; подставьте свой путь.
 
 Состав
+L2.bin_L2.exe.txt        — команда проверки версии протокола -L2ProtocolVersion.
 Core.dll.txt             — VM, native-таблица, строки, INT64, профили и загрузка расширения.
 Engine.dll.txt           — UTexture, mip, Init, dirty/revision, различия HF/Gracia.
 NWindow.dll.txt          — игровой UI, загрузчик Interface, удаление/перекомпиляция пакета.
-NWindow_UI_TRANSFORMS.md — дополнение 31.10.2026: rotationAngle, ScalableData,
+NWindow_UI_TRANSFORMS.md — дополнение: rotationAngle, ScalableData,
                           native RVA корейской сборки и ограничения статического preview.
 D3DDrv.dll.txt           — штатный D3D9-renderer и совместимость с Core.
 Editor.dll.txt           — исследованный ABI компилятора UnrealScript.
