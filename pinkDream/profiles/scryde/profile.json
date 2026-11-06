@@ -1,7 +1,7 @@
 {
   "id": "scryde", "status": "multi-theme-offline-validated",
-  "client_root_windows": "D:/Lineage 2/Scryde",
-  "client_root_linux": "/mnt/d/Lineage 2/Scryde",
+  "client_root_windows": "local/clients/scryde",
+  "client_root_linux": "local/clients/scryde",
   "packages": ["SysTextures/L2UI.utx", "SysTextures/L2UI_CT1.utx", "SysTextures/L2UI_CH3.utx", "SysTextures/L2UI_SCRYDE.utx", "SysTextures/patch.utx"],
   "mappings_manifest": "../../builds/scryde/christmas/v003/manifest.json",
   "selection": "selection.json",

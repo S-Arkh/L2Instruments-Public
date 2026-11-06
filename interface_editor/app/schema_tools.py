@@ -7,10 +7,11 @@ import re
 import uuid
 
 from _interface_core import Document
+from schema_catalog import load_catalog
 
 
 def load_schemas(builtin, directory):
-    catalog = json.loads(Path(builtin).read_text(encoding='utf-8'))
+    catalog = load_catalog(builtin)
     errors = []
     for path in sorted(Path(directory).glob('*.json')):
         try:
@@ -47,6 +48,15 @@ def probe(document, data, schema, label):
     result['hex_start'] = start
     result['hex'] = data[start:start + 96].hex(' ')
     return result
+
+
+def probe_profile(repository, data, schema, label):
+    try:
+        document = Document(repository.text(schema))
+    except Exception as error:
+        return {'schema': schema, 'label': label, 'compatible': False, 'tail_bytes': 0,
+                'offset': 0, 'error': str(error), 'schema_error': True}
+    return probe(document, data, schema, label)
 
 
 def draft_package(schema_text, base, label):
@@ -249,8 +259,9 @@ def import_package(source, directory, catalog_text):
     if source.stat().st_size > 16 * 1024 * 1024:
         raise ValueError('Schema package too large')
     package = validate_package(json.loads(source.read_text(encoding='utf-8')))
-    catalog = json.loads(catalog_text)
-    if set(package['records']) & set(catalog['records']):
+    collision = (catalog_text.collides(package['records']) if hasattr(catalog_text, 'collides') else
+                 set(package['records']) & set(json.loads(catalog_text)['records']))
+    if collision:
         raise ValueError('Schema identifiers collide with installed schemas')
     # Whitelist portable content; do not propagate arbitrary metadata or paths.
     portable = {key: package[key] for key in ('format', 'versions', 'records')}

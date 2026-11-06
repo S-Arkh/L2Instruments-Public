@@ -14,7 +14,7 @@ def digest(path): return hashlib.sha256(path.read_bytes()).hexdigest()
 
 def main():
     profile=json.loads((ROOT/'result/manifest.json').read_text())
-    temp_root=Path('/tmp/opencode') if sys.platform!='win32' else ROOT/'tests'
+    temp_root=Path(tempfile.gettempdir()) if sys.platform!='win32' else ROOT/'tests'
     with tempfile.TemporaryDirectory(prefix='gracia-install-',dir=temp_root) as temp:
         temp=Path(temp);system=temp/'system';system.mkdir()
         for name in ('Core.dll','Engine.dll','NWindow.dll','D3DDrv.dll','Interface.u','Interface.xdat'):

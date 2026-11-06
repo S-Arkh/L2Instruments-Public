@@ -5,8 +5,7 @@ from pathlib import Path
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QDialog, QVBoxLayout, QLabel, QComboBox,
     QPushButton, QPlainTextEdit, QFileDialog, QInputDialog, QProgressDialog)
-from _interface_core import Document
-from schema_tools import probe, draft_package, report
+from schema_tools import probe_profile, draft_package, report
 
 
 def analyze(window, filename, selected, original_error):
@@ -17,9 +16,9 @@ def analyze(window, filename, selected, original_error):
     progress.setAutoClose(False)
     progress.setAutoReset(False)
     window.set_busy(True, 'Подбор схемы…')
-    catalog_text = window.schema_text
+    repository = window.schemas
     versions = {}
-    for label, schema in json.loads(catalog_text)['versions']:
+    for label, schema in repository.versions:
         versions.setdefault(schema, []).append(label)
     candidates = list(versions)
     results = []
@@ -39,7 +38,7 @@ def analyze(window, filename, selected, original_error):
             finish()
             window.error(error)
             return
-        data, document = value
+        data = value
         progress.setMaximum(len(candidates))
 
         def next_probe():
@@ -62,7 +61,7 @@ def analyze(window, filename, selected, original_error):
                     return
                 results.append(result)
                 next_probe()
-            window.submit(lambda: probe(document, data, schema, label), completed)
+            window.submit(lambda: probe_profile(repository, data, schema, label), completed)
         next_probe()
 
     def prepare():
@@ -70,7 +69,7 @@ def analyze(window, filename, selected, original_error):
             data = source.read(256 * 1024 * 1024 + 1)
         if len(data) > 256 * 1024 * 1024:
             raise ValueError('File too large')
-        return data, Document(catalog_text)
+        return data
     window.submit(prepare, ready)
 
 
@@ -142,7 +141,7 @@ def show_results(window, filename, selected, data, results, original_error):
         if not ok or not label.strip():
             return
         try:
-            package = draft_package(window.schema_text, combo.currentData(), label.strip())
+            package = draft_package(window.schemas.text(combo.currentData()), combo.currentData(), label.strip())
             directory = window.user_schema_directory
             directory.mkdir(parents=True, exist_ok=True)
             path = directory / (package['versions'][0][1] + '.json')

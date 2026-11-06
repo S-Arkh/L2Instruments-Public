@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "source": "/mnt/d/Lineage 2/Gracia(for_interlude)/system/Core.dll",
+  "source": "local/clients/gracia/system/Core.dll",
   "approved_profile": null,
   "candidate": {
     "name": "UNREVIEWED",

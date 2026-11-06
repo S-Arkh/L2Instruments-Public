@@ -17,7 +17,11 @@
 
 ## Декомпиляция классов
 
-- DelegateProperty и выражения делегатов.
-- Более полное восстановление replication, state/latent, Within и defaults.
+- Дополнительные формы DelegateProperty, не являющиеся служебным хранилищем
+  объявления делегата (основные объявления, вызовы, присваивания и `new`
+  поддержаны; проверки — `GENERATION_VALIDATION.md`).
+- Более полное восстановление replication, state/latent и defaults.
+- Подтверждение синтаксиса PtrProperty и совместимости SDK (метаданные сохраняются,
+  но класс остаётся partial; см. CORE_METADATA_VALIDATION.md).
 - Структурированные if/while вместо dispatcher, с проверкой CFG.
 - Дополнительные реальные fixtures и проверки повторной компиляции.

@@ -1,10 +1,10 @@
 {
   "Interface": {
-    "recovered_sources": "recovered\\build-20261029-021546-109\\Classes",
+    "recovered_sources": "recovered\\build-snapshot-025-109\\Classes",
     "files": 239
   },
   "NWindow": {
-    "package": "D:\\l2_mode\\mod_comp\\int64_UCC\\rebuild\\gameAddWebWithD3D9\\gracia\\inputs\\NWindow.u",
+    "package": "<LOCAL_INPUT>/NWindow.u",
     "package_sha256": "b0f8bb9ff1f8b5a68132df4d872a5b966a9956bbf920302747fb93b0a23fec8b",
     "extracted": {
       "WindowHandle": {

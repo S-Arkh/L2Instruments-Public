@@ -10,6 +10,22 @@
   },
   "profiles": [
     {
+      "name": "japan_modern_74eac821",
+      "sha256": "74eac821e03fe7ad64e80df26554dcaf73b7f043cfd97f8ea0e349c703849606",
+      "loader_patch_verified": true,
+      "loaded_step_code": "558bec8b410cff750c510fb610408941",
+      "rvas": {"register": 839088, "table": 1981232, "step": 112768, "undefined": 893664},
+      "code": {"register": "ce76e37ae59bcb514156ca42b4330054", "step": "a49b9d9983042419e902000000117dc3", "undefined": "14f8cf29bee5d11b69150bc590ce1741"}
+    },
+    {
+      "name": "korean_modern_964ff724",
+      "sha256": "964ff7241a4c71c18481cf4ba4283ebf5a591cf08dcb1cc82e212d271add73b5",
+      "loader_patch_verified": true,
+      "loaded_step_code": "558bec8b410cff750c510fb610408941",
+      "rvas": {"register": 768896, "table": 1911472, "step": 112768, "undefined": 823472},
+      "code": {"register": "6dc41e2574c1beeceefeff1bf1c909f3", "step": "000022b4e7a8a7137403366af0e80700", "undefined": "5e421e6316f8bd5fadc7f47e31c0b19c"}
+    },
+    {
       "name": "client_b3fb9af3",
       "sha256": "b3fb9af30a4fc9429b6765e9d897acb00478e7ba0a1e6c48266d475bfadf0f3c",
       "rvas": {"register": 382464, "table": 968408, "step": 37392, "undefined": 381456},

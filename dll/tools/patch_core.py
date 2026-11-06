@@ -60,7 +60,9 @@ def patch_bytes(original, image):
     if original != image.data:
         raise ValueError('PE image and input bytes differ')
     digest = hashlib.sha256(original).hexdigest()
-    approved(image)
+    profile = approved(image)
+    if not profile.get('loader_patch_verified', True):
+        raise ValueError('Native ABI profile has no verified on-disk loader patch')
     if digest not in CORE_PROFILES:
         raise ValueError('Unsupported Core.dll: use an original DLL matching a known client profile')
     pe = struct.unpack_from('<I', original, 0x3c)[0]

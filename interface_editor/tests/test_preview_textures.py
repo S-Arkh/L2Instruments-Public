@@ -14,6 +14,7 @@ from PySide6.QtWidgets import QApplication
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'app'))
 from _interface_core import Document, TextureStore, decode_texture
+from schema_catalog import catalog_text
 from texture_project import TextureProject, image_rgba
 from preview_render import ResourceCache, render_preview, Layout, preview_root
 from main import Editor
@@ -31,7 +32,7 @@ def image_file(path, width=30, height=20, color=QColor(240, 30, 50, 180)):
 
 
 def hf():
-    d = Document((ROOT / 'schemas/schemas.json').read_text())
+    d = Document(catalog_text())
     d.load(str(ROOT / 'tests/fixtures/Interface_high_five.xdat'), 'ct26.XDAT')
     credit = next(n for n in d.search('btnCredit')['matches'] if d.info(n)['type'] == 'Button')
     return d, credit
@@ -50,7 +51,7 @@ def korea():
 
 
 def synthetic_preview(profile):
-    doc = Document((ROOT / 'schemas/schemas.json').read_text())
+    doc = Document(catalog_text())
     doc.create(profile + '.XDAT')
     windows = next(n['id'] for n in doc.children() if n['name'] == 'windows')
     parent = doc.add_configured(windows, profile + '.Window', dict(name='PreviewWindow', size=1,

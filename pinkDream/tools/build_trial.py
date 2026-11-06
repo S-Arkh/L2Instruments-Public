@@ -26,7 +26,7 @@ def build(profile_id, revision, client=None, base_bundle=None):
     profile_dir = ROOT / 'profiles' / profile_id
     profile = json.loads((profile_dir / 'profile.json').read_text())
     selection = json.loads((profile_dir / 'selection.json').read_text())
-    inventory = json.loads((profile_dir / 'inventory-20261029.json').read_text())
+    inventory = json.loads((profile_dir / 'inventory-snapshot-017.json').read_text())
     pinned = {p['relative_path']: p['sha256'] for p in inventory['packages']}
     client = client or Path(profile['client_root_windows' if os.name == 'nt' else 'client_root_linux'])
     base = json.loads((base_bundle / 'manifest.json').read_text()) if base_bundle else None

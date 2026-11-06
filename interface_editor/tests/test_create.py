@@ -1,10 +1,11 @@
 import pytest
 from synthetic_fixtures import ROOT
 from _interface_core import Document
+from schema_catalog import catalog_text
 
 
 def test_create_roundtrip_and_failed_create_preserves_edits():
-    schema = (ROOT / 'schemas/schemas.json').read_text(encoding='utf-8')
+    schema = catalog_text()
     doc = Document(schema)
     doc.create('ct26.XDAT')
     assert doc.summary()['dirty'] and not doc.summary()['file']

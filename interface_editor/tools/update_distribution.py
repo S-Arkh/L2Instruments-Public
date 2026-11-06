@@ -49,7 +49,8 @@ def main():
     # Main imports its helpers; publish the entry point last.
     for source in sorted((ROOT / 'app').glob('*.py'), key=lambda p: (p.name == 'main.py', p.name)):
         files['app/' + source.name] = source
-    files['schemas/schemas.json'] = ROOT / 'schemas/schemas.json'
+    for source in sorted((ROOT / 'schemas').glob('*.json')):
+        files['schemas/' + source.name] = source
     files['runtime/zlib1.dll'] = ROOT / 'third_party/windows/zlib1.dll'
     temporary = []
     try:
@@ -74,6 +75,9 @@ def main():
         os.replace(staged_info, info_file)
         if old_module != '_interface_core.pyd':
             (out / 'app' / old_module).unlink()
+        # The previous catalog was verified and backed up above.
+        if 'schemas/schemas.json' in expected:
+            (out / 'schemas/schemas.json').unlink()
     finally:
         for temp in temporary:
             if temp.exists():

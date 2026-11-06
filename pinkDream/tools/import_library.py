@@ -21,7 +21,7 @@ def migrate(bundle, revision):
     if target.exists() or stage.exists():
         raise FileExistsError(target)
     stage.mkdir(parents=True)
-    inventory = json.loads((ROOT / 'profiles' / profile / 'inventory-20261029.json').read_text())
+    inventory = json.loads((ROOT / 'profiles' / profile / 'inventory-snapshot-017.json').read_text())
     original_hashes = {p['relative_path']: p['sha256'] for p in inventory['packages']}
     lib = {'schema': 2, 'profile': profile, 'revision': revision,
            'source_kind': 'original-top-level-PNG; lower RGB mips regenerated from top; exact original alpha',

@@ -1,0 +1,1 @@
+class ZTypeBase extends Actor;

@@ -99,8 +99,8 @@ RVA относительно integrity.dll:
     WebView падает, с ней весь набор кадров/ввода проходит, обычный pipe остаётся
     заблокированным.
 
-Свидетельства находятся в `profiles/gracia/tests/inprocess-client-20261029-040141`,
-`profiles/gracia/tests/inprocess-20261029-035839`, `profiles/gracia/tests/pipe-compat-*` и
+Свидетельства находятся в `profiles/gracia/tests/inprocess-client-snapshot-038`,
+`profiles/gracia/tests/inprocess-snapshot-037`, `profiles/gracia/tests/pipe-compat-*` и
 `profiles/gracia/tests/inprocess-exit-*`. Первые диагностические журналы накопительные:
 различайте запуски по PID и tick. Итоговая привязка — `profiles/gracia/inprocess-validation.json`.
 

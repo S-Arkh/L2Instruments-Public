@@ -6,6 +6,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'app'))
 from _interface_core import Document
+from schema_catalog import BUILTIN_INDEX, profile_text
 
 
 def fixture(catalog_text, schema):
@@ -51,11 +52,11 @@ def fixture(catalog_text, schema):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--catalog', type=Path, default=ROOT / 'schemas/schemas.json')
+    parser.add_argument('--catalog', type=Path, default=BUILTIN_INDEX)
     parser.add_argument('--schema', choices=['essence_native.XDAT', 'korea_native.XDAT'], required=True)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
-    doc = fixture(args.catalog.read_text(encoding='utf-8'), args.schema)
+    doc = fixture(profile_text(args.schema, args.catalog), args.schema)
     with args.output.open('xb') as stream:
         stream.write(doc.serialize())
 

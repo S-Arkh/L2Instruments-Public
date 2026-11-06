@@ -117,9 +117,10 @@ def main(native_only=False, classes=None, sources_only=False):
 def prepare_xdat():
     sys.path.insert(0,str(REBUILD/'interface_editor/app'))
     from _interface_core import Document
-    schema=(REBUILD/'interface_editor/schemas/schemas.json').read_text()
+    from schema_catalog import profile_text
+    schema = profile_text('ct24.XDAT')
     d=Document(schema);d.load(str(ROOT/'inputs/Interface.xdat'),'ct24.XDAT')
-    hf=Document(schema);hf.load(str(SHARED/'result/system/Interface.xdat'),'ct26.XDAT')
+    hf=Document(profile_text('ct26.XDAT'));hf.load(str(SHARED/'result/system/Interface.xdat'),'ct26.XDAT')
     def find(doc,name,kind):
         return next(i for i in doc.search(name)['matches'] if doc.info(i)['name']==name and doc.info(i)['type']==kind)
     def children(doc,i):return next(c['id'] for c in doc.children(i) if c['name']=='children')

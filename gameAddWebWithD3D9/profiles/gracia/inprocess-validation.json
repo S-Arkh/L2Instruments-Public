@@ -6,19 +6,19 @@
   "webview_runtime": "156.0.4314.50",
   "cause": "integrity.dll NtReadFile/NtWriteFile detours return STATUS_ACCESS_DENIED for FILE_TYPE_PIPE, blocking WebView Mojo IPC",
   "native_tests": {
-    "module_load_matrix": "tests/inprocess-20261029-035839/result.json",
-    "pipe_regression": "tests/pipe-compat-20261029-043938/result.json",
-    "active_process_exit": "tests/inprocess-exit-20261029-043951/result.json",
+    "module_load_matrix": "tests/inprocess-snapshot-037/result.json",
+    "pipe_regression": "tests/pipe-compat-snapshot-040/result.json",
+    "active_process_exit": "tests/inprocess-exit-snapshot-041/result.json",
     "ordinary_pipes_still_blocked": true,
     "frame_input_suite": "passed"
   },
   "isolated_client": {
-    "directory": "tests/inprocess-client-20261029-040141",
+    "directory": "tests/inprocess-client-snapshot-038",
     "final_pid": 65852,
     "helper_exe_present": false,
     "controller_created": true,
     "page_displayed_above_login": true,
-    "screenshot": "tests/inprocess-client-20261029-040141/latest.png",
+    "screenshot": "tests/inprocess-client-snapshot-038/latest.png",
     "browser_closed": true,
     "exited_via_game_exit_button": true,
     "remaining_l2_helper_or_l2_webview_processes": 0

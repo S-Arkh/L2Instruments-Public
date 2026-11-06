@@ -20,7 +20,8 @@ class SchemaWorkbench(QDialog):
         self.running = False
         self.cancelled = False
         self.samples, self.results, self.hypotheses, self.history = [], [], [], []
-        self.package = draft_package(window.schema_text, schema or window.version.currentData(), 'Custom XDAT')
+        selected = schema or window.version.currentData()
+        self.package = draft_package(window.schemas.text(selected), selected, 'Custom XDAT')
         layout = QVBoxLayout(self)
         note = QLabel(self.t('Гипотезы требуют проверки. Смещение ошибки и побайтное совпадение не доказывают смысл полей.'))
         note.setWordWrap(True)
@@ -330,7 +331,7 @@ def import_schema(window):
     path, _ = QFileDialog.getOpenFileName(window, window.t('Импорт схемы…'), '', 'JSON (*.json)')
     if path:
         try:
-            import_package(path, window.user_schema_directory, window.schema_text)
+            import_package(path, window.user_schema_directory, window.schemas)
             window.reload_schemas()
         except Exception as error:
             window.error(str(error))
@@ -340,7 +341,8 @@ def export_schema(window):
     path, _ = QFileDialog.getSaveFileName(window, window.t('Экспорт схемы…'), 'schema.json', 'JSON (*.json)')
     if path:
         try:
-            package = export_package(window.schema_text, window.version.currentData())
+            selected = window.version.currentData()
+            package = export_package(window.schemas.text(selected), selected)
             Path(path).write_text(json.dumps(package, ensure_ascii=False, indent=2), encoding='utf-8')
         except Exception as error:
             window.error(str(error))
